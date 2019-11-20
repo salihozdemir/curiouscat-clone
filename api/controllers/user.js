@@ -81,7 +81,7 @@ exports.signup = (req, res, next) => {
                     expiresIn: '1H'
                   }
                 );
-                return res.status(201).json({
+                return res.status(200).json({
                   message: 'User created',
                   token: token
                 });
