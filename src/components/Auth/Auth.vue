@@ -1,87 +1,86 @@
 <template>
-  <div class="container">
-    <div class="row" style="margin-top: 130px">
-      <div
-        class="col-sm-4 p-3 border"
-        :class="{ 'border-primary': isUser, 'border-success': !isUser }"
-      >
-        <h3
-          :class="{ 'text-primary': isUser, 'text-success': !isUser }"
-          class="text-center mb-3 mt-3"
-        >
-          Question Anonymous
-        </h3>
-        <hr />
-        <form>
-          <div class="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              class="form-control"
-              placeholder="Email address"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label>Username</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Username"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              class="form-control"
-              placeholder="Password"
-              required
-            />
-          </div>
-          <div class="text-center">
-            <button
-              type="submit"
-              :class="{ 'btn-primary': isUser, 'btn-success': !isUser }"
-              class="btn btn-block mb-2"
-              @click.prevent="onSubmit"
-            >
-              {{ isUser ? 'Login' : 'Signin' }}
-            </button>
-            <a href="#" @click.prevent="isUser = !isUser" class="text-muted">{{
-              isUser ? 'Signup' : 'I already have an account'
-            }}</a>
-          </div>
-        </form>
-      </div>
-      <div class="col-sm-8 text-center align-self-center">
-        <h1 :class="{ 'text-primary': isUser, 'text-success': !isUser }">
-          {{ isUser ? 'Login' : 'Join Now!' }}
-        </h1>
-      </div>
-    </div>
+  <div class="divLogin">
+    <transition name="slideContainer" mode="out-in" appear>
+      <component :is="getActiveComponent" key="authComponent"></component>
+    </transition>
   </div>
 </template>
 <script>
+import Login from '../Auth/Login';
+import Signup from '../Auth/Signup';
 import api from '../../services/index';
+//import tools from '../../tools/index';
+import { mapGetters } from 'vuex';
 
 export default {
+  components: {
+    appLogin: Login,
+    appSignup: Signup
+  },
   data() {
     return {
       isUser: false
     };
   },
+  computed: {
+    ...mapGetters(['getActiveComponent'])
+  },
+  //TODO: Kullanıcı email veya username ile giriş yapabilsin.
   methods: {
     async onSubmit() {
-      const data = await api().post('/user/login', {
-        email: '123@123.com',
-        password: '123123'
+      let connectionString = '';
+      if (this.isUser) {
+        connectionString = '/user/login';
+      } else {
+        connectionString = '/user/signup';
+      }
+      const userToken = await api().post(connectionString, {
+        email: this.user.email,
+        username: this.user.username,
+        password: this.user.password
       });
-      console.log(data);
+      console.log(userToken.response.data.message);
+
+      //tools.cookie.set('access_token', userToken.data.token);
     }
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.slideContainer-enter-active {
+  animation: slide-in 0.3s ease-in-out forwards;
+}
+.slideContainer-leave-active {
+  animation: slide-out 0.3s ease-in-out forwards;
+}
+
+.divLogin {
+  background-image: url('../../assets/img/login.jpg');
+  background-size: auto;
+  background-color: whitesmoke !important;
+  min-height: 100vh;
+  height: auto;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+}
+</style>
