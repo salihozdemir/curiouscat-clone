@@ -1,5 +1,5 @@
 <template>
-  <div class="divLogin">
+  <div class="auth-background vertical-center">
     <transition name="slideContainer" mode="out-in" appear>
       <component :is="getActiveComponent" key="authComponent"></component>
     </transition>
@@ -8,8 +8,6 @@
 <script>
 import Login from '../Auth/Login';
 import Signup from '../Auth/Signup';
-import api from '../../services/index';
-//import tools from '../../tools/index';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -18,32 +16,13 @@ export default {
     appSignup: Signup
   },
   data() {
-    return {
-      isUser: false
-    };
+    return {};
   },
   computed: {
     ...mapGetters(['getActiveComponent'])
   },
   //TODO: Kullanıcı email veya username ile giriş yapabilsin.
-  methods: {
-    async onSubmit() {
-      let connectionString = '';
-      if (this.isUser) {
-        connectionString = '/user/login';
-      } else {
-        connectionString = '/user/signup';
-      }
-      const userToken = await api().post(connectionString, {
-        email: this.user.email,
-        username: this.user.username,
-        password: this.user.password
-      });
-      console.log(userToken.response.data.message);
-
-      //tools.cookie.set('access_token', userToken.data.token);
-    }
-  }
+  methods: {}
 };
 </script>
 
@@ -55,12 +34,19 @@ export default {
   animation: slide-out 0.3s ease-in-out forwards;
 }
 
-.divLogin {
+.auth-background {
   background-image: url('../../assets/img/login.jpg');
   background-size: auto;
   background-color: whitesmoke !important;
   min-height: 100vh;
   height: auto;
+}
+
+.vertical-center {
+  min-height: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
 }
 
 @keyframes slide-in {
