@@ -10,13 +10,15 @@ exports.login = (req, res, next) => {
     .then(user => {
       if (!user) {
         return res.status(401).json({
-          message: 'User not found.'
+          message: 'User not found.',
+          success: false
         });
       }
       bcrypt.compare(req.body.password, user.password, (err, result) => {
         if (err) {
           return res.status(401).json({
-            message: 'Auth failed'
+            message: 'Auth failed',
+            success: false
           });
         }
         if (result) {
@@ -32,17 +34,20 @@ exports.login = (req, res, next) => {
           );
           return res.status(200).json({
             message: 'Auth successful',
-            token
+            token,
+            success: true
           });
         }
         return res.status(401).json({
-          message: 'Auth failed'
+          message: 'Auth failed',
+          success: false
         });
       });
     })
     .catch(err => {
       res.status(500).json({
-        error: err
+        error: err,
+        success: false
       });
     });
 };
@@ -53,13 +58,15 @@ exports.signup = (req, res, next) => {
     .then(user => {
       if (user) {
         return res.status(409).json({
-          message: 'Mail exist'
+          message: 'Mail exist',
+          success: false
         });
       } else {
         bcrypt.hash(req.body.password, 10, (err, hash) => {
           if (err) {
             return res.status(500).json({
-              error: err
+              error: err,
+              success: false
             });
           } else {
             const user = new User({
@@ -81,19 +88,22 @@ exports.signup = (req, res, next) => {
                     expiresIn: '1H'
                   }
                 );
-                return res.status(200).json({
+                return res.status(201).json({
                   message: 'User created',
-                  token: token
+                  token,
+                  success: true
                 });
               })
               .catch(err => {
                 if (err.code === 11000) {
                   res.status(409).json({
-                    message: 'Username exist'
+                    message: 'Username exist',
+                    success: false
                   });
                 }
                 res.status(500).json({
-                  error: err
+                  error: err,
+                  success: false
                 });
               });
           }
@@ -108,18 +118,21 @@ exports.get_user_by_username = (req, res, next) => {
     .then(user => {
       if (!user) {
         res.status(404).json({
-          message: 'User not found'
+          message: 'User not found',
+          success: false
         });
       }
       res.status(200).json({
         user: {
-          username: user.username
+          username: user.username,
+          success: true
         }
       });
     })
     .catch(err => {
       res.status(500).json({
-        error: err
+        error: err,
+        success: false
       });
     });
 };
