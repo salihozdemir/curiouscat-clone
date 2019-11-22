@@ -10,14 +10,14 @@ exports.login = (req, res, next) => {
     .then(user => {
       if (!user) {
         return res.status(401).json({
-          message: 'User not found.',
+          message: 'The email or password is incorrect. Please, try again',
           success: false
         });
       }
       bcrypt.compare(req.body.password, user.password, (err, result) => {
         if (err) {
           return res.status(401).json({
-            message: 'Auth failed',
+            message: 'The email or password is incorrect. Please, try again',
             success: false
           });
         }
@@ -39,7 +39,7 @@ exports.login = (req, res, next) => {
           });
         }
         return res.status(401).json({
-          message: 'Auth failed',
+          message: 'The email or password is incorrect. Please, try again',
           success: false
         });
       });
@@ -47,7 +47,8 @@ exports.login = (req, res, next) => {
     .catch(err => {
       res.status(500).json({
         error: err,
-        success: false
+        success: false,
+        message: err.message
       });
     });
 };
@@ -58,7 +59,7 @@ exports.signup = (req, res, next) => {
     .then(user => {
       if (user) {
         return res.status(409).json({
-          message: 'Mail exist',
+          message: "Sorry, that emails's taken. Try another?",
           success: false
         });
       } else {
@@ -97,13 +98,14 @@ exports.signup = (req, res, next) => {
               .catch(err => {
                 if (err.code === 11000) {
                   res.status(409).json({
-                    message: 'Username exist',
+                    message: "Sorry, that username's taken. Try another?",
                     success: false
                   });
                 }
                 res.status(500).json({
                   error: err,
-                  success: false
+                  success: false,
+                  message: err.message
                 });
               });
           }
