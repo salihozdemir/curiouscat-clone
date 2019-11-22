@@ -14,6 +14,7 @@
               type="email"
               class="form-control input-text"
               placeholder="Email address"
+              autocomplete="off"
               required
             />
           </div>
@@ -24,6 +25,7 @@
               type="password"
               class="form-control input-text"
               placeholder="Password"
+              autocomplete="off"
               required
             />
           </div>
@@ -39,6 +41,9 @@
             >
           </div>
         </form>
+        <div v-if="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
       </div>
       <div class="col-8 text-center align-self-center">
         <h1 class="text-primary login-text-font">
@@ -50,15 +55,17 @@
 </template>
 <script>
 import api from '../../services/index';
-// import tools from '../../tools/index';
-
+import tools from '../../tools/index';
+//TODO: Loading componenti kullanıcı giriş yaptığında çalışsın.
 export default {
   data() {
     return {
       user: {
         email: null,
         password: null
-      }
+      },
+      errorMessage: null,
+      loading: false
     };
   },
   methods: {
@@ -67,12 +74,19 @@ export default {
       this.$store.commit('setActiveComponent', 'app-signup');
     },
     async login() {
+      //Ard arda login tuşuna tıklandığında hatanın sıfırdan gelmesini sağlar.
+      this.errorMessage = null;
       const userToken = await api().post('/user/login', {
         email: this.user.email,
         password: this.user.password
       });
-      console.log(userToken.response.data.message);
-      //tools.cookie.set('access_token', userToken.data.token);
+      //Servisten dönen cevap 200 ise cookies'e tokenı yaz. Değilse hata mesajını tut ve ekranda göster.
+      if (userToken.data) {
+        tools.cookie.set('access_token', userToken.data.token);
+        this.$router.push({ name: 'Profile' });
+      } else {
+        this.errorMessage = userToken.response.data.message;
+      }
     }
   }
 };
@@ -97,6 +111,14 @@ export default {
 .login-button {
   border-radius: 10px;
   margin-bottom: 0.5rem !important;
+}
+
+.error-message {
+  color: #dc3545;
+  text-align: center;
+  margin-top: 1rem;
+  font-family: cursive;
+  font-weight: bolder;
 }
 
 @font-face {
