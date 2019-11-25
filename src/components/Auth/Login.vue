@@ -32,9 +32,11 @@
           <div class="text-center">
             <button
               type="submit"
-              class="btn btn-block btn-primary login-button"
+              class="btn btn-block btn-primary login-button ld-ext-right"
+              :class="{ running: loading }"
             >
               Login
+              <div class="ld ld-ring ld-spin"></div>
             </button>
             <a href="#" @click.prevent="goSignupComponent" class="text-muted"
               >I don't have an account</a
@@ -57,6 +59,9 @@
 import api from '../../services/index';
 import tools from '../../tools/index';
 //TODO: Loading componenti kullanıcı giriş yaptığında çalışsın.
+// Button basıldığında spinner gözükmesi için bu kütüphane kullanıldı.
+import 'ldbutton/dist/ldbtn.min.css';
+
 export default {
   data() {
     return {
@@ -76,6 +81,7 @@ export default {
     async login() {
       //Ard arda login tuşuna tıklandığında hatanın sıfırdan gelmesini sağlar.
       this.errorMessage = null;
+      this.loading = true;
       const userToken = await api().post('/user/login', {
         email: this.user.email,
         password: this.user.password
@@ -87,11 +93,30 @@ export default {
       } else {
         this.errorMessage = userToken.response.data.message;
       }
+      this.loading = false;
     }
   }
 };
 </script>
 <style scoped>
+.ld {
+  transform-origin: 50% 50%;
+  transform-box: fill-box;
+}
+.ld.ld-spin {
+  animation: ld-spin 1s infinite linear;
+}
+.ld.ld-spin {
+  animation: ld-spin 1s infinite linear;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  animation-play-state: running;
+  animation-name: ld-spin;
+}
 .auth-card {
   background-color: #eaecf2;
   box-shadow: 0 0 10px 1px #343a4052;

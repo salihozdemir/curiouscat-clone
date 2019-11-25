@@ -43,9 +43,11 @@
           <div class="text-center">
             <button
               type="submit"
-              class="btn btn-block btn-success login-button"
+              class="btn btn-block btn-success login-button ld-ext-right"
+              :class="{ running: loading }"
             >
               Sign Up
+              <div class="ld ld-ring ld-spin"></div>
             </button>
             <a href="#" @click.prevent="goLoginComponent" class="text-muted"
               >I already have an account</a
@@ -68,6 +70,9 @@
 import api from '../../services/index';
 import tools from '../../tools/index';
 
+// Button basıldığında spinner gözükmesi için bu kütüphane kullanıldı.
+import 'ldbutton/dist/ldbtn.min.css';
+
 export default {
   data() {
     return {
@@ -88,6 +93,7 @@ export default {
     async signup() {
       //Ard arda login tuşuna tıklandığında hatanın sıfırdan gelmesini sağlar.
       this.errorMessage = null;
+      this.loading = true;
       const userToken = await api().post('/user/signup', {
         email: this.user.email,
         username: this.user.username,
@@ -100,6 +106,7 @@ export default {
       } else {
         this.errorMessage = userToken.response.data.message;
       }
+      this.loading = false;
     }
   }
 };
