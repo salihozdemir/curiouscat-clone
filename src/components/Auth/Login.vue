@@ -1,53 +1,55 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-4 auth-card">
-        <h3 class="site-name">
-          Question
-        </h3>
-        <hr />
-        <form @submit.prevent="login">
-          <div class="form-group">
-            <label class="label-text">Email</label>
-            <input
-              v-model="user.email"
-              type="email"
-              class="form-control input-text"
-              placeholder="Email address"
-              autocomplete="off"
-              required
-            />
+      <div class="col-sm-4">
+        <div class="auth-card">
+          <h3 class="site-name">
+            Question
+          </h3>
+          <hr />
+          <form @submit.prevent="login">
+            <div class="form-group">
+              <label class="label-text">Email</label>
+              <input
+                v-model="user.email"
+                type="email"
+                class="form-control input-text"
+                placeholder="Email address"
+                autocomplete="off"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="label-text">Password</label>
+              <input
+                v-model="user.password"
+                type="password"
+                class="form-control input-text"
+                placeholder="Password"
+                autocomplete="off"
+                required
+              />
+            </div>
+            <div class="text-center">
+              <button
+                type="submit"
+                class="btn btn-block btn-primary login-button ld-ext-right"
+                :class="{ running: loading }"
+              >
+                Login
+                <div class="ld ld-ring ld-spin"></div>
+              </button>
+              <a href="#" @click.prevent="goSignupComponent" class="text-muted"
+                >I don't have an account</a
+              >
+            </div>
+          </form>
+          <div v-if="errorMessage" class="error-message">
+            {{ errorMessage }}
           </div>
-          <div class="form-group">
-            <label class="label-text">Password</label>
-            <input
-              v-model="user.password"
-              type="password"
-              class="form-control input-text"
-              placeholder="Password"
-              autocomplete="off"
-              required
-            />
-          </div>
-          <div class="text-center">
-            <button
-              type="submit"
-              class="btn btn-block btn-primary login-button ld-ext-right"
-              :class="{ running: loading }"
-            >
-              Login
-              <div class="ld ld-ring ld-spin"></div>
-            </button>
-            <a href="#" @click.prevent="goSignupComponent" class="text-muted"
-              >I don't have an account</a
-            >
-          </div>
-        </form>
-        <div v-if="errorMessage" class="error-message">
-          {{ errorMessage }}
         </div>
       </div>
-      <div class="col-8 text-center align-self-center">
+      <div class="col-sm-8 text-center align-self-center">
         <h1 class="text-primary login-text-font">
           Login
         </h1>
@@ -89,6 +91,7 @@ export default {
       //Servisten dönen cevap 200 ise cookies'e tokenı yaz. Değilse hata mesajını tut ve ekranda göster.
       if (userToken.data) {
         tools.cookie.set('access_token', userToken.data.token);
+        this.$store.commit('setToken', userToken.data.token);
         this.$router.push({ name: 'Profile' });
       } else {
         this.errorMessage = userToken.response.data.message;
@@ -99,24 +102,6 @@ export default {
 };
 </script>
 <style scoped>
-.ld {
-  transform-origin: 50% 50%;
-  transform-box: fill-box;
-}
-.ld.ld-spin {
-  animation: ld-spin 1s infinite linear;
-}
-.ld.ld-spin {
-  animation: ld-spin 1s infinite linear;
-  animation-duration: 1s;
-  animation-timing-function: linear;
-  animation-delay: 0s;
-  animation-iteration-count: infinite;
-  animation-direction: normal;
-  animation-fill-mode: none;
-  animation-play-state: running;
-  animation-name: ld-spin;
-}
 .auth-card {
   background-color: #eaecf2;
   box-shadow: 0 0 10px 1px #343a4052;

@@ -1,64 +1,66 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-4 auth-card">
-        <h3 class="site-name">
-          Question
-        </h3>
-        <hr />
-        <form @submit.prevent="signup">
-          <div class="form-group">
-            <label class="label-text">Email</label>
-            <input
-              v-model="user.email"
-              type="email"
-              class="form-control input-text"
-              placeholder="Email address"
-              autocomplete="off"
-              required
-            />
+      <div class="col-sm-4">
+        <div class="auth-card">
+          <h3 class="site-name">
+            Question
+          </h3>
+          <hr />
+          <form @submit.prevent="signup">
+            <div class="form-group">
+              <label class="label-text">Email</label>
+              <input
+                v-model="user.email"
+                type="email"
+                class="form-control input-text"
+                placeholder="Email address"
+                autocomplete="off"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="label-text">Username</label>
+              <input
+                v-model="user.username"
+                type="text"
+                class="form-control input-text"
+                placeholder="Username"
+                autocomplete="off"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="label-text">Password</label>
+              <input
+                v-model="user.password"
+                type="password"
+                class="form-control input-text"
+                placeholder="Password"
+                autocomplete="off"
+                required
+              />
+            </div>
+            <div class="text-center">
+              <button
+                type="submit"
+                class="btn btn-block btn-success login-button ld-ext-right"
+                :class="{ running: loading }"
+              >
+                Sign Up
+                <div class="ld ld-ring ld-spin"></div>
+              </button>
+              <a href="#" @click.prevent="goLoginComponent" class="text-muted"
+                >I already have an account</a
+              >
+            </div>
+          </form>
+          <div v-if="errorMessage" class="error-message">
+            {{ errorMessage }}
           </div>
-          <div class="form-group">
-            <label class="label-text">Username</label>
-            <input
-              v-model="user.username"
-              type="text"
-              class="form-control input-text"
-              placeholder="Username"
-              autocomplete="off"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label class="label-text">Password</label>
-            <input
-              v-model="user.password"
-              type="password"
-              class="form-control input-text"
-              placeholder="Password"
-              autocomplete="off"
-              required
-            />
-          </div>
-          <div class="text-center">
-            <button
-              type="submit"
-              class="btn btn-block btn-success login-button ld-ext-right"
-              :class="{ running: loading }"
-            >
-              Sign Up
-              <div class="ld ld-ring ld-spin"></div>
-            </button>
-            <a href="#" @click.prevent="goLoginComponent" class="text-muted"
-              >I already have an account</a
-            >
-          </div>
-        </form>
-        <div v-if="errorMessage" class="error-message">
-          {{ errorMessage }}
         </div>
       </div>
-      <div class="col-8 align-self-center text-center">
+      <div class="col-sm-8 align-self-center text-center">
         <h1 class="text-success signup-text-font">
           Join Now!
         </h1>
@@ -117,6 +119,7 @@ export default {
   box-shadow: 0 0 10px 1px #343a4052;
   border-radius: 15px;
   padding: 1rem !important;
+  margin-top: 1rem;
   border: 1px solid #dee2e6 !important;
 }
 
@@ -153,7 +156,7 @@ export default {
 
 .signup-text-font {
   font-family: signup-text-font;
-  font-size: 200px;
+  font-size: 195px;
 }
 
 @font-face {

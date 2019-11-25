@@ -1,7 +1,14 @@
 <template>
-  <div>Profile</div>
+  <div class="container">
+    <app-profile-cover></app-profile-cover>
+  </div>
 </template>
 <script>
-export default {};
+import ProfileCover from '../ProfileCover/ProfileCover';
+export default {
+  components: {
+    appProfileCover: ProfileCover
+  }
+};
 </script>
 <style scoped></style>
