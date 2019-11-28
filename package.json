@@ -8,11 +8,15 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "ant-design-vue": "^1.4.8",
     "axios": "^0.19.0",
+    "babel-plugin-import": "^1.13.0",
     "bootstrap": "^4.3.1",
     "core-js": "^3.3.2",
     "jquery": "^3.4.1",
     "ldbutton": "^1.0.2",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
     "popper.js": "^1.16.0",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3",
