@@ -11,7 +11,8 @@ import {
   Checkbox,
   Row,
   Col,
-  Tooltip
+  Tooltip,
+  Alert
 } from 'ant-design-vue';
 
 Vue.prototype.$form = Form;
@@ -26,6 +27,7 @@ Vue.use(Checkbox);
 Vue.use(Row);
 Vue.use(Col);
 Vue.use(Tooltip);
+Vue.use(Alert);
 
 new Vue({
   router,

@@ -1,29 +1,33 @@
 <template>
-  <a-row type="flex" justify="center" style="height: 100vh;" align="middle">
+  <a-row type="flex" justify="space-around" style="height: 100vh;" align="middle">
     <a-col>
       <a-card
         hoverable
-        style="width: 40vh; text-align: center"
+        class="card"
         title="Question"
-        class=""
+        headStyle="font-family: site-name-font; font-size:50px;"
       >
         <a-form
           id="components-form-demo-normal-login"
           :form="form"
           class="login-form"
-          @submit="handleSubmit"
+          @submit.prevent="handleSubmit"
         >
           <a-form-item>
             <a-input
               v-decorator="[
-                'userName',
+                'email',
                 {
                   rules: [
-                    { required: true, message: 'Please input your username!' }
+                    {
+                      type: 'email',
+                      message: 'The input is not valid E-mail!'
+                    },
+                    { required: true, message: 'Please input your email!' }
                   ]
                 }
               ]"
-              placeholder="Username"
+              placeholder="Email"
             >
               <a-icon
                 slot="prefix"
@@ -57,6 +61,7 @@
               type="primary"
               html-type="submit"
               class="login-form-button"
+              :loading="loading"
             >
               Log in
             </a-button>
@@ -66,46 +71,77 @@
             </a>
           </a-form-item>
         </a-form>
+        <transition v-if="errorMessage">
+          <a-alert
+            :message="errorMessage"
+            type="error"
+            banner
+          />
+        </transition>
       </a-card>
     </a-col>
   </a-row>
 </template>
 
 <script>
+import api from '../../services/index';
+import tools from '../../tools/index';
+
 export default {
+  data() {
+    return {
+      errorMessage: null,
+      loading: false
+    };
+  },
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: 'normal_login' });
   },
   methods: {
-    handleSubmit(e) {
-      e.preventDefault();
+    handleSubmit() {
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log('Received values of form: ', values);
+          this.loading = true;
+          this.errorMessage = null;
+          api()
+            .post('/user/login', {
+              email: values.email,
+              password: values.password
+            })
+            .then(result => {
+              if (result.data) {
+                tools.cookie.set('access_token', result.data.token);
+                this.$store.commit('setToken', result.data.token);
+                // this.$router.push({ name: 'Profile' });
+              } else {
+                this.errorMessage = result.response.data.message;
+              }
+              this.loading = false;
+            });
         }
       });
     },
     goSignupComponent() {
       this.$store.commit('setActiveComponent', 'app-signup');
-    },
+    }
   }
 };
 </script>
 
 <style scoped>
-.login-form {
-  max-width: 300px;
-}
-.login-form-forgot {
-  float: right;
-}
 .login-form-button {
   width: 100%;
 }
-.vertical-center {
-  min-height: 100%;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
+.ant-card-hoverable:hover {
+  box-shadow: 0 2px 8px rgba(0, 20, 0, 0.3);
+}
+.ant-card-hoverable {
+    cursor: default;
+}
+.card {
+  width: 350px;
+  text-align: center;
+  padding: 1.5rem;
+  border: 1px solid #1da57a;
 }
 </style>

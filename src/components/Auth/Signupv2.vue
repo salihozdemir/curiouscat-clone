@@ -1,12 +1,8 @@
 <template>
   <a-row type="flex" justify="center" style="height: 100vh;" align="middle">
     <a-col>
-      <a-card
-        hoverable
-        style="width: 60vh; text-align: center"
-        title="Question"
-      >
-        <a-form :form="form" @submit="handleSubmit">
+      <a-card hoverable class="card" headStyle="font-family: site-name-font; font-size:50px;" title="Question">
+        <a-form :form="form" @submit.prevent="handleSubmit">
           <a-form-item v-bind="formItemLayout" label="E-mail">
             <a-input
               v-decorator="[
@@ -67,45 +63,51 @@
           </a-form-item>
           <a-form-item v-bind="formItemLayout">
             <span slot="label">
-              Nickname&nbsp;
+              Username&nbsp;
               <a-tooltip title="What do you want others to call you?">
                 <a-icon type="question-circle-o" />
               </a-tooltip>
             </span>
             <a-input
               v-decorator="[
-                'nickname',
+                'username',
                 {
                   rules: [
                     {
                       required: true,
-                      message: 'Please input your nickname!',
-                      whitespace: true
+                      message: 'Please input your username!'
                     }
                   ]
                 }
               ]"
             />
           </a-form-item>
+          <a-form-item v-bind="tailFormItemLayout"></a-form-item>
           <a-form-item v-bind="tailFormItemLayout">
-
-          </a-form-item>
-          <a-form-item v-bind="tailFormItemLayout">
-            <a-button type="primary" html-type="submit" class="signup-form-button">
-              Register
-            </a-button>
-            Or
-            <a href="" @click.prevent="goLoginComponent">
-              register now!
-            </a>
+            <a-button
+              type="primary"
+              html-type="submit"
+              :loading="loading"
+              class="signup-form-button"
+            >Register</a-button>
+            <a href @click.prevent="goLoginComponent">I already have an account</a>
           </a-form-item>
         </a-form>
+        <transition v-if="errorMessage">
+           <a-alert
+            :message="errorMessage"
+            type="error"
+            banner
+          />
+        </transition>
       </a-card>
     </a-col>
   </a-row>
 </template>
 
 <script>
+import api from '../../services/index';
+import tools from '../../tools/index';
 export default {
   data() {
     return {
@@ -123,26 +125,44 @@ export default {
       tailFormItemLayout: {
         wrapperCol: {
           xs: {
-            span: 24,
+            span: 6,
             offset: 0
           },
           sm: {
-            span: 16,
-            offset: 8
+            span: 12,
+            offset: 6
           }
         }
-      }
+      },
+      errorMessage: null,
+      loading: false
     };
   },
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: 'register' });
   },
   methods: {
-    handleSubmit(e) {
-      e.preventDefault();
+    handleSubmit() {
+      this.errorMessage = null;
+      this.loading = true;
       this.form.validateFieldsAndScroll((err, values) => {
+        console.log(values);
         if (!err) {
-          console.log('Received values of form: ', values);
+          api()
+            .post('/user/signup', {
+              email: values.email,
+              username: values.username,
+              password: values.password
+            })
+            .then(result => {
+              if (result.data) {
+                tools.cookie.set('access_token', result.data.token);
+                // this.$router.push({ name: 'Profile' });
+              } else {
+                this.errorMessage = result.response.data.message;
+              }
+              this.loading = false;
+            });
         }
       });
     },
@@ -173,6 +193,22 @@ export default {
 </script>
 <style scoped>
 .signup-form-button {
-    width: 100%;
+  width: 100%;
+}
+.ant-card-hoverable {
+  cursor: default;
+}
+.ant-card-hoverable:hover {
+  box-shadow: 0 2px 8px rgba(0, 20, 0, 0.3);
+}
+.card {
+  width: 70vh;
+  text-align: center;
+  padding: 1.5rem;
+  border: 1px solid #1da57a;
+}
+@font-face {
+  font-family: site-name-font;
+  src: url('../../assets/font/bakeapple.otf');
 }
 </style>
