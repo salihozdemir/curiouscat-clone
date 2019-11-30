@@ -2,14 +2,30 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css';
+import {
+  Card,
+  Form,
+  Input,
+  Icon,
+  Button,
+  Checkbox,
+  Row,
+  Col,
+  Tooltip
+} from 'ant-design-vue';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap';
-
+Vue.prototype.$form = Form;
 Vue.config.productionTip = false;
-Vue.use(Antd);
+
+Vue.use(Card);
+Vue.use(Form);
+Vue.use(Input);
+Vue.use(Icon);
+Vue.use(Button);
+Vue.use(Checkbox);
+Vue.use(Row);
+Vue.use(Col);
+Vue.use(Tooltip);
 
 new Vue({
   router,
