@@ -1,155 +1,130 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="auth-card">
-          <h3 class="site-name">
-            Question
-          </h3>
-          <hr />
-          <form @submit.prevent="login">
-            <div class="form-group">
-              <label class="label-text">Email</label>
-              <input
-                v-model="user.email"
-                type="email"
-                class="form-control input-text"
-                placeholder="Email address"
-                autocomplete="off"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label class="label-text">Password</label>
-              <input
-                v-model="user.password"
-                type="password"
-                class="form-control input-text"
-                placeholder="Password"
-                autocomplete="off"
-                required
-              />
-            </div>
-            <div class="text-center">
-              <button
-                type="submit"
-                class="btn btn-block btn-primary login-button ld-ext-right"
-                :class="{ running: loading }"
-              >
-                Login
-                <div class="ld ld-ring ld-spin"></div>
-              </button>
-              <a href="#" @click.prevent="goSignupComponent" class="text-muted"
-                >I don't have an account</a
-              >
-            </div>
-          </form>
-          <div v-if="errorMessage" class="error-message">
-            {{ errorMessage }}
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-8 text-center align-self-center">
-        <h1 class="text-primary login-text-font">
-          Login
-        </h1>
-      </div>
-    </div>
-  </div>
+  <a-row type="flex" justify="space-around" style="height: 100vh;" align="middle">
+    <a-col>
+      <a-card
+        hoverable
+        class="card"
+        title="Question"
+        headStyle="font-family: site-name-font; font-size:50px;"
+      >
+        <a-form
+          id="components-form-demo-normal-login"
+          :form="form"
+          class="login-form"
+          @submit.prevent="handleSubmit"
+        >
+          <a-form-item>
+            <a-input
+              v-decorator="[
+                'email',
+                {
+                  rules: [
+                    {
+                      type: 'email',
+                      message: 'The input is not valid E-mail!'
+                    },
+                    { required: true, message: 'Please input your email!' }
+                  ]
+                }
+              ]"
+              placeholder="Email"
+            >
+              <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
+            </a-input>
+          </a-form-item>
+          <a-form-item>
+            <a-input
+              v-decorator="[
+                'password',
+                {
+                  rules: [
+                    { required: true, message: 'Please input your Password!' }
+                  ]
+                }
+              ]"
+              type="password"
+              placeholder="Password"
+            >
+              <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
+            </a-input>
+          </a-form-item>
+          <a-form-item>
+            <a-button
+              type="primary"
+              html-type="submit"
+              class="login-form-button"
+              :loading="loading"
+            >Log in</a-button>Or
+            <a href @click.prevent="goSignupComponent">register now!</a>
+          </a-form-item>
+        </a-form>
+        <transition v-if="errorMessage">
+          <a-alert :message="errorMessage" type="error" banner />
+        </transition>
+      </a-card>
+    </a-col>
+  </a-row>
 </template>
+
 <script>
 import api from '../../services/index';
 import tools from '../../tools/index';
-//TODO: Loading componenti kullanıcı giriş yaptığında çalışsın.
-// Button basıldığında spinner gözükmesi için bu kütüphane kullanıldı.
-import 'ldbutton/dist/ldbtn.min.css';
 
 export default {
   data() {
     return {
-      user: {
-        email: null,
-        password: null
-      },
       errorMessage: null,
       loading: false
     };
   },
+  beforeCreate() {
+    this.form = this.$form.createForm(this, { name: 'normal_login' });
+  },
   methods: {
-    //Login component ile Signup componentleri arasında geçiş yapabilmeyi sağlar.
+    handleSubmit() {
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          this.loading = true;
+          this.errorMessage = null;
+          api()
+            .post('/user/login', {
+              email: values.email,
+              password: values.password
+            })
+            .then(result => {
+              if (result.data) {
+                tools.cookie.set('access_token', result.data.token);
+                this.$store.commit('setToken', result.data.token);
+                // this.$router.push({ name: 'Profile' });
+              } else {
+                this.errorMessage = result.response.data.message;
+              }
+              this.loading = false;
+            });
+        }
+      });
+    },
     goSignupComponent() {
       this.$store.commit('setActiveComponent', 'app-signup');
-    },
-    async login() {
-      //Ard arda login tuşuna tıklandığında hatanın sıfırdan gelmesini sağlar.
-      this.errorMessage = null;
-      this.loading = true;
-      const userToken = await api().post('/user/login', {
-        email: this.user.email,
-        password: this.user.password
-      });
-      //Servisten dönen cevap 200 ise cookies'e tokenı yaz. Değilse hata mesajını tut ve ekranda göster.
-      if (userToken.data) {
-        tools.cookie.set('access_token', userToken.data.token);
-        this.$store.commit('setToken', userToken.data.token);
-        this.$router.push({ name: 'Profile' });
-      } else {
-        this.errorMessage = userToken.response.data.message;
-      }
-      this.loading = false;
     }
   }
 };
 </script>
+
 <style scoped>
-.auth-card {
-  background-color: #eaecf2;
-  box-shadow: 0 0 10px 1px #343a4052;
-  border-radius: 15px;
-  padding: 1rem !important;
-  border: 1px solid #dee2e6 !important;
+.login-form-button {
+  width: 100%;
 }
-
-.input-text {
-  border-radius: 10px !important;
+.ant-card-hoverable:hover {
+  box-shadow: 0 2px 8px rgba(0, 20, 0, 0.3);
 }
-
-.label-text {
-  margin-left: 5px;
+.ant-card-hoverable {
+  cursor: default;
 }
-
-.login-button {
-  border-radius: 10px;
-  margin-bottom: 0.5rem !important;
-}
-
-.error-message {
-  color: #dc3545;
+.card {
+  width: 350px;
   text-align: center;
-  margin-top: 1rem;
-  font-family: cursive;
-  font-weight: bolder;
-}
-
-@font-face {
-  font-family: login-text-font;
-  src: url('../../assets/font/coaster-quake.otf');
-}
-
-.login-text-font {
-  font-family: login-text-font;
-  font-size: 200px;
-}
-
-@font-face {
-  font-family: site-name;
-  src: url('../../assets/font/bakeapple.otf');
-}
-
-.site-name {
-  font-family: site-name;
-  color: #727273;
-  font-size: 55px;
-  text-align: center !important;
+  padding: 1.5rem;
+  border: 1px solid #1da57a;
 }
 </style>

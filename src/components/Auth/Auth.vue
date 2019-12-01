@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-background vertical-center">
+  <div class="auth-background">
     <transition name="slideContainer" mode="out-in" appear>
       <component :is="getActiveComponent" key="authComponent"></component>
     </transition>
@@ -9,24 +9,18 @@
 import Login from '../Auth/Login';
 import Signup from '../Auth/Signup';
 import { mapGetters } from 'vuex';
-
 export default {
   components: {
     appLogin: Login,
     appSignup: Signup
   },
-  data() {
-    return {};
-  },
   computed: {
     ...mapGetters(['getActiveComponent'])
-  },
-  //TODO: Kullanıcı email veya username ile giriş yapabilsin.
-  methods: {}
+  }
 };
 </script>
-
 <style scoped>
+
 .slideContainer-enter-active {
   animation: slide-in 0.3s ease-in-out forwards;
 }
@@ -40,13 +34,6 @@ export default {
   background-color: whitesmoke !important;
   min-height: 100vh;
   height: auto;
-}
-
-.vertical-center {
-  min-height: 100%;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
 }
 
 @keyframes slide-in {
