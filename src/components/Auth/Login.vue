@@ -95,7 +95,7 @@ export default {
               if (result.data) {
                 tools.cookie.set('access_token', result.data.token);
                 this.$store.commit('setToken', result.data.token);
-                // this.$router.push({ name: 'Profile' });
+                this.$router.push({ name: 'Profile' });
               } else {
                 this.errorMessage = result.response.data.message;
               }

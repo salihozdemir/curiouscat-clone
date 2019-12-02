@@ -1,18 +1,21 @@
 <template>
   <div id="app">
-    <app-header v-if="isAuthenticated"></app-header>
-    <router-view />
+    <app-layout v-if="isAuthenticated">
+      <router-view/>
+    </app-layout>
+    <router-view v-else></router-view>
+    
   </div>
 </template>
 
 <script>
-import Header from './components/Header/Header';
+import Layout from './components/Layout/Layout';
 import { mapGetters } from 'vuex';
 import tools from './tools/index.js';
 
 export default {
   components: {
-    appHeader: Header
+    appLayout: Layout
   },
   computed: {
     ...mapGetters(['getToken']),

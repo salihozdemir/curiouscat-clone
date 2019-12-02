@@ -12,7 +12,11 @@ import {
   Row,
   Col,
   Tooltip,
-  Alert
+  Alert,
+  Layout,
+  Menu,
+  Breadcrumb
+  
 } from 'ant-design-vue';
 
 Vue.prototype.$form = Form;
@@ -28,6 +32,10 @@ Vue.use(Row);
 Vue.use(Col);
 Vue.use(Tooltip);
 Vue.use(Alert);
+Vue.use(Layout);
+Vue.use(Menu);
+Vue.use(Breadcrumb);
+
 
 new Vue({
   router,
