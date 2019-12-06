@@ -15,7 +15,8 @@ import {
   Alert,
   Layout,
   Menu,
-  Breadcrumb
+  Breadcrumb,
+  Modal
   
 } from 'ant-design-vue';
 
@@ -35,6 +36,7 @@ Vue.use(Alert);
 Vue.use(Layout);
 Vue.use(Menu);
 Vue.use(Breadcrumb);
+Vue.use(Modal);
 
 
 new Vue({
