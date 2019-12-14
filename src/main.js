@@ -16,7 +16,10 @@ import {
   Layout,
   Menu,
   Breadcrumb,
-  Modal
+  Modal,
+  List,
+  Comment,
+  Avatar,
   
 } from 'ant-design-vue';
 
@@ -37,6 +40,9 @@ Vue.use(Layout);
 Vue.use(Menu);
 Vue.use(Breadcrumb);
 Vue.use(Modal);
+Vue.use(List);
+Vue.use(Comment);
+Vue.use(Avatar);
 
 
 new Vue({

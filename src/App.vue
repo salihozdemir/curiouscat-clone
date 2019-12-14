@@ -3,15 +3,14 @@
     <app-layout v-if="isAuthenticated">
       <router-view/>
     </app-layout>
-    <router-view v-else></router-view>
-    
+    <router-view v-else></router-view>   
   </div>
 </template>
 
 <script>
-import Layout from './components/Layout/Layout';
+import Layout from '@/components/Layout';
 import { mapGetters } from 'vuex';
-import tools from './tools/index.js';
+import common from '@/common/index.js';
 
 export default {
   components: {
@@ -24,7 +23,7 @@ export default {
     }
   },
   created() {
-    this.$store.commit('setToken', tools.cookie.get('access_token'));
+    this.$store.commit('setToken', common.cookie.get('access_token'));
   }
 };
 </script>

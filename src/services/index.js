@@ -1,10 +1,10 @@
 import axios from 'axios';
-import tools from '../tools/index';
+import common from '@/common/index';
 
 const instance = axios.create();
 
 instance.interceptors.request.use(config => {
-  const token = tools.cookie.get('access_token');
+  const token = common.cookie.get('access_token');
   config.baseURL = 'https://question-node-api.herokuapp.com';
   config.headers.authorization = `Bearer ${token}`;
   return config;

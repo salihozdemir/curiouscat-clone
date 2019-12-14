@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import tools from '@/tools';
+import common from '@/common';
 
 Vue.use(VueRouter);
 
@@ -9,12 +9,12 @@ const routes = [
   {
     path: '/Auth',
     name: 'Auth',
-    component: () => import('../components/Auth/Auth.vue')
+    component: () => import('@/views/Auth.vue')
   },
   {
     path: '/Profile',
     name: 'Profile',
-    component: () => import('../components/Profile/Profile.vue')
+    component: () => import('@/views/Profile.vue')
   }
 ];
 
@@ -28,12 +28,12 @@ export default router;
 
 router.afterEach(to => {
   if (to.name !== 'Auth') {
-    if (!tools.cookie.get('access_token')) {
+    if (!common.cookie.get('access_token')) {
       router.push({ name: 'Auth' });
     }
   }
   if (to.name === 'Auth') {
-    if (tools.cookie.get('access_token')) {
+    if (common.cookie.get('access_token')) {
       router.push({ name: 'Profile' });
     }
   }
