@@ -20,7 +20,8 @@ import {
   List,
   Comment,
   Avatar,
-  
+  Switch
+
 } from 'ant-design-vue';
 
 Vue.prototype.$form = Form;
@@ -43,6 +44,7 @@ Vue.use(Modal);
 Vue.use(List);
 Vue.use(Comment);
 Vue.use(Avatar);
+Vue.use(Switch);
 
 
 new Vue({
