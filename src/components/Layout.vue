@@ -8,7 +8,7 @@
       theme="light"
     >
       <div class="logo">Question</div>
-      <a-menu theme="light" mode="inline" :defaultSelectedKeys="['4']">
+      <a-menu theme="light" mode="inline" :defaultSelectedKeys="['1']">
         <a-menu-item key="1">
           <router-link to="/Home" tag="a">
             <a-icon type="home" />
@@ -43,7 +43,11 @@
     </a-layout-sider>
     <a-layout>
       <a-layout-content :style="{ margin: '24px 16px 0' }">
-          <slot></slot>
+        <a-row type="flex" justify="center">
+          <a-col :xs="24" :sm="20" :md="18" >
+            <slot></slot>
+          </a-col>
+        </a-row>
       </a-layout-content>
     </a-layout>
   </a-layout>
