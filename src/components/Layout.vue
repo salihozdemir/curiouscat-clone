@@ -34,7 +34,7 @@
           </router-link>
         </a-menu-item>
         <a-menu-item key="5">
-          <router-link to="/Home" tag="a">
+          <router-link to="/Notification" tag="a">
             <a-icon type="notification" />
             <span class="nav-text">Notification</span>
           </router-link>

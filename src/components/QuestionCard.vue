@@ -30,36 +30,6 @@
         </a-comment>
       </a-comment>
     </div>
-    <div class="card">
-      <a-comment>
-        <a slot="author">Han Solo</a>
-        <a-avatar
-          slot="avatar"
-          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          alt="Han Solo"
-          size="large"
-          style="text-align: -webkit-center;"
-        ></a-avatar>
-        <p slot="content">
-          We supply a series of design principles, practical patterns and high quality design resources
-          (Sketch and Axure).
-        </p>
-        <a-comment>
-          <a slot="author">Han Solo</a>
-          <a-avatar
-            slot="avatar"
-            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            alt="Han Solo"
-            size="large"
-            style="text-align: -webkit-center;"
-          />
-          <p slot="content">
-            We supply a series of design principles, practical patterns and high quality design
-            resources (Sketch and Axure).
-          </p>
-        </a-comment>
-      </a-comment>
-    </div>
   </div>
 </template>
 <script>
