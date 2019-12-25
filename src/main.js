@@ -25,6 +25,7 @@ import {
 } from 'ant-design-vue';
 
 Vue.prototype.$form = Form;
+Vue.prototype.$confirm = Modal.confirm;
 Vue.config.productionTip = false;
 
 Vue.use(Card);

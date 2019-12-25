@@ -34,4 +34,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.ant-comment-actions > li {
+  float: right;
+}
 </style>
