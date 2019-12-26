@@ -22,7 +22,7 @@ const routes = [
     component: () => import('@/views/Inbox.vue')
   },
   {
-    path: '/Home',
+    path: '/',
     name: 'Home',
     component: () => import('@/views/Home.vue')
   },
@@ -30,6 +30,11 @@ const routes = [
     path: '/Notification',
     name: 'Notification',
     component: () => import('@/views/Notification.vue')
+  },
+  {
+    path: '/Discover',
+    name: 'Discover',
+    component: () => import('@/views/Discover.vue')
   }
 ];
 

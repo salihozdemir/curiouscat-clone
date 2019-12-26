@@ -10,7 +10,7 @@
       <div class="logo">Question</div>
       <a-menu theme="light" mode="inline" :defaultSelectedKeys="['1']">
         <a-menu-item key="1">
-          <router-link to="/Home" tag="a">
+          <router-link to="/" tag="a">
             <a-icon type="home" />
             <span class="nav-text">Home</span>
           </router-link>

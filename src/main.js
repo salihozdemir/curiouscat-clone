@@ -20,7 +20,8 @@ import {
   List,
   Comment,
   Avatar,
-  Switch
+  Switch,
+  AutoComplete
 
 } from 'ant-design-vue';
 
@@ -46,6 +47,7 @@ Vue.use(List);
 Vue.use(Comment);
 Vue.use(Avatar);
 Vue.use(Switch);
+Vue.use(AutoComplete);
 
 
 new Vue({
