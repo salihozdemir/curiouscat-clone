@@ -1,18 +1,20 @@
 <template>
   <div id="app">
-    <app-header v-if="isAuthenticated"></app-header>
-    <router-view />
+    <app-layout v-if="isAuthenticated">
+      <router-view/>
+    </app-layout>
+    <router-view v-else></router-view>   
   </div>
 </template>
 
 <script>
-import Header from './components/Header/Header';
+import Layout from '@/components/Layout';
 import { mapGetters } from 'vuex';
-import tools from './tools/index.js';
+import common from '@/common/index.js';
 
 export default {
   components: {
-    appHeader: Header
+    appLayout: Layout
   },
   computed: {
     ...mapGetters(['getToken']),
@@ -21,7 +23,7 @@ export default {
     }
   },
   created() {
-    this.$store.commit('setToken', tools.cookie.get('access_token'));
+    this.$store.commit('setToken', common.cookie.get('access_token'));
   }
 };
 </script>
@@ -31,5 +33,9 @@ export default {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.ant-comment-actions > li {
+  float: right;
 }
 </style>
