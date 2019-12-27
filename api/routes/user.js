@@ -9,6 +9,6 @@ router.post("/login", UserController.login);
 router.post("/signup", UserController.signup);
 
 //TODO: Kullanıcı adıyla bilgileri çağırma
-router.get("/:username", );
+router.get("/:username", UserController.get_user_by_username);
 
 module.exports = router;
