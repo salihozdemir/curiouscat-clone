@@ -38,4 +38,8 @@ export default {
 .ant-comment-actions > li {
   float: right;
 }
+
+.border-bottom-0 {
+  border-bottom: none !important;
+}
 </style>
