@@ -3,14 +3,14 @@
     <a-list>
       <div class="border-bottom-0">
         <div slot="header" class="border-bottom-0">
-          <a-auto-complete autofocus placeholder="Username" style="width: 100%;">
+          <a-auto-complete auto-focus placeholder="Username" style="width: 100%;">
             <a-input>
               <a-icon slot="suffix" type="search" />
             </a-input>
           </a-auto-complete>
         </div>
       </div>
-      <a-list-item class="border-bottom-0">
+      <a-list-item style="margin-top: 5px;" class="border-bottom-0">
         <a-list-item-meta description="Progresser AFX">
           <a slot="title" href="https://www.antdv.com/">Salih</a>
           <a-avatar

@@ -6,8 +6,9 @@
       <a-row type="flex" justify="center" class="text-center">
         <a-col :span="4">
           <div class="avatar">
-            <img src="../assets/img/human-photos/person-1.jpg" />
+            <img src="../assets/img/human-photos/person-1.jpg" @click="$refs.file.click()"/>
           </div>
+          <input ref="file" type="file" @change="changePP($event)" class="form-control" hidden>
         </a-col>
       </a-row>
       <a-row type="flex" justify="center" class="text-center">
@@ -81,6 +82,11 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    changePP(e) {
+      console.log(e);
+    }
   }
 };
 </script>
