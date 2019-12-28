@@ -18,12 +18,24 @@ import ProfileCover from '@/components/ProfileCover';
 import AskMessage from '@/components/AskMessage';
 import QuestionCard from '@/components/QuestionCard';
 import WhoToFollow from '@/components/WhoToFollow';
+import userService from '@/services/user';
 export default {
   components: {
     appProfileCover: ProfileCover,
     appAskMessage: AskMessage,
     appQuestionCard: QuestionCard,
     appWhoToFollow: WhoToFollow
+  },
+  methods: {
+    async getUserDetail() {
+      const userDetail = await userService.getUserDetail(
+        this.$route.params.username
+      );
+      console.log(userDetail);
+    }
+  },
+  created() {
+    this.getUserDetail();
   }
 };
 </script>

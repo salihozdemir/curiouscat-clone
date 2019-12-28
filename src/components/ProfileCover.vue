@@ -86,8 +86,9 @@ export default {
       ]
     };
   },
+  //TODO: Fotoğraf eklendiğinde tip kontrolü yapılcak. Ardından hatalı tip ise notification çıksın. Backend'e veri gönderilecek.
   methods: {
-    changePP(e) {
+    changePP(photo) {
       console.log(e);
     },
     logout() {

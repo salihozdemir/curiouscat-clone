@@ -1,6 +1,6 @@
 <template>
   <a-layout id="components-layout-demo-responsive" style="min-height: 100vh">
-    <a-layout-header class="header">
+    <a-layout-header class="custom-header">
       <a-menu theme="light" mode="horizontal" :defaultSelectedKeys="['2']">
         <a-menu-item key="1">
           <router-link to="/" tag="a">
@@ -64,7 +64,7 @@ export default {
 body {
   background-color: whitesmoke;
 }
-.header {
+.custom-header {
   position: fixed;
   z-index: 1;
   width: 100%;

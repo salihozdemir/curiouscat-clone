@@ -1,11 +1,7 @@
 <template>
   <a-row type="flex" justify="space-around" style="height: 100vh;" align="middle">
     <a-col>
-      <a-card
-        hoverable
-        class="card"
-        title="Question"
-      >
+      <a-card hoverable class="card" title="Question">
         <a-form
           id="components-form-demo-normal-login"
           :form="form"
@@ -86,7 +82,7 @@ export default {
         if (!err) {
           this.loading = true;
           this.errorMessage = null;
-          api()
+          const login = api()
             .post('/user/login', {
               email: values.email,
               password: values.password
@@ -94,7 +90,7 @@ export default {
             .then(result => {
               if (result.data) {
                 common.cookie.set('access_token', result.data.token);
-                const decoded = jwt.verify(result.data.token, "que-ano");
+                const decoded = jwt.verify(result.data.token, 'que-ano');
                 console.log(decoded);
                 this.$store.commit('setloginUserName', decoded.username);
                 this.$store.commit('setToken', result.data.token);

@@ -47,5 +47,10 @@ export default {
   .nav-text {
     display: none;
   }
+  .ant-menu-item .anticon,
+  .ant-menu-submenu-title .anticon {
+    margin-right: unset;
+    font-size: 17px;
+  }
 }
 </style>
