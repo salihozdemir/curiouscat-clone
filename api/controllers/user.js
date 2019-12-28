@@ -137,3 +137,20 @@ exports.get_user_by_username = (req, res, next) => {
       });
     });
 };
+
+exports.upload_profile_photo = (req, res, next) => {
+  const id = req.body.id;
+  User.findOneAndUpdate({ _id : id }, { profileImg: req.file.filename })
+    .exec()
+    .then(result => {
+      res.status(200).json({
+        message: "PP updated",
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+};

@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
     },
     password: {type: String, required: true},
     username: {type: String, required: true, unique:true},
-    profileImg: {type: String}
+    profileImg: {type: String, default: 'default-pp.png'}
 });
 
 module.exports = mongoose.model('User', userSchema);
