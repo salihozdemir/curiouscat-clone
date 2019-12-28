@@ -35,7 +35,6 @@ exports.login = (req, res, next) => {
           return res.status(200).json({
             message: 'Auth successful',
             token,
-            username: user.username,
             success: true
           });
         }
@@ -126,10 +125,9 @@ exports.get_user_by_username = (req, res, next) => {
         });
       }
       res.status(200).json({
-        user: {
-          username: user.username,
-          success: true
-        }
+        username: user.username,
+        profileImg: user.profileImg,
+        success: true
       });
     })
     .catch(err => {
