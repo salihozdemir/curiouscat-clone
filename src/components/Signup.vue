@@ -1,7 +1,7 @@
 <template>
   <a-row type="flex" justify="center" style="height: 100vh;" align="middle">
     <a-col>
-      <a-card hoverable class="card" headStyle="font-family: site-name-font; font-size:50px;" title="Question">
+      <a-card hoverable class="card" title="Question">
         <a-form :form="form" @submit.prevent="handleSubmit">
           <a-form-item v-bind="formItemLayout" label="E-mail">
             <a-input

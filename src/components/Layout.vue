@@ -1,14 +1,7 @@
 <template>
   <a-layout id="components-layout-demo-responsive" style="min-height: 100vh">
-    <a-layout-sider
-      breakpoint="xs"
-      collapsedWidth="0"
-      @collapse="onCollapse"
-      @breakpoint="onBreakpoint"
-      theme="light"
-    >
-      <div class="logo">Question</div>
-      <a-menu theme="light" mode="inline" :defaultSelectedKeys="['1']">
+    <a-layout-header class="header">
+      <a-menu theme="light" mode="horizontal" :defaultSelectedKeys="['2']">
         <a-menu-item key="1">
           <router-link to="/" tag="a">
             <a-icon type="home" />
@@ -22,7 +15,7 @@
           </router-link>
         </a-menu-item>
         <a-menu-item key="3">
-          <router-link to="/Profile" tag="a">
+          <router-link :to="'/Profile/' + this.loginUserName" tag="a">
             <a-icon type="profile" />
             <span class="nav-text">Profile</span>
           </router-link>
@@ -40,11 +33,11 @@
           </router-link>
         </a-menu-item>
       </a-menu>
-    </a-layout-sider>
+    </a-layout-header>
     <a-layout>
-      <a-layout-content :style="{ margin: '24px 16px 0' }">
+      <a-layout-content :style="{ padding: '0 50px', marginTop: '50px' }">
         <a-row type="flex" justify="center">
-          <a-col :xs="24" :sm="20" :md="18" >
+          <a-col :xs="24" :sm="20" :md="18">
             <slot></slot>
           </a-col>
         </a-row>
@@ -53,19 +46,15 @@
   </a-layout>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
-  methods: {
-    onCollapse(collapsed, type) {
-      console.log(collapsed, type);
-    },
-    onBreakpoint(broken) {
-      console.log(broken);
-    }
-  }
+  computed: {
+    ...mapGetters(['loginUserName'])
+  },
 };
 </script>
 
-<style>
+<style scope>
 #components-layout-demo-responsive .logo {
   height: 32px;
   background: rgba(255, 255, 255, 0.2);
@@ -74,5 +63,13 @@ export default {
 
 body {
   background-color: whitesmoke;
+}
+.header {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  background: none;
+  padding: unset;
+  text-align: center;
 }
 </style>

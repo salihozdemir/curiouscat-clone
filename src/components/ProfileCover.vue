@@ -6,10 +6,11 @@
       <a-row type="flex" justify="center" class="text-center">
         <a-col :span="4">
           <div class="avatar">
-            <img src="../assets/img/human-photos/person-1.jpg" @click="$refs.file.click()"/>
+            <img src="../assets/img/human-photos/person-1.jpg" @click="$refs.file.click()" />
           </div>
-          <input ref="file" type="file" @change="changePP($event)" class="form-control" hidden>
+          <input ref="file" type="file" @change="changePP($event)" class="form-control" hidden />
         </a-col>
+        <a-button icon="poweroff" type="danger" shape="circle" class="logout" @click="logout"></a-button>
       </a-row>
       <a-row type="flex" justify="center" class="text-center">
         <a-col :span="4">
@@ -62,6 +63,8 @@
   </a-row>
 </template>
 <script>
+import common from '@/common';
+
 export default {
   data() {
     return {
@@ -86,6 +89,11 @@ export default {
   methods: {
     changePP(e) {
       console.log(e);
+    },
+    logout() {
+      common.cookie.set('access_token', '', 0);
+      this.$store.commit('setToken', null);
+      this.$router.push({ name: 'Auth' });
     }
   }
 };
@@ -158,5 +166,11 @@ export default {
 .num {
   font-size: 1.75em;
   margin: 0.1em 0;
+}
+
+.logout {
+  position: absolute;
+  right: 8px;
+  top: 0;
 }
 </style>

@@ -5,13 +5,12 @@
         hoverable
         class="card"
         title="Question"
-        headStyle="font-family: site-name-font; font-size:50px;"
       >
         <a-form
           id="components-form-demo-normal-login"
           :form="form"
           class="login-form"
-          @submit.prevent="handleSubmit"
+          @submit.prevent="login"
         >
           <a-form-item>
             <a-input
@@ -69,6 +68,7 @@
 <script>
 import api from '@/services/index';
 import common from '@/common/index';
+import jwt from 'jsonwebtoken';
 
 export default {
   data() {
@@ -81,7 +81,7 @@ export default {
     this.form = this.$form.createForm(this, { name: 'normal_login' });
   },
   methods: {
-    handleSubmit() {
+    login() {
       this.form.validateFields((err, values) => {
         if (!err) {
           this.loading = true;
@@ -94,8 +94,11 @@ export default {
             .then(result => {
               if (result.data) {
                 common.cookie.set('access_token', result.data.token);
+                const decoded = jwt.verify(result.data.token, "que-ano");
+                console.log(decoded);
+                this.$store.commit('setloginUserName', decoded.username);
                 this.$store.commit('setToken', result.data.token);
-                this.$router.push({ name: 'Profile' });
+                this.$router.push({ name: 'Home' });
               } else {
                 this.errorMessage = result.response.data.message;
               }

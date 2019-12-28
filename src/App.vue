@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <app-layout v-if="isAuthenticated">
-      <router-view/>
+      <router-view />
     </app-layout>
-    <router-view v-else></router-view>   
+    <router-view v-else></router-view>
   </div>
 </template>
 
@@ -17,9 +17,9 @@ export default {
     appLayout: Layout
   },
   computed: {
-    ...mapGetters(['getToken']),
+    ...mapGetters(['token']),
     isAuthenticated() {
-      return this.getToken === '' ? false : true;
+      return !!this.token;
     }
   },
   created() {
@@ -41,5 +41,11 @@ export default {
 
 .border-bottom-0 {
   border-bottom: none !important;
+}
+
+@media screen and (max-width: 560px) {
+  .nav-text {
+    display: none;
+  }
 }
 </style>

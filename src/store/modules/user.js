@@ -5,16 +5,19 @@ Vue.use(Vuex);
 
 export default {
   state: {
-    token: null
+    token: null,
+    loginUserName: '',
   },
   getters: {
-    getToken(state) {
-      return state.token;
-    }
+    token: state => state.token,
+    loginUserName: state => state.loginUserName,
   },
   mutations: {
     setToken(state, payload) {
       state.token = payload;
+    },
+    setloginUserName(state, payload) {
+      state.loginUserName = payload;
     }
   },
   actions: {}
