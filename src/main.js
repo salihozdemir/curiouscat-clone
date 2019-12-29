@@ -22,10 +22,12 @@ import {
   Avatar,
   Switch,
   AutoComplete,
+  message,
 
 } from 'ant-design-vue';
 
 Vue.prototype.$form = Form;
+Vue.prototype.$message = message;
 Vue.prototype.$confirm = Modal.confirm;
 Vue.config.productionTip = false;
 

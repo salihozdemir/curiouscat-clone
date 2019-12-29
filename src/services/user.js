@@ -12,4 +12,15 @@ export default {
       };
     }
   },
+  async uploadProfilePhoto(payload) {
+    try {
+      const res = await api().post('/user/profileImg', payload);
+      return res.data;
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+  }
 };

@@ -7,10 +7,12 @@ export default {
   state: {
     token: null,
     loginUserName: '',
+    loginUserId : '',
   },
   getters: {
     token: state => state.token,
     loginUserName: state => state.loginUserName,
+    loginUserId: state => state.loginUserId,
   },
   mutations: {
     setToken(state, payload) {
@@ -18,6 +20,9 @@ export default {
     },
     setloginUserName(state, payload) {
       state.loginUserName = payload;
+    },
+    setLoginUserId(state, payload) {
+      state.loginUserId = payload;
     }
   },
   actions: {}

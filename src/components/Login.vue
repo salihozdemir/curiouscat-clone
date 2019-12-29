@@ -91,7 +91,7 @@ export default {
               if (result.data) {
                 common.cookie.set('access_token', result.data.token);
                 const decoded = jwt.verify(result.data.token, 'que-ano');
-                console.log(decoded);
+                this.$store.commit('setLoginUserId', decoded.userId);
                 this.$store.commit('setloginUserName', decoded.username);
                 this.$store.commit('setToken', result.data.token);
                 this.$router.push({ name: 'Home' });

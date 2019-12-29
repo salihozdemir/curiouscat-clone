@@ -26,17 +26,6 @@ export default {
     appQuestionCard: QuestionCard,
     appWhoToFollow: WhoToFollow
   },
-  methods: {
-    async getUserDetail() {
-      const userDetail = await userService.getUserDetail(
-        this.$route.params.username
-      );
-      console.log(userDetail);
-    }
-  },
-  created() {
-    this.getUserDetail();
-  }
 };
 </script>
 <style scoped></style>

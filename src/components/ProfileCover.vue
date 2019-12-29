@@ -6,7 +6,7 @@
       <a-row type="flex" justify="center" class="text-center">
         <a-col :span="4">
           <div class="avatar">
-            <img src="../assets/img/human-photos/person-1.jpg" @click="$refs.file.click()" />
+            <img :src="'https://question-node-api.herokuapp.com/' + this.userImg" @click="$refs.file.click()" />
           </div>
           <input ref="file" type="file" @change="changePP($event)" class="form-control" hidden />
         </a-col>
@@ -14,7 +14,7 @@
       </a-row>
       <a-row type="flex" justify="center" class="text-center">
         <a-col :span="4">
-          <a style="font-weight: bold;" class="usermame">Username</a>
+          <a class="usermame">{{userName}}</a>
           <a-button style="font-weight: bold;" type="primary" shape="round" icon="user-add">Follow</a-button>
         </a-col>
       </a-row>
@@ -63,8 +63,9 @@
   </a-row>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import common from '@/common';
-
+import userService from '@/services/user';
 export default {
   data() {
     return {
@@ -83,19 +84,40 @@ export default {
         {
           title: 'İbrahim Parlak'
         }
-      ]
+      ],
+      userImg: '',
+      userName: '',
     };
   },
-  //TODO: Fotoğraf eklendiğinde tip kontrolü yapılcak. Ardından hatalı tip ise notification çıksın. Backend'e veri gönderilecek.
+  computed: {
+    ...mapGetters(['loginUserId'])
+  },
   methods: {
-    changePP(photo) {
-      console.log(e);
+    async changePP(event) {
+      const pp = event.target.files[0];
+      if (pp.type === 'image/png' || pp.type === 'image/jpeg') {
+        const formData = new FormData();
+        formData.append('id', this.loginUserId);
+        formData.append('profileImg', pp, pp.name);
+        const result = await userService.uploadProfilePhoto(formData);
+        this.userImg = result.profileImg;
+      } else {
+        this.$message.error('Please upload jpeg or png file type.');
+      }
+    },
+    async getUserPhoto() {
+      const pp = await userService.getUserDetail(this.$route.params.username);
+      this.userImg = pp.profileImg;
+      this.userName = pp.username;
     },
     logout() {
       common.cookie.set('access_token', '', 0);
       this.$store.commit('setToken', null);
       this.$router.push({ name: 'Auth' });
     }
+  },
+  created() {
+    this.getUserPhoto();
   }
 };
 </script>
@@ -108,6 +130,9 @@ export default {
 .usermame {
   font-size: 1.7rem;
   color: #fff;
+  text-transform: capitalize;
+  font-weight: bold;
+  display: block;
 }
 
 .cursor-pointer {
