@@ -145,7 +145,7 @@ exports.upload_profile_photo = (req, res, next) => {
     .then(result => {
       res.status(200).json({
         message: "PP updated",
-        ppUrl: result.profileImg,
+        profileImg: req.file.filename,
       });
     })
     .catch(err => {
