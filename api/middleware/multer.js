@@ -1,10 +1,15 @@
 const multer = require("multer");
+const fs = require('fs-extra')
+
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, "./uploads/");
+  destination: async function(req, file, cb) {
+    const dir = `./uploads/${req.body.id}`;
+    await fs.removeSync(dir);
+    await fs.ensureDir(dir);
+    cb(null, dir);
   },
   filename: function(req, file, cb) {
-    cb(null, req.body.id + '.' + file.originalname.split('.').pop());
+    cb(null, Date.now() + file.originalname);
   }
 });
 
