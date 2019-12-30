@@ -16,6 +16,6 @@ router.delete("/:questionId", QuestionController.delete_question);
 router.patch("/:questionId", QuestionController.answer_a_question);
 
 //Get users user questions
-router.get("/getFollowerQuestions/:fromUserId", QuestionController.get_following_questions);
+router.get("/getFollowerQuestions", QuestionController.get_following_questions);
 
 module.exports = router;
