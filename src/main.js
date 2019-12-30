@@ -23,6 +23,7 @@ import {
   Switch,
   AutoComplete,
   message,
+  Popconfirm,
 
 } from 'ant-design-vue';
 
@@ -50,6 +51,8 @@ Vue.use(Comment);
 Vue.use(Avatar);
 Vue.use(Switch);
 Vue.use(AutoComplete);
+Vue.use(Popconfirm);
+
 
 
 new Vue({

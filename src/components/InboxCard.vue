@@ -1,18 +1,27 @@
 <template>
   <div class="card" v-if="cardVisible">
     <a-comment>
-      <a slot="author">{{getUserInfo.name}}</a>
+      <a slot="author" class="author-name">{{getUserInfo.name}}</a>
       <a-avatar
         slot="avatar"
         :src="getUserInfo.url"
         :alt="getUserInfo.name"
-        size="large"
+        :size="64"
         style="text-align: -webkit-center;"
       ></a-avatar>
       <p slot="content">{{question.questionText}}</p>
       <template slot="actions">
-        <span @click="showDeleteConfirm(question._id)" style="color: red">Sil</span>
-        <span @click="showModal" style="color: #43bcff">Reply</span>
+        <a-popconfirm
+          title="Are you sure delete this question?"
+          @confirm="deleteQuestion"
+          okText="Yes"
+          cancelText="No"
+        >
+          <span class="delete-button">
+            <a-icon type="delete" />
+          </span>
+        </a-popconfirm>
+        <span @click="showModal" class="reply-button">Reply</span>
       </template>
     </a-comment>
     <a-modal
@@ -86,19 +95,8 @@ export default {
       this.visible = false;
       this.answerText = '';
     },
-    showDeleteConfirm(questionId) {
-      this.$confirm({
-        title: 'Are you sure delete this question?',
-        okText: 'Yes',
-        okType: 'danger',
-        cancelText: 'No',
-        async onOk() {
-          const result = await questionService.deleteQuestion(questionId);
-          this.deneme(result);
-        }
-      });
-    },
-    deneme(result) {
+    async deleteQuestion() {
+      const result = await questionService.deleteQuestion(this.question._id);
       if (result.success) {
         this.$message.error('Deleted!');
         this.cardVisible = false;
@@ -132,5 +130,20 @@ export default {
 
 .question-container > span {
   white-space: pre-wrap;
+}
+
+.reply-button {
+  font-size: unset;
+  color: rgb(67, 188, 255);
+}
+
+.delete-button {
+  font-size: medium;
+  color: red;
+}
+
+.author-name {
+  font-weight: bold;
+  font-size: larger;
 }
 </style>

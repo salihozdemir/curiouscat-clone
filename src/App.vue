@@ -43,6 +43,16 @@ export default {
   border-bottom: none !important;
 }
 
+.ant-comment-avatar img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 @media screen and (max-width: 560px) {
   .nav-text {
     display: none;

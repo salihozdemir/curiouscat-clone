@@ -35,11 +35,12 @@ const routes = [
     path: '/Discover',
     name: 'Discover',
     component: () => import('@/views/Discover.vue')
-  }
+  },
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'
 });
 
 export default router;

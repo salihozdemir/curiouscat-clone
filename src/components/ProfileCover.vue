@@ -8,9 +8,9 @@
           <div class="avatar">
             <img :src="getPhotoUrl" @click="$refs.file.click()" />
           </div>
-          <input ref="file" type="file" @change="changePP($event)" class="form-control" hidden />
+          <input ref="file" type="file" @change="changePP($event)" class="form-control" hidden v-if="isOwnProfile"/>
         </a-col>
-        <a-button icon="poweroff" type="danger" shape="circle" class="logout" @click="logout"></a-button>
+        <a-button icon="poweroff" type="danger" shape="circle" class="logout" @click="logout" v-if="isOwnProfile"></a-button>
       </a-row>
       <a-row type="flex" justify="center" class="text-center">
         <a-col :span="4">
@@ -67,7 +67,7 @@ import { mapGetters } from 'vuex';
 import common from '@/common';
 import userService from '@/services/user';
 export default {
-  props: ['userImg','userName','userId'],
+  props: ['userImg', 'userName', 'userId'],
   data() {
     return {
       followersVisible: false,
@@ -85,16 +85,23 @@ export default {
         {
           title: 'İbrahim Parlak'
         }
-      ],
+      ]
     };
   },
   computed: {
     ...mapGetters(['loginUserId']),
     getPhotoUrl() {
-      if(this.userImg === 'default-pp.png'){
+      if (this.userImg === 'default-pp.png') {
         return `https://question-node-api.herokuapp.com/${this.userImg}`;
       } else {
         return `https://question-node-api.herokuapp.com/${this.userId}/${this.userImg}`;
+      }
+    },
+    isOwnProfile() {
+      if (this.userId === this.loginUserId) {
+        return true;
+      } else {
+        return false;
       }
     }
   },
@@ -119,7 +126,7 @@ export default {
       this.$store.commit('setLoginUserId', '');
       this.$router.push({ name: 'Auth' });
     }
-  },
+  }
 };
 </script>
 <style scoped>
