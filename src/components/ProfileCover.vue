@@ -6,7 +6,7 @@
       <a-row type="flex" justify="center" class="text-center">
         <a-col :span="4">
           <div class="avatar">
-            <img :src="'https://question-node-api.herokuapp.com/' + this.userImg" @click="$refs.file.click()" />
+            <img :src="getPhotoUrl" @click="$refs.file.click()" />
           </div>
           <input ref="file" type="file" @change="changePP($event)" class="form-control" hidden />
         </a-col>
@@ -67,6 +67,7 @@ import { mapGetters } from 'vuex';
 import common from '@/common';
 import userService from '@/services/user';
 export default {
+  props: ['userImg','userName','userId'],
   data() {
     return {
       followersVisible: false,
@@ -85,12 +86,19 @@ export default {
           title: 'İbrahim Parlak'
         }
       ],
-      userImg: '',
-      userName: '',
     };
   },
   computed: {
-    ...mapGetters(['loginUserId'])
+    ...mapGetters(['loginUserId']),
+    getPhotoUrl() {
+      if(this.userImg === ''){
+        return '';
+      } else if(this.userImg === 'default-pp.png'){
+        return `https://question-node-api.herokuapp.com/${this.userImg}`;
+      } else {
+        return `https://question-node-api.herokuapp.com/${this.userId}/${this.userImg}`;
+      }
+    }
   },
   methods: {
     async changePP(event) {
@@ -100,15 +108,10 @@ export default {
         formData.append('id', this.loginUserId);
         formData.append('profileImg', pp, pp.name);
         const result = await userService.uploadProfilePhoto(formData);
-        this.userImg = result.profileImg;
+        this.$emit('update:userImg', result.profileImg);
       } else {
         this.$message.error('Please upload jpeg or png file type.');
       }
-    },
-    async getUserPhoto() {
-      const pp = await userService.getUserDetail(this.$route.params.username);
-      this.userImg = pp.profileImg;
-      this.userName = pp.username;
     },
     logout() {
       common.cookie.set('access_token', '', 0);
@@ -116,9 +119,6 @@ export default {
       this.$router.push({ name: 'Auth' });
     }
   },
-  created() {
-    this.getUserPhoto();
-  }
 };
 </script>
 <style scoped>

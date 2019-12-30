@@ -1,13 +1,13 @@
 <template>
   <div class="card">
-    <a-form :form="form" :hideRequiredMark="true" @submit.prevent="handleSubmit">
+    <a-form :form="form" @submit.prevent="handleSubmit">
       <a-form-item style="margin-bottom: 5px;">
         <a-textarea
           style="padding: 10px;"
           placeholder="Ask something!"
           :autosize="{ minRows: 6, maxRows: 12 }"
           v-decorator="[
-                'message',
+                'questionText',
                 {
                   rules: [
                     { required: true, message: 'Please input your message!' }
@@ -22,8 +22,8 @@
           <a-form-item style="margin-bottom: 5px;">
             <a-switch
               checkedChildren="Anon"
-              v-decorator="['switch', { valuePropName: 'true' }]"
               defaultChecked
+              v-decorator="['isAnon', { initialValue: true }]"
             />
           </a-form-item>
         </a-col>
@@ -37,18 +37,30 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+import questionService from '@/services/question';
+import { async } from 'q';
 export default {
   beforeCreate() {
     this.form = this.$form.createForm(this, { name: 'send_question' });
   },
+  props: ['userId'],
+  computed: {
+    ...mapGetters(['loginUserId'])
+  },
   methods: {
-    handleSubmit() {
-      this.form.validateFields((err, values) => {
-        console.log(err);
-        console.log(values);
+    async handleSubmit() {
+      this.form.validateFields(async (err, values) => {
+        if (!err) {
+          (values.toUserId = this.userId), (values.fromUserId = this.loginUserId);
+          const res = await questionService.createQuestion(values);
+          if(res.success) {
+            this.$message.success('Question sent!');
+          }
+        }
         this.form.resetFields();
       });
-    }
+    },
   }
 };
 </script>
