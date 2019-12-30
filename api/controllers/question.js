@@ -84,7 +84,8 @@ exports.answer_a_question = (req, res, next) => {
     .exec()
     .then(result => {
       res.status(200).json({
-        message: "Question updated"
+        message: "Question updated",
+        success: true,
       });
     })
     .catch(err => {
