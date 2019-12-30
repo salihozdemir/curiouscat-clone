@@ -5,7 +5,6 @@ const Follow = require("../models/follow");
 exports.get_user_questions = (req, res, next) => {
   Question.find({
     toUser: req.body.toUserId,
-    fromUser: req.body.fromUserId,
     answerText: { $exists: req.body.answered }
   })
     .select("-__v")
