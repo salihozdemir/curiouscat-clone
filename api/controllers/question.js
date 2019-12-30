@@ -8,7 +8,7 @@ exports.get_user_questions = (req, res, next) => {
     answerText: { $exists: req.body.answered }
   })
     .select("-__v")
-    .populate("toUser fromUser", "username")
+    .populate("toUser fromUser", "username profileImg")
     .exec()
     .then(docs => {
       const response = {
