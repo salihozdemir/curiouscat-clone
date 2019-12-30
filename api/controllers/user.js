@@ -127,6 +127,7 @@ exports.get_user_by_username = (req, res, next) => {
       res.status(200).json({
         username: user.username,
         profileImg: user.profileImg,
+        id: user._id,
         success: true
       });
     })
