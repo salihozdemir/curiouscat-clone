@@ -22,7 +22,7 @@ import userService from '@/services/user';
 export default {
   data(){
     return {
-      userImg: '',
+      userImg: 'default-pp.png',
       userName: '',
       userId: '',
     }
@@ -36,7 +36,6 @@ export default {
   methods: {
     async getUser() {
       const details = await userService.getUserDetail(this.$route.params.username);
-      console.log(details);
       this.userImg = details.profileImg;
       this.userName = details.username;
       this.userId = details.id;

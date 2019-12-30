@@ -1,26 +1,23 @@
 <template>
-  <div class="card">
+  <div class="card" v-if="cardVisible">
     <a-comment>
-      <a slot="author">Han Solo</a>
+      <a slot="author">{{getUserInfo.name}}</a>
       <a-avatar
         slot="avatar"
-        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-        alt="Han Solo"
+        :src="getUserInfo.url"
+        :alt="getUserInfo.name"
         size="large"
         style="text-align: -webkit-center;"
       ></a-avatar>
-      <p slot="content">
-        We supply a series of design principles, practical patterns and high quality design resources
-        (Sketch and Axure).
-      </p>
+      <p slot="content">{{question.questionText}}</p>
       <template slot="actions">
-        <span @click="showDeleteConfirm" style="color: red">Sil</span>
+        <span @click="showDeleteConfirm(question._id)" style="color: red">Sil</span>
         <span @click="showModal" style="color: #43bcff">Reply</span>
       </template>
     </a-comment>
     <a-modal
       :visible="visible"
-      @ok="handleOk"
+      @ok="answerQuestion"
       :confirmLoading="confirmLoading"
       @cancel="handleCancel"
       okText="Answer"
@@ -28,12 +25,13 @@
     >
       <div class="question-container">
         <div class="sender">
-          <a href="#">Anon</a> asked
+          <a href="#">{{getUserInfo.name}}</a> asked
         </div>
-        <span>My Name is Salaosdasld</span>
+        <span>{{question.questionText}}</span>
       </div>
       <a-textarea
         style="padding: 10px;"
+        v-model="answerText"
         placeholder="Ask something!"
         :autosize="{ minRows: 6, maxRows: 12 }"
         :centered="true"
@@ -42,43 +40,70 @@
   </div>
 </template>
 <script>
+import questionService from '@/services/question';
 export default {
+  props: ['question'],
   data() {
     return {
-      deneme: null,
       visible: false,
-      confirmLoading: false
+      confirmLoading: false,
+      cardVisible: true,
+      answerText: ''
     };
+  },
+  computed: {
+    getUserInfo() {
+      if (this.question.isAnon) {
+        return {
+          name: 'Anonymous',
+          url: 'assets/img/anonymous-pp.png'
+        };
+      } else {
+        return {
+          name: this.question.fromUser.username,
+          url: `https://question-node-api.herokuapp.com/${this.question.fromUser._id}/${this.question.fromUser.profileImg}`
+        };
+      }
+    }
   },
   methods: {
     showModal() {
       this.visible = true;
     },
-    handleOk(e) {
+    async answerQuestion() {
       this.confirmLoading = true;
-      setTimeout(() => {
-        this.visible = false;
-        this.confirmLoading = false;
-      }, 2000);
-    },
-    handleCancel(e) {
+      const result = await questionService.answerQuestion(this.question._id, {
+        value: this.answerText
+      });
+      if (result.success) {
+        this.$message.success('Answered!');
+        this.cardVisible = false;
+      }
       this.visible = false;
+      this.confirmLoading = false;
     },
-    showDeleteConfirm() {
-        this.$confirm({
-          title: 'Are you sure delete this task?',
-          content: 'Some descriptions',
-          okText: 'Yes',
-          okType: 'danger',
-          cancelText: 'No',
-          onOk() {
-            console.log('OK');
-          },
-          onCancel() {
-            console.log('Cancel');
-          },
-        });
-      },
+    handleCancel() {
+      this.visible = false;
+      this.answerText = '';
+    },
+    showDeleteConfirm(questionId) {
+      this.$confirm({
+        title: 'Are you sure delete this question?',
+        okText: 'Yes',
+        okType: 'danger',
+        cancelText: 'No',
+        async onOk() {
+          const result = await questionService.deleteQuestion(questionId);
+          this.deneme(result);
+        }
+      });
+    },
+    deneme(result) {
+      if (result.success) {
+        this.$message.error('Deleted!');
+        this.cardVisible = false;
+      }
+    }
   }
 };
 </script>
@@ -101,11 +126,11 @@ export default {
 }
 
 .question-container.sender {
-    margin-bottom: .5em;
-    font-weight: 300;
+  margin-bottom: 0.5em;
+  font-weight: 300;
 }
 
-.question-container>span{
+.question-container > span {
   white-space: pre-wrap;
 }
 </style>

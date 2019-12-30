@@ -12,4 +12,38 @@ export default {
       };
     }
   },
+  async getNonAnsweredQuestions(payload) {
+    try {
+      const res = await api().post('/question/getUserQuestion', payload);
+      return res.data;
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+  },
+  async answerQuestion(params, payload) {
+    try {
+      const res = await api().patch('/question/' + params , payload);
+      return res.data;
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+  },
+  async deleteQuestion(params) {
+    try {
+      const res = await api().delete('/question/' + params);
+      return res.data;
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message,
+      };
+    }
+  },
+
 }

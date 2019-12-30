@@ -91,9 +91,7 @@ export default {
   computed: {
     ...mapGetters(['loginUserId']),
     getPhotoUrl() {
-      if(this.userImg === ''){
-        return '';
-      } else if(this.userImg === 'default-pp.png'){
+      if(this.userImg === 'default-pp.png'){
         return `https://question-node-api.herokuapp.com/${this.userImg}`;
       } else {
         return `https://question-node-api.herokuapp.com/${this.userId}/${this.userImg}`;
@@ -108,6 +106,7 @@ export default {
         formData.append('id', this.loginUserId);
         formData.append('profileImg', pp, pp.name);
         const result = await userService.uploadProfilePhoto(formData);
+        console.log(result);
         this.$emit('update:userImg', result.profileImg);
       } else {
         this.$message.error('Please upload jpeg or png file type.');
@@ -116,6 +115,8 @@ export default {
     logout() {
       common.cookie.set('access_token', '', 0);
       this.$store.commit('setToken', null);
+      this.$store.commit('setloginUserName', '');
+      this.$store.commit('setLoginUserId', '');
       this.$router.push({ name: 'Auth' });
     }
   },
