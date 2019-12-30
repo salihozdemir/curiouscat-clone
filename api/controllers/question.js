@@ -46,7 +46,8 @@ exports.create_question = (req, res, next) => {
     .save()
     .then(result => {
       res.status(201).json({
-        message: "Created question successful"
+        message: "Created question successful",
+        success: true
       });
     })
     .catch(err => {
