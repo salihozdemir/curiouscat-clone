@@ -10,9 +10,7 @@
           :size="40"
           style="text-align: -webkit-center;"
         ></a-avatar>
-        <p slot="content">
-          {{question.questionText}}
-        </p>
+        <p slot="content">{{question.questionText}}</p>
         <a-comment>
           <a slot="author" class="author-name">{{question.toUser.username}}</a>
           <a-avatar
@@ -22,9 +20,7 @@
             :size="40"
             style="text-align: -webkit-center;"
           />
-          <p slot="content">
-            {{question.answerText}}
-          </p>
+          <p slot="content">{{question.answerText}}</p>
         </a-comment>
       </a-comment>
     </div>
@@ -33,6 +29,11 @@
 <script>
 export default {
   props: ['question'],
+  data() {
+    return {
+      loading: false
+    };
+  },
   computed: {
     getUserInfo() {
       if (this.question.isAnon) {
@@ -43,11 +44,11 @@ export default {
       } else {
         return {
           fromUserName: this.question.fromUser.username,
-          fromUserUrl: `https://question-node-api.herokuapp.com/${this.question.fromUser._id}/${this.question.fromUser.profileImg}`,
+          fromUserUrl: `https://question-node-api.herokuapp.com/${this.question.fromUser._id}/${this.question.fromUser.profileImg}`
         };
       }
     }
-  },
+  }
 };
 </script>
 <style scoped>

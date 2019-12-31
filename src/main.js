@@ -24,6 +24,8 @@ import {
   AutoComplete,
   message,
   Popconfirm,
+  Skeleton,
+  Spin
 
 } from 'ant-design-vue';
 
@@ -52,6 +54,8 @@ Vue.use(Avatar);
 Vue.use(Switch);
 Vue.use(AutoComplete);
 Vue.use(Popconfirm);
+Vue.use(Skeleton);
+Vue.use(Spin);
 
 
 

@@ -7,7 +7,17 @@
         <app-who-to-follow></app-who-to-follow>
       </a-col>
       <a-col :md="24" :lg="16">
-        <app-question-card v-for="question in questions" :key="question._id" :question="question"></app-question-card>
+        <div v-if="loading">
+          <div class="card" v-for="i in 4" :key="i">
+            <a-skeleton active avatar :paragraph="{rows: 2}" />
+          </div>
+        </div>
+        <app-question-card
+          v-else
+          v-for="question in questions"
+          :key="question._id"
+          :question="question"
+        ></app-question-card>
       </a-col>
     </a-row>
   </div>
@@ -22,10 +32,11 @@ import questionService from '@/services/question';
 export default {
   data() {
     return {
-      userImg: 'default-pp.png',
+      userImg: '',
       userName: '',
       userId: '',
-      questions: []
+      questions: [],
+      loading: true
     };
   },
   components: {
@@ -49,12 +60,21 @@ export default {
         answered: true
       });
       this.questions = result.questions;
+      this.loading = false;
     }
   },
   async created() {
+    this.loading = true;
     await this.getUser();
     await this.getAnsweredQuestions();
   }
 };
 </script>
-<style scoped></style>
+<style scoped>
+.card {
+  padding: 10px;
+  background-color: white;
+  margin-top: 10px;
+  border-radius: 0.5rem;
+}
+</style>

@@ -6,11 +6,26 @@
       <a-row type="flex" justify="center" class="text-center">
         <a-col :span="4">
           <div class="avatar">
-            <img :src="getPhotoUrl" @click="$refs.file.click()" />
+            <a-spin v-if="this.userImg === ''" class="spin"/>
+            <img v-else :src="getPhotoUrl" @click="$refs.file.click()" />
           </div>
-          <input ref="file" type="file" @change="changePP($event)" class="form-control" hidden v-if="isOwnProfile"/>
+          <input
+            ref="file"
+            type="file"
+            @change="changePP($event)"
+            class="form-control"
+            hidden
+            v-if="isOwnProfile"
+          />
         </a-col>
-        <a-button icon="poweroff" type="danger" shape="circle" class="logout" @click="logout" v-if="isOwnProfile"></a-button>
+        <a-button
+          icon="poweroff"
+          type="danger"
+          shape="circle"
+          class="logout"
+          @click="logout"
+          v-if="isOwnProfile"
+        ></a-button>
       </a-row>
       <a-row type="flex" justify="center" class="text-center">
         <a-col :span="4">
@@ -85,14 +100,15 @@ export default {
         {
           title: 'İbrahim Parlak'
         }
-      ]
+      ],
+      loading: true
     };
   },
   computed: {
     ...mapGetters(['loginUserId']),
     getPhotoUrl() {
       if (this.userImg === 'default-pp.png') {
-        return `https://question-node-api.herokuapp.com/${this.userImg}`;
+        return '/assets/img/default-pp.png';
       } else {
         return `https://question-node-api.herokuapp.com/${this.userId}/${this.userImg}`;
       }
@@ -206,5 +222,13 @@ export default {
   position: absolute;
   right: 8px;
   top: 0;
+}
+
+.spin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
 }
 </style>
