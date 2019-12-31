@@ -7,8 +7,7 @@
         <app-who-to-follow></app-who-to-follow>
       </a-col>
       <a-col :md="24" :lg="16">
-        <app-question-card></app-question-card>
-        <app-question-card></app-question-card>
+        <app-question-card v-for="question in questions" :key="question._id" :question="question"></app-question-card>
       </a-col>
     </a-row>
   </div>
@@ -19,13 +18,15 @@ import AskMessage from '@/components/AskMessage';
 import QuestionCard from '@/components/QuestionCard';
 import WhoToFollow from '@/components/WhoToFollow';
 import userService from '@/services/user';
+import questionService from '@/services/question';
 export default {
-  data(){
+  data() {
     return {
       userImg: 'default-pp.png',
       userName: '',
       userId: '',
-    }
+      questions: []
+    };
   },
   components: {
     appProfileCover: ProfileCover,
@@ -35,14 +36,24 @@ export default {
   },
   methods: {
     async getUser() {
-      const details = await userService.getUserDetail(this.$route.params.username);
+      const details = await userService.getUserDetail(
+        this.$route.params.username
+      );
       this.userImg = details.profileImg;
       this.userName = details.username;
       this.userId = details.id;
     },
+    async getAnsweredQuestions() {
+      const result = await questionService.getNonAnsweredQuestions({
+        toUserId: this.userId,
+        answered: true
+      });
+      this.questions = result.questions;
+    }
   },
-  created() {
-  this.getUser();
+  async created() {
+    await this.getUser();
+    await this.getAnsweredQuestions();
   }
 };
 </script>

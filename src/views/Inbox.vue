@@ -35,7 +35,7 @@ export default {
         answered: false
       });
       this.questions = result.questions;
-      console.log(result);
+      console.log('getNonAnsweredQuestions', result);
     }
   },
   created() {

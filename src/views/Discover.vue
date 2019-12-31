@@ -5,7 +5,7 @@
     </a-col>
     <a-col :md="24" :lg="16">
       <app-search></app-search>
-      <app-question-card></app-question-card>
+      <!-- <app-question-card></app-question-card> -->
     </a-col>
   </a-row>
 </template>

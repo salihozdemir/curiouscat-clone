@@ -49,6 +49,10 @@ export default {
     border-radius: 50%;
 }
 
+.ant-comment-inner {
+    padding: 7px 0px 0px 0px;
+}
+
 a:hover {
   text-decoration: underline;
 }
