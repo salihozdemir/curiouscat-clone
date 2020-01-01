@@ -1,6 +1,6 @@
 <template>
   <div>
-    <app-profile-cover :userImg.sync="userImg" :userName="userName" :userId="userId"></app-profile-cover>
+    <app-profile-cover :userImg.sync="userImg" :userName="userName" :userId="userId" :isFollow.sync="isFollow"></app-profile-cover>
     <a-row :gutter="16">
       <a-col :md="24" :lg="8">
         <app-ask-message :userId="userId"></app-ask-message>
@@ -19,13 +19,15 @@ import QuestionCard from '@/components/QuestionCard';
 import WhoToFollow from '@/components/WhoToFollow';
 import userService from '@/services/user';
 import questionService from '@/services/question';
+import followService from '@/services/follow';
 export default {
   data() {
     return {
       userImg: 'default-pp.png',
       userName: '',
       userId: '',
-      questions: []
+      questions: [],
+      isFollow: '',
     };
   },
   components: {
@@ -49,11 +51,19 @@ export default {
         answered: true
       });
       this.questions = result.questions;
+    },
+    async isFollowUser() {
+      const result = await followService.isFollow({
+        toUserId: this.userId,
+        fromUserId: this.loginUserId
+      });
+      this.isFollow = result.isFollow;
     }
   },
   async created() {
     await this.getUser();
     await this.getAnsweredQuestions();
+    await this.isFollowUser();
   }
 };
 </script>
