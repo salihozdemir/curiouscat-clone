@@ -30,7 +30,13 @@
       <a-row type="flex" justify="center" class="text-center">
         <a-col :span="4">
           <a class="usermame">{{userName}}</a>
-          <a-button style="font-weight: bold;" type="primary" shape="round" icon="user-add">Follow</a-button>
+          <a-button
+            style="font-weight: bold;"
+            @click="followOrUnFollow"
+            type="primary"
+            shape="round"
+            icon="user-add"
+          >{{isFollow ? 'unFollow' : 'Follow'}}</a-button>
         </a-col>
       </a-row>
       <br />
@@ -41,19 +47,19 @@
         </a-col>
         <a-col :span="4" @click="followersVisible = true" class="cursor-pointer">
           <span class="title">Followers</span>
-          <span class="num">15</span>
+          <span class="num">{{userFollowers.count}}</span>
         </a-col>
         <a-col :span="4" @click="followingVisible = true" class="cursor-pointer">
           <span class="title">Following</span>
-          <span class="num">20</span>
+          <span class="num">{{userFollowings.count}}</span>
         </a-col>
       </a-row>
     </a-col>
     <a-modal title="Followers" v-model="followersVisible" :footer="null">
-      <a-list itemLayout="horizontal" :dataSource="data">
+      <a-list itemLayout="horizontal" :dataSource="userFollowers.followers">
         <a-list-item slot="renderItem" slot-scope="item">
           <a-list-item-meta description="25 Answered">
-            <a slot="title" href="https://www.antdv.com/">{{item.title}}</a>
+            <a slot="title" href="https://www.antdv.com/">{{item.username}}</a>
             <a-avatar
               slot="avatar"
               src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -63,10 +69,10 @@
       </a-list>
     </a-modal>
     <a-modal v-model="followingVisible" title="Following" :footer="null">
-      <a-list itemLayout="horizontal" :dataSource="data">
+      <a-list itemLayout="horizontal" :dataSource="userFollowings.following">
         <a-list-item slot="renderItem" slot-scope="item">
           <a-list-item-meta description="25 Answered">
-            <a slot="title" href="https://www.antdv.com/">{{item.title}}</a>
+            <a slot="title" href="https://www.antdv.com/">{{item.username}}</a>
             <a-avatar
               slot="avatar"
               src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
@@ -81,27 +87,15 @@
 import { mapGetters } from 'vuex';
 import common from '@/common';
 import userService from '@/services/user';
+import followService from '@/services/follow';
 export default {
-  props: ['userImg', 'userName', 'userId'],
+  props: ['userImg', 'userName', 'userId', 'isFollow'],
   data() {
     return {
       followersVisible: false,
       followingVisible: false,
-      data: [
-        {
-          title: 'Ali Özdemir'
-        },
-        {
-          title: 'Salih Özdemir'
-        },
-        {
-          title: 'Ayşenur Özdemir'
-        },
-        {
-          title: 'İbrahim Parlak'
-        }
-      ],
-      loading: true
+      userFollowers: {},
+      userFollowings: {},
     };
   },
   computed: {
@@ -141,7 +135,28 @@ export default {
       this.$store.commit('setloginUserName', '');
       this.$store.commit('setLoginUserId', '');
       this.$router.push({ name: 'Auth' });
+    },
+    async followOrUnFollow() {
+      const result = await followService.followOrUnFollow({
+        toUserId: this.userId,
+        fromUserId: this.loginUserId
+      });
+      this.$emit('update:isFollow', result.isFollow);
+    },
+    async getFollowersUser() {
+      const followers = await followService.getUserFollowers(this.loginUserId);
+      this.userFollowers = followers;
+      console.log(this.userFollowers);
+    },
+    async getFollowingUser() {
+      const followings = await followService.getUserFollowings(this.loginUserId);
+      this.userFollowings = followings;
+      console.log(this.userFollowings);
     }
+  },
+  created() {
+    this.getFollowersUser();
+    this.getFollowingUser();
   }
 };
 </script>
