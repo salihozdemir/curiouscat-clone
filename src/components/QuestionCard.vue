@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="card">
+      <a-skeleton v-if="loading" active avatar :paragraph="{rows: 2}" />
       <a-comment>
         <a slot="author" class="author-name">{{getUserInfo.fromUserName}}</a>
         <a-avatar
@@ -28,12 +29,7 @@
 </template>
 <script>
 export default {
-  props: ['question'],
-  data() {
-    return {
-      loading: false
-    };
-  },
+  props: ['question', 'loading'],
   computed: {
     getUserInfo() {
       if (this.question.isAnon) {
