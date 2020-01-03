@@ -1,24 +1,24 @@
 <template>
   <div>
-    <a-skeleton v-if="coverLoading" active :paragraph="{rows: 6}" />
-    <app-profile-cover v-else :userImg.sync="userImg" :userName="userName" :userId="userId" :isFollow.sync="isFollow"></app-profile-cover>
+    <app-profile-cover
+      :loading="coverLoading"
+      :userImg.sync="userImg"
+      :userName="userName"
+      :userId="userId"
+      :isFollow.sync="isFollow"
+    ></app-profile-cover>
     <a-row :gutter="16">
       <a-col :md="24" :lg="8">
         <app-ask-message :userId="userId"></app-ask-message>
         <app-who-to-follow></app-who-to-follow>
       </a-col>
       <a-col :md="24" :lg="16">
-        <!-- <div v-if="questionLoading">
+        <div v-if="questionLoading">
           <div class="card" v-for="i in 4" :key="i">
             <a-skeleton active avatar :paragraph="{rows: 2}" />
           </div>
-        </div> -->
-        <app-question-card
-          v-for="question in questions"
-          :key="question._id"
-          :question="question"
-          :loading="questionLoading"
-        ></app-question-card>
+        </div>
+        <app-question-card v-for="question in questions" :key="question._id" :question="question"></app-question-card>
       </a-col>
     </a-row>
   </div>
@@ -47,11 +47,11 @@ export default {
       questions: [],
       questionLoading: true,
       coverLoading: true,
-      isFollow: '',
+      isFollow: ''
     };
   },
   computed: {
-     ...mapGetters(['loginUserId']),
+    ...mapGetters(['loginUserId'])
   },
   methods: {
     async getUser() {
@@ -75,7 +75,6 @@ export default {
         toUserId: this.userId,
         fromUserId: this.loginUserId
       });
-      console.log('result isFollow: ',result.isFollow)
       this.isFollow = result.isFollow;
       this.coverLoading = false;
     }
@@ -84,8 +83,8 @@ export default {
     this.questionLoading = true;
     this.coverLoading = true;
     await this.getUser();
-    await this.getAnsweredQuestions();
-    await this.isFollowUser();
+    this.isFollowUser();
+    this.getAnsweredQuestions();
   }
 };
 </script>
