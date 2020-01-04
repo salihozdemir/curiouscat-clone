@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const Follow = require("../models/follow");
+
 
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
@@ -153,6 +155,41 @@ exports.upload_profile_photo = (req, res, next) => {
       console.log(err);
       res.status(500).json({
         error: err
+      });
+    });
+};
+
+exports.get_random_users = (req, res, next) => {
+  Follow.find({ fromUser: {$ne: req.body.fromUserId}, toUser: {$ne: req.body.fromUserId}})
+    .populate("toUser", "username profileImg")
+    .exec()
+    .then(docs => {
+      const shuffled = docs.sort(() => 0.5 - Math.random());
+      let selected = shuffled.slice(0, 3);
+      res.status(200).json({
+        notFollowers: selected.map(doc => {
+          return {
+            _id: doc.toUser._id,
+            username: doc.toUser.username,
+            profileImg: doc.toUser.profileImg
+          }
+        })
+      });
+    });
+};
+
+exports.search_users = (req, res, next) => {
+  User.find({username : {$regex: req.body.username , $options: 'i'} })
+    .exec()
+    .then(result => {
+      res.status(200).json({
+        user: result.map(doc => {
+          return {
+            _id: doc._id,
+            profileImg: doc.profileImg,
+            username: doc.username
+          }   
+        })
       });
     });
 };

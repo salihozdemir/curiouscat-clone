@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Follow = require("../models/follow");
+const Question = require("../models/question");
 
 exports.follow_or_unfollow = (req, res, next) => {
   Follow.findOne({ toUser: req.body.toUserId, fromUser: req.body.fromUserId })
@@ -66,21 +67,33 @@ exports.is_follow = (req, res, next) => {
     });
 };
 
-exports.get_user_followers = (req, res, next) => {
-  Follow.find({ toUser: req.params.toUserId })
-    .populate('fromUser','username _id')
+exports.get_user_followers = async (req, res, next) => {
+  await Follow.find({ toUser: req.params.toUserId })
+    .populate('fromUser','username _id profileImg')
     .exec()
     .then(docs => {
-      res.status(200).json({
+        res.status(200).json({
         count: docs.length,
         followers: docs.map(doc => {
           return {
             _id: doc.fromUser._id,
-            username: doc.fromUser.username
+            username: doc.fromUser.username,
+            profileImg: doc.fromUser.profileImg,
+            answerCounts: get_answer_count(doc.fromUser._id),
           }
         })    
-      });
-    });
+    })
+    }),
+    function get_answer_count(id) {
+      Question.find({
+        toUser: id,
+        answerText: { $exists: true }
+      })
+        .exec()
+        .then(docs => {
+          return docs.length;
+        })
+    }
 };
 
 exports.get_user_following = (req, res, next) => {
