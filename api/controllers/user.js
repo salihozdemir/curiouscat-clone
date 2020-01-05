@@ -160,26 +160,39 @@ exports.upload_profile_photo = (req, res, next) => {
 };
 
 exports.get_random_users = (req, res, next) => {
-  Follow.find({ fromUser: {$ne: req.body.fromUserId}, toUser: {$ne: req.body.fromUserId}})
-    .populate("toUser", "username profileImg")
+  Follow.find({ fromUser: req.body.fromUserId }, { '_id': 0,})
+    .select('toUser')
     .exec()
     .then(docs => {
-      const shuffled = docs.sort(() => 0.5 - Math.random());
-      let selected = shuffled.slice(0, 3);
-      res.status(200).json({
-        notFollowers: selected.map(doc => {
-          return {
-            _id: doc.toUser._id,
-            username: doc.toUser.username,
-            profileImg: doc.toUser.profileImg
-          }
-        })
+      let userFollowingIdies = [];
+      docs.map(doc => {
+        userFollowingIdies.push(doc.toUser);
       });
-    });
+      User.aggregate([
+          {
+            $match: 
+              {
+                _id: { $nin: userFollowingIdies } 
+              }
+          },
+          {
+            $sample: {size: 3}
+          },
+         { $project : { username : 1, _id : 1, profileImg: 1 } }
+        ])
+        .exec()
+        .then(docs => {
+          res.status(200).json({
+            users: docs
+          });
+        })
+    })
 };
 
 exports.search_users = (req, res, next) => {
   User.find({username : {$regex: req.body.username , $options: 'i'} })
+    .limit(10)
+    .sort('username')
     .exec()
     .then(result => {
       res.status(200).json({
