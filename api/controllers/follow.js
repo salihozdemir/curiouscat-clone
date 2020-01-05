@@ -68,32 +68,55 @@ exports.is_follow = (req, res, next) => {
 };
 
 exports.get_user_followers = async (req, res, next) => {
-  await Follow.find({ toUser: req.params.toUserId })
-    .populate('fromUser','username _id profileImg')
+  await Follow.find({ toUser: req.params.toUserId }, { _id: 0})
+    .select('fromUser')
+    .populate('fromUser','_id username profileImg')
     .exec()
     .then(docs => {
-        res.status(200).json({
-        count: docs.length,
-        followers: docs.map(doc => {
-          return {
-            _id: doc.fromUser._id,
-            username: doc.fromUser.username,
-            profileImg: doc.fromUser.profileImg,
-            answerCounts: get_answer_count(doc.fromUser._id),
-          }
-        })    
+      let usersIds = [];
+      docs.map(doc => {
+        usersIds.push(doc.fromUser._id);
+      });
+      // Question.find({
+      //   toUser: { $in: usersIds},
+      //   answerText: { $exists: true }
+      // })
+      //   .exec()
+      //   .then(docs => {
+      //     console.log(docs);
+      //   })
+      console.log(usersIds);
+      Question.aggregate([
+        {
+          $match: 
+            {
+              toUser: { $in: usersIds },
+              answerText: { $exists: true } 
+            }
+        },
+        // {
+        //   $group: {
+        //     _id: null,
+        //     count: { $sum: 1 }
+        //   }
+        // }
+      ])
+      .exec()
+      .then(result => {
+        res.status(200).json(result);
+      });
+    //     res.status(200).json({
+    //     count: docs.length,
+    //     followers: docs.map(doc => {
+    //       return {
+    //         _id: doc.fromUser._id,
+    //         username: doc.fromUser.username,
+    //         profileImg: doc.fromUser.profileImg,
+    //         answerCounts: [],
+    //       }
+    //     })    
+    // })
     })
-    }),
-    function get_answer_count(id) {
-      Question.find({
-        toUser: id,
-        answerText: { $exists: true }
-      })
-        .exec()
-        .then(docs => {
-          return docs.length;
-        })
-    }
 };
 
 exports.get_user_following = (req, res, next) => {
