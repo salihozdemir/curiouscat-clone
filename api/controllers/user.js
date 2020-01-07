@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Follow = require("../models/follow");
+const Question = require("../models/question");
 
 
 exports.login = (req, res, next) => {
@@ -170,8 +171,7 @@ exports.get_random_users = (req, res, next) => {
       });
       User.aggregate([
           {
-            $match: 
-              {
+            $match: {
                 _id: { $nin: userFollowingIdies } 
               }
           },
@@ -181,12 +181,34 @@ exports.get_random_users = (req, res, next) => {
          { $project : { username : 1, _id : 1, profileImg: 1 } }
         ])
         .exec()
-        .then(docs => {
-          res.status(200).json({
-            users: docs
+        .then(docs => { 
+          let usersIds = [];
+          docs.map(doc => {
+            usersIds.push(doc._id);
           });
-        })
-    })
+          Question.aggregate([
+            {
+              $match: {
+                  toUser: { $in: usersIds },
+                  answerText: { $exists: true } 
+                }
+            },
+            {
+              $group: {
+                _id: '$toUser',
+                answerCount: { $sum: 1 },
+              }
+            },
+          ])
+          .exec()
+          .then(result => {
+            res.status(200).json({
+              answerCount: result,
+              docs,
+            });
+          });
+      });
+    });
 };
 
 exports.search_users = (req, res, next) => {
@@ -206,3 +228,4 @@ exports.search_users = (req, res, next) => {
       });
     });
 };
+

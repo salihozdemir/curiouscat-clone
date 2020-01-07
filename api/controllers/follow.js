@@ -67,8 +67,8 @@ exports.is_follow = (req, res, next) => {
     });
 };
 
-exports.get_user_followers = async (req, res, next) => {
-  await Follow.find({ toUser: req.params.toUserId }, { _id: 0})
+exports.get_user_followers = (req, res, next) => {
+  Follow.find({ toUser: req.params.toUserId }, { _id: 0})
     .select('fromUser')
     .populate('fromUser','_id username profileImg')
     .exec()
@@ -77,46 +77,44 @@ exports.get_user_followers = async (req, res, next) => {
       docs.map(doc => {
         usersIds.push(doc.fromUser._id);
       });
-      // Question.find({
-      //   toUser: { $in: usersIds},
-      //   answerText: { $exists: true }
-      // })
-      //   .exec()
-      //   .then(docs => {
-      //     console.log(docs);
-      //   })
-      console.log(usersIds);
       Question.aggregate([
         {
-          $match: 
-            {
+          $match: {
               toUser: { $in: usersIds },
               answerText: { $exists: true } 
             }
         },
-        // {
-        //   $group: {
-        //     _id: null,
-        //     count: { $sum: 1 }
-        //   }
-        // }
+        {    
+          $lookup: {
+              from: 'users',
+              localField: 'toUser',
+              foreignField: '_id',
+              as: 'toUsers'
+            }
+        },
+        {
+          $unwind: {
+            path: '$toUsers',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $group: {
+            _id: '$toUsers',
+            answerCount: { $sum: 1 }
+          }
+        },
+        {
+          $project: {
+            '_id._id': 1, '_id.profileImg': 1, '_id.username': 1, answerCount: 1
+          }
+        },
       ])
       .exec()
       .then(result => {
         res.status(200).json(result);
       });
-    //     res.status(200).json({
-    //     count: docs.length,
-    //     followers: docs.map(doc => {
-    //       return {
-    //         _id: doc.fromUser._id,
-    //         username: doc.fromUser.username,
-    //         profileImg: doc.fromUser.profileImg,
-    //         answerCounts: [],
-    //       }
-    //     })    
-    // })
-    })
+    });
 };
 
 exports.get_user_following = (req, res, next) => {
@@ -124,14 +122,46 @@ exports.get_user_following = (req, res, next) => {
     .populate('toUser','username _id')
     .exec()
     .then(docs => {
-      res.status(200).json({
-        count: docs.length,
-        following: docs.map(doc=> {
-          return {
-            _id: doc.toUser._id,
-            username: doc.toUser.username
+      let usersIds = [];
+      docs.map(doc => {
+        usersIds.push(doc.toUser._id);
+      });
+      Question.aggregate([
+        {
+          $match: {
+              toUser: { $in: usersIds },
+              answerText: { $exists: true } 
+            }
+        },
+        {    
+          $lookup: {
+              from: 'users',
+              localField: 'toUser',
+              foreignField: '_id',
+              as: 'toUsers'
+            }
+        },
+        {
+          $unwind: {
+            path: '$toUsers',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $group: {
+            _id: '$toUsers',
+            answerCount: { $sum: 1 }
           }
-        })
+        },
+        {
+          $project: {
+            '_id._id': 1, '_id.profileImg': 1, '_id.username': 1, answerCount: 1
+          }
+        },
+      ])
+      .exec()
+      .then(result => {
+        res.status(200).json(result);
       });
     });
 };
