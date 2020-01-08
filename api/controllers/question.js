@@ -78,9 +78,10 @@ exports.delete_question = (req, res, next) => {
 };
 
 exports.answer_a_question = (req, res, next) => {
-  Question.update(
+  Question.updateOne(
     { _id: req.params.questionId },
-    { $set: { answerText: req.body.value } }
+    { $set: { answerText: req.body.value } },
+    { $inc: { answerCount: 1 } }
   )
     .exec()
     .then(result => {

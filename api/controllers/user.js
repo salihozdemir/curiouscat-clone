@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const Follow = require("../models/follow");
+const Question = require("../models/question");
+
 
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
@@ -156,3 +159,114 @@ exports.upload_profile_photo = (req, res, next) => {
       });
     });
 };
+
+exports.get_random_users = (req, res, next) => {
+  Follow.find({ fromUser: req.body.fromUserId }, { '_id': 0,})
+    .select('toUser')
+    .exec()
+    .then(docs => {
+      let userFollowingIdies = [];
+      docs.map(doc => {
+        userFollowingIdies.push(doc.toUser);
+      });
+      User.aggregate([
+        {
+          $match: { _id: { $nin: userFollowingIdies } }
+        },
+        {
+          $sample: { size: 3 }
+        },
+        { 
+          $project : { username : 1, _id : 1, profileImg: 1, answerCount: 1 } 
+        }
+        ])
+        .exec()
+        .then(docs => { 
+          res.status(200).json({
+            users: docs
+          });
+         //#region get for answerCount query
+          // let usersIds = [];
+          // docs.map(doc => {
+          //   usersIds.push(doc._id);
+          // });
+          // Question.aggregate([
+          //   {
+          //     $match: {
+          //         toUser: { $in: usersIds },
+          //         answerText: { $exists: true } 
+          //       }
+          //   },
+          //   {
+          //     $group: {
+          //       _id: '$toUser',
+          //       answerCount: { $sum: 1 },
+          //     }
+          //   }
+          // ])
+          // .exec()
+          // .then(result => {
+          //   docs.map(doc => {
+          //     doc.answerCount = 0;
+          //     result.map(item => {
+          //       if(String(doc._id) === String(item._id)){
+          //         doc['answerCount'] = item.answerCount;
+          //       }
+          //     });
+          //   });
+          //   res.status(200).json({
+          //     users: docs,
+          //   });
+          // });
+          //#endregion
+      });
+    });
+};
+
+exports.search_users = (req, res, next) => {
+  User.find({username : {$regex: req.body.username , $options: 'i'} })
+    .select('-__v -password -email')
+    .limit(10)
+    .sort('username')
+    .exec()
+    .then(docs => {
+      res.status(200).json({
+        users: docs
+      });
+      //#region for get answerCount query
+      // let usersIds = [];
+      // docs.map(doc => {
+      //   usersIds.push(doc._id);
+      // });
+      // Question.aggregate([
+      //   {
+      //     $match: {
+      //         toUser: { $in: usersIds },
+      //         answerText: { $exists: true } 
+      //       }
+      //   },
+      //   {
+      //     $group: {
+      //       _id: '$toUser',
+      //       answerCount: { $sum: 1 },
+      //     }
+      //   }
+      // ])
+      // .exec()
+      // .then(result => {
+      //   docs.forEach(doc => {
+      //     doc.answerCount = 0;
+      //     result.forEach(item => {
+      //       if(String(doc._id) === String(item._id)){
+      //         doc['answerCount'] = item.answerCount;
+      //       }
+      //     });
+      //   });
+      //   res.status(200).json({
+      //     users: docs
+      //   });
+      // });
+      //#endregion
+    });
+};
+
