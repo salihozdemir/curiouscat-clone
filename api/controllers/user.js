@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Follow = require("../models/follow");
-const Question = require("../models/question");
 
 
 exports.login = (req, res, next) => {

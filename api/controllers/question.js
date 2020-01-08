@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Question = require("../models/question");
 const Follow = require("../models/follow");
+const User = require('../models/user');
 
 exports.get_user_questions = (req, res, next) => {
   Question.find({
@@ -65,9 +66,15 @@ exports.delete_question = (req, res, next) => {
           message: "Question not found"
         });
       }
-      res.status(200).json({
-        message: "Question deleted",
-        success: true,
+      User.findByIdAndUpdate(
+        {_id: req.body.userId },
+        { $inc: { answerCount: -1 } })
+        .exec()
+        .then(result => {
+          res.status(200).json({
+            message: "Question updated",
+            success: true,
+        });
       });
     })
     .catch(err => {
@@ -78,23 +85,33 @@ exports.delete_question = (req, res, next) => {
 };
 
 exports.answer_a_question = (req, res, next) => {
-  Question.updateOne(
+  Question.findOneAndUpdate(
     { _id: req.params.questionId },
     { $set: { answerText: req.body.value } },
-    { $inc: { answerCount: 1 } }
   )
-    .exec()
-    .then(result => {
-      res.status(200).json({
-        message: "Question updated",
-        success: true,
+  .exec()
+  .then(result => {
+    User.findByIdAndUpdate(
+      {_id: req.body.userId },
+      { $inc: { answerCount: 1 } })
+      .exec()
+      .then(result => {
+        res.status(200).json({
+          message: "Question updated",
+          success: true,
+        });
+      })
+      .catch(err => {
+        res.status(500).json({
+          error: err
+        });
       });
-    })
-    .catch(err => {
-      res.status(500).json({
-        error: err
-      });
+  })
+  .catch(err => {
+    res.status(500).json({
+      error: err
     });
+  });
 };
 
 exports.get_following_questions = (req, res, next) => {
