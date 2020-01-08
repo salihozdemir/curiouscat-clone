@@ -170,50 +170,55 @@ exports.get_random_users = (req, res, next) => {
         userFollowingIdies.push(doc.toUser);
       });
       User.aggregate([
-          {
-            $match: {
-                _id: { $nin: userFollowingIdies } 
-              }
-          },
-          {
-            $sample: {size: 3}
-          },
-         { $project : { username : 1, _id : 1, profileImg: 1 } }
+        {
+          $match: { _id: { $nin: userFollowingIdies } }
+        },
+        {
+          $sample: { size: 3 }
+        },
+        { 
+          $project : { username : 1, _id : 1, profileImg: 1, answerCount: 1 } 
+        }
         ])
         .exec()
         .then(docs => { 
-          let usersIds = [];
-          docs.map(doc => {
-            usersIds.push(doc._id);
+          res.status(200).json({
+            users: docs
           });
-          Question.aggregate([
-            {
-              $match: {
-                  toUser: { $in: usersIds },
-                  answerText: { $exists: true } 
-                }
-            },
-            {
-              $group: {
-                _id: '$toUser',
-                answerCount: { $sum: 1 },
-              }
-            }
-          ])
-          .exec()
-          .then(result => {
-            docs.map(doc => {
-              doc.answerCount = 0;
-              result.map(item => {
-                if(String(doc._id) === String(item._id)){
-                  doc['answerCount'] = item.answerCount;
-                }
-              });
-            });
-            res.status(200).json({
-              users: docs,
-            });
-          });
+         //#region get for answerCount query
+          // let usersIds = [];
+          // docs.map(doc => {
+          //   usersIds.push(doc._id);
+          // });
+          // Question.aggregate([
+          //   {
+          //     $match: {
+          //         toUser: { $in: usersIds },
+          //         answerText: { $exists: true } 
+          //       }
+          //   },
+          //   {
+          //     $group: {
+          //       _id: '$toUser',
+          //       answerCount: { $sum: 1 },
+          //     }
+          //   }
+          // ])
+          // .exec()
+          // .then(result => {
+          //   docs.map(doc => {
+          //     doc.answerCount = 0;
+          //     result.map(item => {
+          //       if(String(doc._id) === String(item._id)){
+          //         doc['answerCount'] = item.answerCount;
+          //       }
+          //     });
+          //   });
+          //   res.status(200).json({
+          //     users: docs,
+          //   });
+          // });
+          //#endregion
       });
     });
 };
@@ -225,38 +230,43 @@ exports.search_users = (req, res, next) => {
     .sort('username')
     .exec()
     .then(docs => {
-      let usersIds = [];
-      docs.map(doc => {
-        usersIds.push(doc._id);
+      res.status(200).json({
+        users: docs
       });
-      Question.aggregate([
-        {
-          $match: {
-              toUser: { $in: usersIds },
-              answerText: { $exists: true } 
-            }
-        },
-        {
-          $group: {
-            _id: '$toUser',
-            answerCount: { $sum: 1 },
-          }
-        }
-      ])
-      .exec()
-      .then(result => {
-        docs.forEach(doc => {
-          doc.answerCount = 0;
-          result.forEach(item => {
-            if(String(doc._id) === String(item._id)){
-              doc['answerCount'] = item.answerCount;
-            }
-          });
-        });
-        res.status(200).json({
-          users: docs
-        });
-      });
+      //#region for get answerCount query
+      // let usersIds = [];
+      // docs.map(doc => {
+      //   usersIds.push(doc._id);
+      // });
+      // Question.aggregate([
+      //   {
+      //     $match: {
+      //         toUser: { $in: usersIds },
+      //         answerText: { $exists: true } 
+      //       }
+      //   },
+      //   {
+      //     $group: {
+      //       _id: '$toUser',
+      //       answerCount: { $sum: 1 },
+      //     }
+      //   }
+      // ])
+      // .exec()
+      // .then(result => {
+      //   docs.forEach(doc => {
+      //     doc.answerCount = 0;
+      //     result.forEach(item => {
+      //       if(String(doc._id) === String(item._id)){
+      //         doc['answerCount'] = item.answerCount;
+      //       }
+      //     });
+      //   });
+      //   res.status(200).json({
+      //     users: docs
+      //   });
+      // });
+      //#endregion
     });
 };
 
