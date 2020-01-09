@@ -90,7 +90,7 @@ export default {
             .then(result => {
               if (result.data) {
                 common.cookie.set('access_token', result.data.token);
-                const decoded = jwt.verify(result.data.token, process.env.MONGO_KEY);
+                const decoded = jwt.verify(result.data.token, process.env.VUE_APP_MONGO_KEY);
                 this.$store.commit('setLoginUserId', decoded.userId);
                 this.$store.commit('setloginUserName', decoded.username);
                 this.$store.commit('setToken', result.data.token);

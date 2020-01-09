@@ -104,7 +104,7 @@ export default {
       if (this.userImg === 'default-pp.png') {
         return '/assets/img/default-pp.png';
       } else {
-        return `${process.env.API_URL}${this.userId}/${this.userImg}`;
+        return `${process.env.VUE_APP_API_URL}/${this.userId}/${this.userImg}`;
       }
     },
     isOwnProfile() {
