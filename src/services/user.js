@@ -22,5 +22,27 @@ export default {
         message: error.message,
       };
     }
+  },
+  async getRandomUsers(payload) {
+    try {
+      const res = await api().post('/user/getRandomUser', payload);
+      return res.data;
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message
+      }
+    }
+  },
+  async searchUsers(payload) {
+    try {
+      const res = await api().post('/user/searchUser', payload);
+      return res.data;
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message
+      }
+    }
   }
 };

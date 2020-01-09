@@ -34,9 +34,9 @@ export default {
       };
     }
   },
-  async deleteQuestion(params) {
+  async deleteQuestion(params, payload) {
     try {
-      const res = await api().delete('/question/' + params);
+      const res = await api().delete('/question/' + params, payload);
       return res.data;
     } catch (error) {
       return {
@@ -45,5 +45,15 @@ export default {
       };
     }
   },
-
+  async getFollowingQuestions(payload) {
+    try {
+      const res = await api().get('/question/getFollowingQuestions/' + payload);
+      return res.data;
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message,
+      }
+    }
+  }
 }

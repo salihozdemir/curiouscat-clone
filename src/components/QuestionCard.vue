@@ -28,7 +28,7 @@
 </template>
 <script>
 export default {
-  props: ['question', 'loading'],
+  props: ['question'],
   computed: {
     getUserInfo() {
       if (this.question.isAnon) {

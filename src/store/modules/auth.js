@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default {
   state: {
-    activeComponent: 'app-signup'
+    activeComponent: 'signup'
   },
   getters: {
     getActiveComponent(state) {

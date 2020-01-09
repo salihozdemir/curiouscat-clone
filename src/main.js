@@ -21,11 +21,11 @@ import {
   Comment,
   Avatar,
   Switch,
-  AutoComplete,
   message,
   Popconfirm,
   Skeleton,
-  Spin
+  Spin,
+  ConfigProvider
 
 } from 'ant-design-vue';
 
@@ -52,10 +52,10 @@ Vue.use(List);
 Vue.use(Comment);
 Vue.use(Avatar);
 Vue.use(Switch);
-Vue.use(AutoComplete);
 Vue.use(Popconfirm);
 Vue.use(Skeleton);
 Vue.use(Spin);
+Vue.use(ConfigProvider);
 
 
 

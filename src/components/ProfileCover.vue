@@ -104,7 +104,7 @@ export default {
       if (this.userImg === 'default-pp.png') {
         return '/assets/img/default-pp.png';
       } else {
-        return `https://question-node-api.herokuapp.com/${this.userId}/${this.userImg}`;
+        return `${process.env.VUE_APP_API_URL}/${this.userId}/${this.userImg}`;
       }
     },
     isOwnProfile() {
@@ -114,6 +114,10 @@ export default {
         return false;
       }
     }
+  },
+  created() {
+    this.getFollowersUser();
+    this.getFollowingUser();
   },
   methods: {
     async changePP(event) {
@@ -154,10 +158,6 @@ export default {
       console.log(this.userFollowings);
     }
   },
-  created() {
-    this.getFollowersUser();
-    this.getFollowingUser();
-  }
 };
 </script>
 <style scoped>

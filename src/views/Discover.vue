@@ -1,10 +1,10 @@
 <template>
   <a-row :gutter="16">
     <a-col :md="24" :lg="8">
-      <app-who-to-follow></app-who-to-follow>
+      <who-to-follow></who-to-follow>
     </a-col>
     <a-col :md="24" :lg="16">
-      <app-search></app-search>
+      <search></search>
       <!-- <app-question-card></app-question-card> -->
     </a-col>
   </a-row>
@@ -16,9 +16,9 @@ import Search from '@/components/Search.vue';
 
 export default {
   components: {
-    appWhoToFollow: WhoToFollow,
-    appQuestionCard: QuestionCard,
-    appSearch: Search
+    WhoToFollow,
+    QuestionCard,
+    Search
   }
 };
 </script>
