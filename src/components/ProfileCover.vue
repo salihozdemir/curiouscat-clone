@@ -1,13 +1,13 @@
 <template>
-  <a-row type="flex" class="header">
+  <a-spin v-if="loading" class="spin"/>
+  <a-row v-else type="flex" class="header">
     <div class="banner background"></div>
     <div class="banner background-cover"></div>
     <a-col span="24">
       <a-row type="flex" justify="center" class="text-center">
         <a-col :span="4">
           <div class="avatar">
-            <a-spin v-if="this.userImg === ''" class="spin"/>
-            <img v-else :src="getPhotoUrl" @click="$refs.file.click()" />
+            <img :src="getPhotoUrl" @click="$refs.file.click()" />
           </div>
           <input
             ref="file"
@@ -89,7 +89,7 @@ import common from '@/common';
 import userService from '@/services/user';
 import followService from '@/services/follow';
 export default {
-  props: ['userImg', 'userName', 'userId', 'isFollow'],
+  props: ['userImg', 'userName', 'userId', 'isFollow', 'loading'],
   data() {
     return {
       followersVisible: false,
@@ -244,6 +244,6 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100%;
+  height: 20vh;
 }
 </style>

@@ -1,14 +1,13 @@
 <template>
   <div>
-    <a-skeleton v-if="coverLoading" active :paragraph="{rows: 6}" />
-    <profile-cover v-else :userImg.sync="userImg" :userName="userName" :userId="userId" :isFollow.sync="isFollow"></profile-cover>
+    <profile-cover :userImg.sync="userImg" :userName="userName" :userId="userId" :isFollow.sync="isFollow"></profile-cover>
     <a-row :gutter="16">
       <a-col :md="24" :lg="8">
         <ask-message :userId="userId"></ask-message>
         <who-to-follow></who-to-follow>
       </a-col>
       <a-col :md="24" :lg="16">
-        <!-- <div v-if="questionLoading">
+        <div v-if="questionLoading">
           <div class="card" v-for="i in 4" :key="i">
             <a-skeleton active avatar :paragraph="{rows: 2}" />
           </div>
@@ -47,11 +46,11 @@ export default {
       questions: [],
       questionLoading: true,
       coverLoading: true,
-      isFollow: '',
+      isFollow: ''
     };
   },
   computed: {
-     ...mapGetters(['loginUserId']),
+    ...mapGetters(['loginUserId'])
   },
   methods: {
     async getUser() {
@@ -75,7 +74,6 @@ export default {
         toUserId: this.userId,
         fromUserId: this.loginUserId
       });
-      console.log('result isFollow: ',result.isFollow)
       this.isFollow = result.isFollow;
       this.coverLoading = false;
     }
@@ -84,8 +82,8 @@ export default {
     this.questionLoading = true;
     this.coverLoading = true;
     await this.getUser();
-    await this.getAnsweredQuestions();
-    await this.isFollowUser();
+    this.isFollowUser();
+    this.getAnsweredQuestions();
   }
 };
 </script>
