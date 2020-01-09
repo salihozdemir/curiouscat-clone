@@ -4,7 +4,7 @@
       <div class="border-bottom-0">
         <div slot="header" class="border-bottom-0">
           <a-auto-complete auto-focus placeholder="Username" style="width: 100%;">
-            <a-input>
+            <a-input v-model="searchText">
               <a-icon slot="suffix" type="search" />
             </a-input>
           </a-auto-complete>
@@ -22,7 +22,7 @@
           <a-button type="dashed">Follow</a-button>
         </div>
       </a-list-item>
-      <a-list-item class="border-bottom-0">
+      <!-- <a-list-item class="border-bottom-0">
         <a-list-item-meta description="Progresser AFX">
           <a slot="title" href="https://www.antdv.com/">Salih</a>
           <a-avatar
@@ -45,12 +45,35 @@
         <div>
           <a-button type="dashed">Follow</a-button>
         </div>
-      </a-list-item>
+      </a-list-item> -->
     </a-list>
   </div>
 </template>
 <script>
-export default {};
+import userService from '@/services/user';
+import _ from 'lodash';
+export default {
+  data() {
+    return {
+      searchResult: [],
+      searchText: '',
+    }
+  },
+  watch: {
+    searchText() {
+      _.debounce(this.searchUser, 500);
+    }
+  },
+  methods: {
+    async searchUser() {
+      const result = await userService.searchUsers({
+        username: this.searchText
+      });
+      this.searchResult = result.users;
+      console.log(this.searchResult);
+    }
+  }
+};
 </script>
 <style scoped>
 .card {

@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <a-list>
+    <a-list :dataSource="randomUsers">
       <div slot="header">
         <a-row type="flex" align="bottom">
           <a-col :span="3">
@@ -14,33 +14,9 @@
           </a-col>
         </a-row>
       </div>
-      <a-list-item>
-        <a-list-item-meta description="Progresser AFX">
-          <a slot="title" href="https://www.antdv.com/">Salih</a>
-          <a-avatar
-            slot="avatar"
-            src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
-          />
-        </a-list-item-meta>
-        <div>
-          <a-button type="dashed" size="small">Follow</a-button>
-        </div>
-      </a-list-item>
-      <a-list-item>
-        <a-list-item-meta description="Progresser AFX">
-          <a slot="title" href="https://www.antdv.com/">Salih 2</a>
-          <a-avatar
-            slot="avatar"
-            src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
-          />
-        </a-list-item-meta>
-        <div>
-          <a-button type="dashed" size="small">Follow</a-button>
-        </div>
-      </a-list-item>
-      <a-list-item>
-        <a-list-item-meta description="Progresser AFX">
-          <a slot="title" href="https://www.antdv.com/">Salih 3</a>
+      <a-list-item slot="renderItem" slot-scope="item">
+        <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
+          <a slot="title" href="https://www.antdv.com/">{{item.username}}</a>
           <a-avatar
             slot="avatar"
             src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
@@ -54,7 +30,29 @@
   </div>
 </template>
 <script>
-export default {};
+import userService from '@/services/user';
+import { mapGetters } from 'vuex';
+export default {
+  data(){
+    return {
+      randomUsers: [],
+    }
+  },
+  computed: {
+    ...mapGetters(['loginUserId'])
+  },
+  created() {
+    this.getRandomUsers();
+  },
+  methods: {
+    async getRandomUsers() {
+      const res = await userService.getRandomUsers({
+        fromUserId: this.loginUserId  
+      });
+      this.randomUsers = res.users;
+    }
+  }
+};
 </script>
 <style scoped>
 .card {

@@ -1,14 +1,13 @@
 <template>
   <a-row :gutter="16">
     <a-col :md="24" :lg="8">
-      <app-who-to-follow></app-who-to-follow>
+       <app-who-to-follow></app-who-to-follow>
     </a-col>
     <a-col :md="24" :lg="16">
       <app-question-card
           v-for="question in questions"
           :key="question._id"
           :question="question"
-          :loading="questionLoading"
         ></app-question-card>
     </a-col>
   </a-row>
@@ -26,7 +25,7 @@ export default {
   },
   data(){
     return {
-      questions: []
+      questions: [],
     }
   },
   computed: {
