@@ -104,7 +104,7 @@ export default {
       if (this.userImg === 'default-pp.png') {
         return '/assets/img/default-pp.png';
       } else {
-        return `https://question-node-api.herokuapp.com/${this.userId}/${this.userImg}`;
+        return `${process.env.API_URL}${this.userId}/${this.userImg}`;
       }
     },
     isOwnProfile() {
