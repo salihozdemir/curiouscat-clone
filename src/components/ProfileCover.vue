@@ -115,6 +115,10 @@ export default {
       }
     }
   },
+  created() {
+    this.getFollowersUser();
+    this.getFollowingUser();
+  },
   methods: {
     async changePP(event) {
       const pp = event.target.files[0];
@@ -154,10 +158,6 @@ export default {
       console.log(this.userFollowings);
     }
   },
-  created() {
-    this.getFollowersUser();
-    this.getFollowingUser();
-  }
 };
 </script>
 <style scoped>

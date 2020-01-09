@@ -186,7 +186,7 @@ export default {
       callback();
     },
     goLoginComponent() {
-      this.$store.commit('setActiveComponent', 'app-login');
+      this.$store.commit('setActiveComponent', 'login');
     }
   }
 };

@@ -1,11 +1,11 @@
 <template>
   <div>
     <a-skeleton v-if="coverLoading" active :paragraph="{rows: 6}" />
-    <app-profile-cover v-else :userImg.sync="userImg" :userName="userName" :userId="userId" :isFollow.sync="isFollow"></app-profile-cover>
+    <profile-cover v-else :userImg.sync="userImg" :userName="userName" :userId="userId" :isFollow.sync="isFollow"></profile-cover>
     <a-row :gutter="16">
       <a-col :md="24" :lg="8">
-        <app-ask-message :userId="userId"></app-ask-message>
-        <app-who-to-follow></app-who-to-follow>
+        <ask-message :userId="userId"></ask-message>
+        <who-to-follow></who-to-follow>
       </a-col>
       <a-col :md="24" :lg="16">
         <!-- <div v-if="questionLoading">
@@ -13,12 +13,12 @@
             <a-skeleton active avatar :paragraph="{rows: 2}" />
           </div>
         </div> -->
-        <app-question-card
+        <question-card
           v-for="question in questions"
           :key="question._id"
           :question="question"
           :loading="questionLoading"
-        ></app-question-card>
+        ></question-card>
       </a-col>
     </a-row>
   </div>
@@ -34,10 +34,10 @@ import followService from '@/services/follow';
 import { mapGetters } from 'vuex';
 export default {
   components: {
-    appProfileCover: ProfileCover,
-    appAskMessage: AskMessage,
-    appQuestionCard: QuestionCard,
-    appWhoToFollow: WhoToFollow
+    ProfileCover,
+    AskMessage,
+    QuestionCard,
+    WhoToFollow
   },
   data() {
     return {

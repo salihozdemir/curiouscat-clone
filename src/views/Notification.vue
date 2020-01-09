@@ -1,13 +1,13 @@
 <template>
   <a-row :gutter="16">
     <a-col :md="24" :lg="8">
-      <app-who-to-follow></app-who-to-follow>
+      <who-to-follow></who-to-follow>
     </a-col>
     <a-col :md="24" :lg="16">
-      <app-notification-card></app-notification-card>
-      <app-notification-card></app-notification-card>
-      <app-notification-card></app-notification-card>
-      <app-notification-card></app-notification-card>
+      <notification-card></notification-card>
+      <notification-card></notification-card>
+      <notification-card></notification-card>
+      <notification-card></notification-card>
     </a-col>
   </a-row>
 </template>
@@ -17,8 +17,8 @@ import NotificationCard from '@/components/NotificationCard.vue';
 
 export default {
   components: {
-    appWhoToFollow: WhoToFollow,
-    appNotificationCard: NotificationCard,
+    WhoToFollow,
+    NotificationCard,
   }
 }
 </script>

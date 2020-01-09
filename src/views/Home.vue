@@ -1,14 +1,15 @@
 <template>
   <a-row :gutter="16">
     <a-col :md="24" :lg="8">
-       <app-who-to-follow></app-who-to-follow>
+       <who-to-follow></who-to-follow>
     </a-col>
     <a-col :md="24" :lg="16">
-      <app-question-card
+      <question-card
           v-for="question in questions"
           :key="question._id"
           :question="question"
-        ></app-question-card>
+        >
+      </question-card>
     </a-col>
   </a-row>
 </template>
@@ -20,8 +21,8 @@ import { mapGetters } from 'vuex';
 
 export default {
   components: {
-    appWhoToFollow: WhoToFollow,
-    appQuestionCard: QuestionCard,
+    WhoToFollow,
+    QuestionCard,
   },
   data(){
     return {

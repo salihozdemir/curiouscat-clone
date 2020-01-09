@@ -11,8 +11,8 @@ import Signup from '@/components/Signup';
 import { mapGetters } from 'vuex';
 export default {
   components: {
-    appLogin: Login,
-    appSignup: Signup
+    Login,
+    Signup
   },
   computed: {
     ...mapGetters(['getActiveComponent'])

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <app-layout v-if="isAuthenticated">
+    <layout v-if="isAuthenticated">
       <router-view />
-    </app-layout>
+    </layout>
     <router-view v-else></router-view>
   </div>
 </template>
@@ -14,7 +14,7 @@ import common from '@/common/index.js';
 
 export default {
   components: {
-    appLayout: Layout
+    Layout,
   },
   computed: {
     ...mapGetters(['token']),

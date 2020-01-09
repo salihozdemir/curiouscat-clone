@@ -37,16 +37,17 @@
   </div>
 </template>
 <script>
+//TODO: V-decoreder işime yarıyor mu? Yaramıyorsa kaldır.
 import { mapGetters } from 'vuex';
 import questionService from '@/services/question';
 import { async } from 'q';
 export default {
-  beforeCreate() {
-    this.form = this.$form.createForm(this, { name: 'send_question' });
-  },
   props: ['userId'],
   computed: {
     ...mapGetters(['loginUserId'])
+  },
+  beforeCreate() {
+    this.form = this.$form.createForm(this, { name: 'send_question' });
   },
   methods: {
     async handleSubmit() {

@@ -104,7 +104,7 @@ export default {
       });
     },
     goSignupComponent() {
-      this.$store.commit('setActiveComponent', 'app-signup');
+      this.$store.commit('setActiveComponent', 'signup');
     }
   }
 };
