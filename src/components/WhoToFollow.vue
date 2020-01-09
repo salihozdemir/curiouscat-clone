@@ -10,7 +10,7 @@
             <div style="font-size: 12px;">Who to follow</div>
           </a-col>
           <a-col :span="3">
-            <a-icon id="reload" type="reload" :spin="false"></a-icon>
+            <a-icon class="reload" @click="refreshUsers" type="reload" :spin="false"></a-icon>
           </a-col>
         </a-row>
       </div>
@@ -32,24 +32,20 @@
 <script>
 import userService from '@/services/user';
 import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex'
 export default {
-  data(){
-    return {
-      randomUsers: [],
-    }
-  },
   computed: {
-    ...mapGetters(['loginUserId'])
+    ...mapGetters(['randomUsers'])
   },
   created() {
-    this.getRandomUsers();
+    if(this.randomUsers === []) {
+      this.getRandomUsers();
+    }
   },
   methods: {
-    async getRandomUsers() {
-      const res = await userService.getRandomUsers({
-        fromUserId: this.loginUserId  
-      });
-      this.randomUsers = res.users;
+    ...mapActions(['getRandomUsers']),
+    refreshUsers() {
+      this.getRandomUsers();
     }
   }
 };
@@ -61,7 +57,7 @@ export default {
   margin-top: 10px;
   border-radius: 0.5rem;
 }
-#reload {
+.reload {
   font-size: 16px;
   cursor: pointer;
 }
