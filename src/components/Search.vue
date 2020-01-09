@@ -12,7 +12,7 @@
       </div>
       <a-list-item style="margin-top: 5px;" class="border-bottom-0">
         <a-list-item-meta description="Progresser AFX">
-          <a slot="title" href="https://www.antdv.com/">Salih</a>
+          <a slot="title" href="https://www.antdv.com/">{{isTyping}}</a>
           <a-avatar
             slot="avatar"
             src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
@@ -57,12 +57,19 @@ export default {
     return {
       searchResult: [],
       searchText: '',
+      isTyping: false
     }
   },
   watch: {
-    searchText() {
-      _.debounce(this.searchUser, 500);
+    searchText(newValue) {
+      this.isTyping = true;
+      if(newValue.length >= 3) {
+        this.debouncedGetUser();
+      }
     }
+  },
+  created() {
+    this.debouncedGetUser =  _.debounce(this.searchUser, 500);
   },
   methods: {
     async searchUser() {
@@ -70,7 +77,7 @@ export default {
         username: this.searchText
       });
       this.searchResult = result.users;
-      console.log(this.searchResult);
+      this.isTyping = false;
     }
   }
 };
