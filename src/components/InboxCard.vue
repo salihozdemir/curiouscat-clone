@@ -50,6 +50,7 @@
 </template>
 <script>
 import questionService from '@/services/question';
+import { mapGetters } from 'vuex';
 export default {
   props: ['question'],
   data() {
@@ -61,6 +62,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['loginUserId']),
     getUserInfo() {
       if (this.question.isAnon) {
         return {
@@ -82,7 +84,8 @@ export default {
     async answerQuestion() {
       this.confirmLoading = true;
       const result = await questionService.answerQuestion(this.question._id, {
-        value: this.answerText
+        value: this.answerText,
+        userId: this.loginUserId 
       });
       if (result.success) {
         this.$message.success('Answered!');
@@ -96,7 +99,9 @@ export default {
       this.answerText = '';
     },
     async deleteQuestion() {
-      const result = await questionService.deleteQuestion(this.question._id);
+      const result = await questionService.deleteQuestion(this.question._id, {
+        userId: this.loginUserId
+      });
       if (result.success) {
         this.$message.error('Deleted!');
         this.cardVisible = false;

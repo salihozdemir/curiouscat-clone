@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="card">
-      <a-skeleton v-if="loading" active avatar :paragraph="{rows: 2}" />
+      <!-- <a-skeleton v-if="loading" active avatar :paragraph="{rows: 2}" /> -->
       <a-comment>
         <a slot="author" class="author-name">{{getUserInfo.fromUserName}}</a>
         <a-avatar
