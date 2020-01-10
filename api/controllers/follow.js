@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Follow = require("../models/follow");
-const Question = require("../models/question");
 
 exports.follow_or_unfollow = (req, res, next) => {
   Follow.findOne({ toUser: req.body.toUserId, fromUser: req.body.fromUserId })

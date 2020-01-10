@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const userRoutes = require("./api/routes/user");
 const questionRoutes = require("./api/routes/question");
 const followRoutes = require("./api/routes/follow");
+const notificationRoutes = require("./api/routes/notification");
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
@@ -42,6 +43,7 @@ app.use((req, res, next) => {
 app.use("/user", userRoutes);
 app.use("/question", questionRoutes);
 app.use("/follow", followRoutes);
+app.use("/notification", notificationRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
