@@ -2,23 +2,27 @@
   <div class="container">
     <div class="card">
       <a-comment>
-        <a slot="author" class="author-name">{{getUserInfo.fromUserName}}</a>
+        <a slot="author" @click="goToProfile(fromUserInfo.fromUserName)" class="author-name">
+          {{fromUserInfo.fromUserName}}
+        </a>
         <a-avatar
+          @click="goToProfile(fromUserInfo.fromUserName)"
           slot="avatar"
-          :src="getUserInfo.fromUserUrl"
-          :alt="getUserInfo.fromUserName"
+          :src="fromUserInfo.fromUserUrl"
+          :alt="fromUserInfo.fromUserName"
           :size="40"
-          style="text-align: -webkit-center;"
+          class="comment-avatar"
         ></a-avatar>
         <p slot="content">{{question.questionText}}</p>
         <a-comment>
-          <a slot="author" class="author-name">{{question.toUser.username}}</a>
+          <a slot="author" @click="goToProfile(question.toUser.username)" class="author-name">{{question.toUser.username}}</a>
           <a-avatar
+            @click="goToProfile(question.toUser.username)"
             slot="avatar"
-            :src="question.toUser.profileImg"
+            :src="toUserInfo"
             :alt="question.toUser.username"
             :size="40"
-            style="text-align: -webkit-center;"
+            class="comment-avatar"
           />
           <p slot="content">{{question.answerText}}</p>
         </a-comment>
@@ -30,18 +34,35 @@
 export default {
   props: ['question'],
   computed: {
-    getUserInfo() {
+    fromUserInfo() {
       if (this.question.isAnon) {
         return {
           fromUserName: 'Anonymous',
           fromUserUrl: '/assets/img/anonymous-pp.png'
         };
       } else {
+        const defaultPP = '/assets/img/default-pp.png';
+        const backendPP = `${process.env.VUE_APP_API_URL}/${this.question.fromUser._id}/${this.question.fromUser.profileImg}`;
         return {
           fromUserName: this.question.fromUser.username,
-          fromUserUrl: `https://question-node-api.herokuapp.com/${this.question.fromUser._id}/${this.question.fromUser.profileImg}`
-        };
+          fromUserUrl: this.question.fromUser.profileImg === 'default-pp.png' ? defaultPP : backendPP
+        }; 
       }
+    },
+    toUserInfo() {
+      const defaultPP = '/assets/img/default-pp.png';
+      const backendPP = `${process.env.VUE_APP_API_URL}/${this.question.toUser._id}/${this.question.toUser.profileImg}`;
+      return this.question.toUser.profileImg === 'default-pp.png' ? defaultPP : backendPP
+    },
+  },
+  methods: {
+    goToProfile(value) {
+      if(value !== 'Anonymous'){
+        this.$router.push({
+          name: 'Profile',
+          params: { username: value }
+        }); 
+      } 
     }
   }
 };
@@ -52,6 +73,7 @@ export default {
   background-color: white;
   margin-top: 10px;
   border-radius: 0.5rem;
+  box-shadow: 0 0px 4px 0 rgba(0,0,0,0.2);
 }
 
 .container:last-child {
@@ -62,4 +84,11 @@ export default {
   font-weight: bold;
   font-size: larger;
 }
+
+.comment-avatar {
+  display: inline;
+  text-align: center;
+}
+
+
 </style>

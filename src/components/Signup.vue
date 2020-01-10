@@ -146,7 +146,6 @@ export default {
       this.errorMessage = null;
       this.loading = true;
       this.form.validateFieldsAndScroll((err, values) => {
-        console.log(values);
         if (!err) {
           api()
             .post('/user/signup', {

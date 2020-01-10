@@ -71,5 +71,7 @@ body {
   background: none;
   padding: unset;
   text-align: center;
+  height: unset;
+  box-shadow: 0 0px 4px 0 rgba(0,0,0,0.2);
 }
 </style>

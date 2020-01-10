@@ -28,6 +28,7 @@
         ></a-button>
       </a-row>
       <a-row type="flex" justify="center" class="text-center">
+        <!-- TODO: $route.params.id  -->
         <a-col :span="4">
           <a class="usermame">{{userName}}</a>
           <a-button
@@ -127,7 +128,6 @@ export default {
         formData.append('id', this.loginUserId);
         formData.append('profileImg', pp, pp.name);
         const result = await userService.uploadProfilePhoto(formData);
-        console.log(result);
         this.$emit('update:userImg', result.profileImg);
       } else {
         this.$message.error('Please upload jpeg or png file type.');
@@ -150,12 +150,10 @@ export default {
     async getFollowersUser() {
       const followers = await followService.getUserFollowers(this.loginUserId);
       this.userFollowers = followers;
-      console.log(this.userFollowers);
     },
     async getFollowingUser() {
       const followings = await followService.getUserFollowings(this.loginUserId);
       this.userFollowings = followings;
-      console.log(this.userFollowings);
     }
   },
 };

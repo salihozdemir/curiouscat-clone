@@ -46,16 +46,14 @@ const router = new VueRouter({
 export default router;
 
 // Tüm router işlemlerinde token kontrolü yapılıyor. Eğer kullanıcı Auth ekranından başka bir sayfaya istek gönderdiğinde ve token'a sahip değilse Auth ekranına gönder. Auth ekranına gitmek istediğinde ise token'ı var ise Profile sayfasına yönlendirir.
-
-router.afterEach(to => {
+//TODO: Kontrol edilicek. Daha iyi geliştirmeler yapılabilir.
+router.beforeEach((to, from, next) => {
   if (to.name !== 'Auth') {
-    if (!common.cookie.get('access_token')) {
-      router.push({ name: 'Auth' });
-    }
+    if (!common.cookie.get('access_token')) next('/Auth');
+    else next();
   }
   if (to.name === 'Auth') {
-    if (common.cookie.get('access_token')) {
-      router.push({ name: 'Profile' });
-    }
+    if (common.cookie.get('access_token')) next('/Profile');
+    else next();
   }
 });

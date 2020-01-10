@@ -47,7 +47,10 @@ export default {
     width: 48px;
     height: 48px;
     border-radius: 50%;
+    padding: 2px;
+    border: 2px solid rgba(0,0,0,.1);
 }
+
 
 .ant-comment-inner {
     padding: 7px 0px 0px 0px;
