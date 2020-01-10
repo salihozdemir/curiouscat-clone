@@ -120,12 +120,14 @@ exports.get_following_questions = (req, res, next) => {
     .then(docs => {
       let userArray = [];
       docs.map(doc => {
-        userArray.push(doc.fromUser);
+        userArray.push(doc.toUser);
       });
       Question.find({
-        fromUser: { $all: userArray },
+        fromUser: { $in: userArray },
         answerText: { $exists: true }
       })
+        .select("-__v")
+        .populate("toUser fromUser", "username profileImg")
         .exec()
         .then(result => {
           res.status(200).json({
