@@ -116,6 +116,7 @@ export default {
   background-color: white;
   margin-top: 10px;
   border-radius: 0.5rem;
+  box-shadow: 0 0px 4px 0 rgba(0,0,0,0.2);
 }
 
 .question-container {

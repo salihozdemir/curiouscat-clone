@@ -5,6 +5,12 @@
         <a-menu-item key="1">
           <router-link to="/" tag="a">
             <a-icon type="home" />
+            <img src="assets/img/askPrivy-logo.svg" />
+          </router-link>
+        </a-menu-item>
+        <a-menu-item key="1">
+          <router-link to="/" tag="a">
+            <a-icon type="home" />
             <span class="nav-text">Home</span>
           </router-link>
         </a-menu-item>

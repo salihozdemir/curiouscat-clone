@@ -210,7 +210,7 @@ export default {
 }
 
 .background {
-  background-image: linear-gradient(140deg, #5ad8b1 50%, #4adcae);
+  background-image: linear-gradient(140deg, #32aff8 50%, #32aff8);
   background-size: cover;
   background-position: 50%;
 }

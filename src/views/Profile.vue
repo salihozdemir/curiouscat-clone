@@ -11,7 +11,7 @@
           <div class="card" v-for="i in 4" :key="i">
             <a-skeleton active avatar :paragraph="{rows: 2}" />
           </div>
-        </div> -->
+        </div>
         <question-card
           v-for="question in questions"
           :key="question._id"
