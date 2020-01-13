@@ -25,7 +25,8 @@ import {
   Popconfirm,
   Skeleton,
   Spin,
-  ConfigProvider
+  ConfigProvider,
+  Badge
 
 } from 'ant-design-vue';
 
@@ -56,6 +57,7 @@ Vue.use(Popconfirm);
 Vue.use(Skeleton);
 Vue.use(Spin);
 Vue.use(ConfigProvider);
+Vue.use(Badge);
 
 
 

@@ -5,12 +5,6 @@
         <a-menu-item key="1">
           <router-link to="/" tag="a">
             <a-icon type="home" />
-            <img src="assets/img/askPrivy-logo.svg" />
-          </router-link>
-        </a-menu-item>
-        <a-menu-item key="1">
-          <router-link to="/" tag="a">
-            <a-icon type="home" />
             <span class="nav-text">Home</span>
           </router-link>
         </a-menu-item>
@@ -34,14 +28,17 @@
         </a-menu-item>
         <a-menu-item key="5">
           <router-link to="/Notification" tag="a">
-            <a-icon type="notification" />
+          <!-- TODO: ekran küçülünce olacak olan offset :offset="[6,-1]" -->
+            <a-badge :count="9" :offset="[-5,-5]">
+              <a-icon type="notification" />
+            </a-badge>
             <span class="nav-text">Notification</span>
           </router-link>
         </a-menu-item>
       </a-menu>
     </a-layout-header>
     <a-layout>
-      <a-layout-content :style="{ padding: '0 50px', marginTop: '50px' }">
+      <a-layout-content class="layout-content">
         <a-row type="flex" justify="center">
           <a-col :xs="24" :sm="20" :md="18">
             <slot></slot>
@@ -67,9 +64,11 @@ export default {
   margin: 16px;
 }
 
-body {
-  background-color: whitesmoke;
+.layout-content {
+  padding: 0px 50px; 
+  margin-top: 50px;
 }
+
 .custom-header {
   position: fixed;
   z-index: 1;
