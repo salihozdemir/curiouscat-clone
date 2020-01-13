@@ -67,6 +67,21 @@ export default {
     padding: 7px 0px 0px 0px;
 }
 
+#discover .ant-list-header{
+  border-bottom: unset;
+}
+
+#discover .ant-list-empty-text{
+  display: none;
+}
+
+#inbox-card .ant-comment-actions{
+  display: flex;
+  flex-flow: row-reverse;
+  font-size: 15px;
+}
+
+
 a:hover {
   text-decoration: underline;
 }

@@ -4,10 +4,12 @@
        <who-to-follow></who-to-follow>
     </a-col>
     <a-col :md="24" :lg="16">
+      <a-skeleton active v-if="loadingQuestions" :paragraph="{rows: 5}" />
       <question-card
-          v-for="question in questions"
-          :key="question._id"
-          :question="question"
+        v-else
+        v-for="question in questions"
+        :key="question._id"
+        :question="question"
         >
       </question-card>
     </a-col>
@@ -27,6 +29,7 @@ export default {
   data(){
     return {
       questions: [],
+      loadingQuestions: true,
     }
   },
   computed: {
@@ -39,6 +42,7 @@ export default {
     async getFollowingQuestions(){
       const result = await questionService.getFollowingQuestions(this.loginUserId);
       this.questions = result.questions;
+      this.loadingQuestions = false;
     }
   }
 };

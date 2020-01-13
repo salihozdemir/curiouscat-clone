@@ -98,6 +98,7 @@ export default {
 .avatar {
   display: inline;
   text-align: center;
+  cursor: pointer;
 }
 
 .follow-button {

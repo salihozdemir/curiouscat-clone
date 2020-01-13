@@ -1,29 +1,29 @@
 <template>
-  <div class="card">
-    <a-config-provider>
-      <template v-slot:renderEmpty>
-        
-      </template>
-      <a-list :dataSource="searchResult" :loading="isTyping">
-        <div slot="header" >
-          <a-input auto-focus placeholder="Username" v-model="searchText">
-            <a-icon slot="suffix" type="search" />
-          </a-input>
+  <div class="card" id="discover">
+    <a-list :dataSource="searchResult">
+      <div slot="header" >
+        <a-input auto-focus placeholder="Username" v-model="searchText">
+          <a-icon slot="suffix" type="loading-3-quarters" :spin="true" style="color: #32afd3;" v-if="isTyping"></a-icon>
+          <a-icon slot="suffix" type="search" v-else />
+        </a-input>
+      </div>
+      <a-list-item style="margin-top: 5px;" class="border-bottom-0" slot="renderItem" slot-scope="item">
+        <a-list-item-meta :description="String(item.answerCount) + ' Answered'">
+          <a slot="title" @click="goToProfile(item.username)" class="username">{{item.username}}</a>
+          <a-avatar
+            slot="avatar"
+            :src="getProfileImg(item)"
+            @click="goToProfile(item.username)"
+            :size="40"
+            class="avatar"
+          />
+        </a-list-item-meta>
+        <div>
+          <a-button shape="round" class="follow-button" size="small">Follow</a-button>
         </div>
-        <a-list-item style="margin-top: 5px;" class="border-bottom-0" slot="renderItem" slot-scope="item">
-          <a-list-item-meta :description="String(item.answerCount) + ' Answered'">
-            <a slot="title" href="https://www.antdv.com/">{{item.username}}</a>
-            <a-avatar
-              slot="avatar"
-              src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
-            />
-          </a-list-item-meta>
-          <div>
-            <a-button type="dashed">Follow</a-button>
-          </div>
-        </a-list-item>
-      </a-list>
-    </a-config-provider>
+      </a-list-item>
+      <p v-if="noDataText" class="no-data-text">Nothing found!</p>
+    </a-list>
   </div>
 </template>
 <script>
@@ -34,7 +34,8 @@ export default {
     return {
       searchResult: [],
       searchText: '',
-      isTyping: false
+      isTyping: false,
+      noDataText: false,
     }
   },
   watch: {
@@ -55,7 +56,20 @@ export default {
       });
       this.searchResult = result.users;
       this.isTyping = false;
-    }
+      if(this.searchResult.length === 0) this.noDataText = true;
+      else this.noDataText = false; 
+    },
+    goToProfile(value) {
+      this.$router.push({
+        name: 'Profile',
+        params: { username: value }
+      }); 
+    },
+    getProfileImg(user) {
+      const defaultPP = '/assets/img/default-pp.png';
+      const backendPP = `${process.env.VUE_APP_API_URL}/${user._id}/${user.profileImg}`;
+      return user.profileImg === 'default-pp.png' ? defaultPP : backendPP
+    },
   }
 };
 </script>
@@ -67,5 +81,26 @@ export default {
   border-radius: 0.5rem;
   margin-bottom: 20px;
   box-shadow: 0 0px 4px 0 rgba(0,0,0,0.2);
+}
+
+.no-data-text {
+  text-align: center;
+  color: #8a8989;
+}
+
+.username {
+  color: #32afd3;
+  font-size: 14px;
+}
+
+.avatar {
+  display: inline;
+  text-align: center;
+  cursor: pointer;
+}
+
+.follow-button {
+  border-color: #b1b0b0;
+  border-style: solid;
 }
 </style>

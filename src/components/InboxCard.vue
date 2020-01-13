@@ -1,28 +1,29 @@
 <template>
-  <div class="card" v-if="cardVisible">
+  <div class="card" id="inbox-card" v-if="cardVisible">
     <a-comment>
-      <a slot="author" class="author-name">{{getUserInfo.name}}</a>
+      <a slot="author" class="author-name" @click="goToProfile(fromUserInfo.name)">{{fromUserInfo.name}}</a>
       <a-avatar
+        @click="goToProfile(fromUserInfo.name)"
         slot="avatar"
-        :src="getUserInfo.url"
-        :alt="getUserInfo.name"
-        :size="64"
-        style="text-align: -webkit-center;"
+        :src="fromUserInfo.url"
+        :alt="fromUserInfo.name"
+        :size="40"
+        class="avatar"
       ></a-avatar>
-      <p slot="content">{{question.questionText}}</p>
-      <template slot="actions">
-        <a-popconfirm
+      <p slot="content" style="margin-bottom: 25px;">{{question.questionText}}</p>
+      <a-popconfirm
           title="Are you sure delete this question?"
           @confirm="deleteQuestion"
           okText="Yes"
           cancelText="No"
         >
-          <span class="delete-button">
-            <a-icon type="delete" />
-          </span>
+          <a-icon slot="icon" type="delete" style="color: red" />
+          <a-icon type="close" class="delete-button"/>
         </a-popconfirm>
-        <span @click="showModal" class="reply-button">Reply</span>
-      </template>
+        <a-button shape="round" size="small" @click="showModal" class="reply-button">
+          Answer
+          <a-icon type="right" style="font-size: 13px;" />
+        </a-button>
     </a-comment>
     <a-modal
       :visible="visible"
@@ -31,10 +32,10 @@
       @cancel="handleCancel"
       okText="Answer"
       :closable="false"
-    >
+      >
       <div class="question-container">
         <div class="sender">
-          <a href="#">{{getUserInfo.name}}</a> asked
+          <a @click="goToProfile(fromUserInfo.name)">{{fromUserInfo.name}}</a> asked
         </div>
         <span>{{question.questionText}}</span>
       </div>
@@ -63,18 +64,26 @@ export default {
   },
   computed: {
     ...mapGetters(['loginUserId']),
-    getUserInfo() {
+    fromUserInfo() {
       if (this.question.isAnon) {
         return {
           name: 'Anonymous',
-          url: 'assets/img/anonymous-pp.png'
+          url: '/assets/img/anonymous-pp.png'
         };
       } else {
         return {
           name: this.question.fromUser.username,
-          url: `https://question-node-api.herokuapp.com/${this.question.fromUser._id}/${this.question.fromUser.profileImg}`
+          url: `${process.env.VUE_APP_API_URL}/${this.question.fromUser._id}/${this.question.fromUser.profileImg}`
         };
       }
+    },
+    goToProfile(value) {
+      if(value !== 'Anonymous'){
+        this.$router.push({
+          name: 'Profile',
+          params: { username: value }
+        }); 
+      } 
     }
   },
   methods: {
@@ -106,7 +115,15 @@ export default {
         this.$message.error('Deleted!');
         this.cardVisible = false;
       }
-    }
+    },
+    goToProfile(value) {
+      if(value !== 'Anonymous'){
+        this.$router.push({
+          name: 'Profile',
+          params: { username: value }
+        }); 
+      } 
+    },
   }
 };
 </script>
@@ -134,22 +151,51 @@ export default {
   font-weight: 300;
 }
 
+.sender > a {
+  color: #32afd3;
+}
+
 .question-container > span {
   white-space: pre-wrap;
 }
 
 .reply-button {
   font-size: unset;
-  color: rgb(67, 188, 255);
+  color: #32afd3;
+  position: absolute;
+  bottom: 0px;
+  right: 0;
+  border: none;
+  box-shadow: none;
+  padding-bottom: 1px;
+  transition: none;
 }
 
-.delete-button {
-  font-size: medium;
-  color: red;
+.reply-button:hover {
+  border: 1px solid;
+  background-color: #32afd3;
+  color: white;
 }
 
 .author-name {
-  font-weight: bold;
-  font-size: larger;
+  font-size: 14px;
+  color: #32afd3;
 }
+
+.avatar {
+  display: inline;
+  text-align: center;
+  cursor: pointer;
+}
+
+.delete-button {
+  font-size: 12px;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #8a8989;
+}
+
+
 </style>
