@@ -1,6 +1,7 @@
 <template>
   <div class="card">
-    <a-list :dataSource="randomUsers">
+    <a-skeleton active v-if="initLoading"></a-skeleton>
+    <a-list v-else :loading="isLoadingUsers" :dataSource="randomUsers">
       <div slot="header">
         <a-row type="flex" align="bottom">
           <a-col :span="3">
@@ -10,7 +11,7 @@
             <div style="font-size: 12px;">Who to follow</div>
           </a-col>
           <a-col :span="3">
-            <a-icon class="reload" @click="refreshUsers" type="reload" :spin="false"></a-icon>
+            <a-icon class="reload" @click="refreshUsers" type="reload" :spin="isLoadingUsers"></a-icon>
           </a-col>
         </a-row>
       </div>
@@ -37,18 +38,27 @@ import userService from '@/services/user';
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex'
 export default {
+  data() {
+    return {
+      isLoadingUsers: false,
+      initLoading: true
+    }
+  },
   computed: {
     ...mapGetters(['randomUsers'])
   },
-  created() {
-    if(this.randomUsers === []) {
-      this.getRandomUsers();
+  async created() {
+    if(this.randomUsers.length === 0) {
+      await this.getRandomUsers();
     }
+    this.initLoading = false;
   },
   methods: {
     ...mapActions(['getRandomUsers']),
-    refreshUsers() {
-      this.getRandomUsers();
+    async refreshUsers() {
+      this.isLoadingUsers = true;
+      await this.getRandomUsers();
+      this.isLoadingUsers = false;
     },
     getProfileImg(user) {
       const defaultPP = '/assets/img/default-pp.png';

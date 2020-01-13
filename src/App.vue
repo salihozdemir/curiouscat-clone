@@ -71,7 +71,7 @@ a:hover {
   text-decoration: underline;
 }
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: 576px) {
   .nav-text {
     display: none;
   }
