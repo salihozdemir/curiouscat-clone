@@ -10,6 +10,7 @@ export default {
     loginUserName: '',
     loginUserId : '',
     randomUsers: [],
+    followText: [],
   },
   getters: {
     token: state => state.token,
@@ -29,12 +30,18 @@ export default {
     },
     setRandomUsers(state, payload) {
       state.randomUsers = payload;
+    },
+    changeUserText(state, payload) {
+      state.randomUsers.find(x => x._id === payload._id).text = payload.text;
     }
   },
   actions: {
     async getRandomUsers({ commit, state }) {
       const res = await userService.getRandomUsers({
         fromUserId: state.loginUserId
+      });
+      res.users.map(x => {
+        x.text = 'Follow';
       });
       commit('setRandomUsers', res.users);
     }

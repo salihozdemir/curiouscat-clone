@@ -48,7 +48,7 @@
       />
     </a-modal>
   </div>
-</template>
+</template> 
 <script>
 import questionService from '@/services/question';
 import { mapGetters } from 'vuex';
@@ -77,14 +77,6 @@ export default {
         };
       }
     },
-    goToProfile(value) {
-      if(value !== 'Anonymous'){
-        this.$router.push({
-          name: 'Profile',
-          params: { username: value }
-        }); 
-      } 
-    }
   },
   methods: {
     showModal() {

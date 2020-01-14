@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" id="whoToFollow">
     <a-skeleton active v-if="initLoading"></a-skeleton>
     <a-list v-else :loading="isLoadingUsers" :dataSource="randomUsers">
       <div slot="header">
@@ -26,26 +26,33 @@
             class="avatar"
           />
         </a-list-item-meta>
-        <div>
-          <a-button shape="round" class="follow-button" size="small">Follow</a-button>
-        </div>
+          <a-button 
+            shape="round" 
+            class="follow-button" 
+            size="small" 
+            @click="followOrUnFollow(item._id)"
+            :ref="item._id"
+          >
+            {{item.text}}
+          </a-button>
       </a-list-item>
     </a-list>
   </div>
 </template>
 <script>
 import userService from '@/services/user';
+import followService from '@/services/follow';
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex'
 export default {
   data() {
     return {
       isLoadingUsers: false,
-      initLoading: true
+      initLoading: true,
     }
   },
   computed: {
-    ...mapGetters(['randomUsers'])
+    ...mapGetters(['randomUsers', 'loginUserId'])
   },
   async created() {
     if(this.randomUsers.length === 0) {
@@ -70,7 +77,17 @@ export default {
         name: 'Profile',
         params: { username: value }
       }); 
-    }
+    },
+    async followOrUnFollow(userId) {
+      const result = await followService.followOrUnFollow({
+        toUserId: userId,
+        fromUserId: this.loginUserId
+      });
+      this.$store.commit('changeUserText', {
+        text: result.buttonText,
+        _id: result.toUserId
+      });
+    },
   }
 };
 </script>
@@ -104,6 +121,10 @@ export default {
 .follow-button {
   border-color: #b1b0b0;
   border-style: solid;
+}
+
+.follow-button:hover, .follow-button:focus {
+  color: unset;
 }
 
 a-avatar > img {

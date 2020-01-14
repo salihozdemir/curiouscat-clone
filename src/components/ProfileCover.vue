@@ -6,7 +6,7 @@
     <a-col span="24">
       <a-row type="flex" justify="center" class="text-center">
         <a-col :span="4">
-          <div class="avatar">
+          <div class="profile-avatar">
             <img :src="getPhotoUrl" @click="$refs.file.click()" />
           </div>
           <input
@@ -44,40 +44,46 @@
       <a-row type="flex" justify="space-around" class="text-center">
         <a-col :span="4">
           <span class="title">Answers</span>
-          <span class="num">10</span>
+          <span class="num">{{answerCount}}</span>
         </a-col>
         <a-col :span="4" @click="followersVisible = true" class="cursor-pointer">
           <span class="title">Followers</span>
-          <span class="num">{{userFollowers.count}}</span>
+          <span class="num">{{userFollowers.length}}</span>
         </a-col>
         <a-col :span="4" @click="followingVisible = true" class="cursor-pointer">
           <span class="title">Following</span>
-          <span class="num">{{userFollowings.count}}</span>
+          <span class="num">{{userFollowings.length}}</span>
         </a-col>
       </a-row>
     </a-col>
     <a-modal title="Followers" v-model="followersVisible" :footer="null">
-      <a-list itemLayout="horizontal" :dataSource="userFollowers.followers">
+      <a-list itemLayout="horizontal" :dataSource="userFollowers">
         <a-list-item slot="renderItem" slot-scope="item">
-          <a-list-item-meta description="25 Answered">
-            <a slot="title" href="https://www.antdv.com/">{{item.username}}</a>
+          <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
+            <a slot="title" @click="goToProfile(item.username)">{{item.username}}</a>
             <a-avatar
-              slot="avatar"
-              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            />
+            slot="avatar"
+            :src="getProfileImg(item)"
+            @click="goToProfile(item.username)"
+            :size="40"
+            class="avatar"
+          />
           </a-list-item-meta>
         </a-list-item>
       </a-list>
     </a-modal>
     <a-modal v-model="followingVisible" title="Following" :footer="null">
-      <a-list itemLayout="horizontal" :dataSource="userFollowings.following">
+      <a-list itemLayout="horizontal" :dataSource="userFollowings">
         <a-list-item slot="renderItem" slot-scope="item">
-          <a-list-item-meta description="25 Answered">
-            <a slot="title" href="https://www.antdv.com/">{{item.username}}</a>
+          <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
+            <a slot="title" @click="goToProfile(item.username)">{{item.username}}</a>
             <a-avatar
-              slot="avatar"
-              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            />
+            slot="avatar"
+            :src="getProfileImg(item)"
+            @click="goToProfile(item.username)"
+            :size="40"
+            class="avatar"
+          />
           </a-list-item-meta>
         </a-list-item>
       </a-list>
@@ -90,13 +96,13 @@ import common from '@/common';
 import userService from '@/services/user';
 import followService from '@/services/follow';
 export default {
-  props: ['userImg', 'userName', 'userId', 'isFollow', 'loading'],
+  props: ['userImg', 'userName', 'userId', 'isFollow', 'loading', 'answerCount'],
   data() {
     return {
       followersVisible: false,
       followingVisible: false,
-      userFollowers: {},
-      userFollowings: {},
+      userFollowers: [],
+      userFollowings: [],
     };
   },
   computed: {
@@ -149,11 +155,24 @@ export default {
     },
     async getFollowersUser() {
       const followers = await followService.getUserFollowers(this.loginUserId);
-      this.userFollowers = followers;
+      this.userFollowers = followers.users;
     },
     async getFollowingUser() {
       const followings = await followService.getUserFollowings(this.loginUserId);
-      this.userFollowings = followings;
+      this.userFollowings = followings.users;
+    },
+    getProfileImg(user) {
+      const defaultPP = '/assets/img/default-pp.png';
+      const backendPP = `${process.env.VUE_APP_API_URL}/${user._id}/${user.profileImg}`;
+      return user.profileImg === 'default-pp.png' ? defaultPP : backendPP
+    },
+    goToProfile(value) {
+      this.followersVisible = false,
+      this.followingVisible = false,
+      this.$router.push({
+        name: 'Profile',
+        params: { username: value }
+      }); 
     }
   },
 };
@@ -176,7 +195,7 @@ export default {
   cursor: pointer;
 }
 
-.avatar {
+.profile-avatar {
   display: inline-block;
   margin: 0.5em 0;
   width: 90px;
@@ -188,10 +207,16 @@ export default {
   cursor: pointer;
 }
 
-.avatar img {
+.profile-avatar img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
+}
+
+.avatar {
+  display: inline;
+  text-align: center;
+  cursor: pointer;
 }
 
 .header {

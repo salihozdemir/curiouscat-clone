@@ -1,5 +1,5 @@
 <template>
-  <a-layout id="components-layout-demo-responsive" style="min-height: 100vh">
+  <a-layout id="layout" style="min-height: 100vh">
     <a-layout-header class="custom-header">
       <a-menu theme="light" mode="horizontal">
         <a-menu-item key="1">
@@ -58,11 +58,6 @@ export default {
 </script>
 
 <style scope>
-#components-layout-demo-responsive .logo {
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px;
-}
 
 .layout-content {
   padding: 0px 50px; 

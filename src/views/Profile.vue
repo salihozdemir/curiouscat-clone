@@ -1,6 +1,6 @@
 <template>
   <div>
-    <profile-cover :userImg.sync="userImg" :userName="userName" :userId="userId" :isFollow.sync="isFollow"></profile-cover>
+    <profile-cover :userImg.sync="userImg" :userName="userName" :userId="userId" :isFollow.sync="isFollow" :answerCount="answerCount" ></profile-cover>
     <a-row :gutter="16">
       <a-col :md="24" :lg="8">
         <ask-message :userId="userId"></ask-message>
@@ -43,6 +43,8 @@ export default {
       userImg: '',
       userName: '',
       userId: '',
+      answerCount: 0,
+      user: {},
       questions: [],
       questionLoading: true,
       coverLoading: true,
@@ -60,6 +62,7 @@ export default {
       this.userImg = details.profileImg;
       this.userName = details.username;
       this.userId = details.id;
+      this.answerCount = details.answerCount;
     },
     async getAnsweredQuestions() {
       const result = await questionService.getNonAnsweredQuestions({

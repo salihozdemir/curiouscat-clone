@@ -81,6 +81,9 @@ export default {
   font-size: 15px;
 }
 
+#layout .anticon {
+  transform: scale(1.3);
+}
 
 a:hover {
   text-decoration: underline;
@@ -94,6 +97,10 @@ a:hover {
   .ant-menu-submenu-title .anticon {
     margin-right: unset;
     font-size: 17px;
+  }
+  .ant-badge-count {
+    right: -6px !important;
+    margin-top: unset !important;
   }
 }
 </style>
