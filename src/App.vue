@@ -81,7 +81,7 @@ export default {
   font-size: 15px;
 }
 
-#layout .anticon {
+#header .anticon {
   transform: scale(1.3);
 }
 
