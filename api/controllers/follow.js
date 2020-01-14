@@ -16,6 +16,7 @@ exports.follow_or_unfollow = (req, res, next) => {
           .then(result => {
             res.status(201).json({
               message: result.fromUser + " follow to" + result.toUser,
+              toUserId: result.toUser,
               isFollow: true,
             });
           })
@@ -33,6 +34,7 @@ exports.follow_or_unfollow = (req, res, next) => {
           .then(result => {
             res.status(200).json({
               message: result.fromUser + " unfollow to " + result.toUser,
+              toUserId: result.toUser,
               isFollow: false,
             });
           })

@@ -3,7 +3,6 @@ const app = express();
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const history = require('connect-history-api-fallback');
 
 const userRoutes = require("./api/routes/user");
 const questionRoutes = require("./api/routes/question");
@@ -22,7 +21,6 @@ mongoose.connect(
   }
 ).catch((error) => { console.log(error);});
 
-app.use(history());
 app.use(morgan("dev"));
 app.use(express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: false }));
