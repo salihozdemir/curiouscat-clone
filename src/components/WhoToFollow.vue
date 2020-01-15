@@ -31,7 +31,6 @@
             class="follow-button" 
             size="small" 
             @click="followOrUnFollow(item._id)"
-            :ref="item._id"
           >
             {{item.text}}
           </a-button>

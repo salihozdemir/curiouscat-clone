@@ -19,7 +19,14 @@
           />
         </a-list-item-meta>
         <div>
-          <a-button shape="round" class="follow-button" size="small">Follow</a-button>
+          <a-button 
+            shape="round" 
+            class="follow-button" 
+            size="small"
+            @click="followOrUnFollow(item._id)"
+            >
+              {{item.following ? 'unFollow' : 'Follow'}}
+          </a-button>
         </div>
       </a-list-item>
       <p v-if="noDataText" class="no-data-text">Nothing found!</p>
@@ -27,8 +34,11 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+import followService from '@/services/follow';
 import userService from '@/services/user';
 import _ from 'lodash';
+
 export default {
   data() {
     return {
@@ -37,6 +47,9 @@ export default {
       isTyping: false,
       noDataText: false,
     }
+  },
+  computed: {
+    ...mapGetters(['loginUserId']),
   },
   watch: {
     searchText(newValue) {
@@ -52,9 +65,11 @@ export default {
   methods: {
     async searchUser() {
       const result = await userService.searchUsers({
-        username: this.searchText
+        username: this.searchText,
+        fromUserId: this.loginUserId
       });
       this.searchResult = result.users;
+      console.log(this.searchResult);
       this.isTyping = false;
       if(this.searchResult.length === 0) this.noDataText = true;
       else this.noDataText = false; 
@@ -69,6 +84,14 @@ export default {
       const defaultPP = '/assets/img/default-pp.png';
       const backendPP = `${process.env.VUE_APP_API_URL}/${user._id}/${user.profileImg}`;
       return user.profileImg === 'default-pp.png' ? defaultPP : backendPP
+    },
+    async followOrUnFollow(userId) {
+      const result = await followService.followOrUnFollow({
+        toUserId: userId,
+        fromUserId: this.loginUserId
+      });
+      const clickedUser = this.searchResult.find(x => x._id === result.toUserId);
+      clickedUser.following = result.isFollow;
     },
   }
 };
@@ -102,5 +125,9 @@ export default {
 .follow-button {
   border-color: #b1b0b0;
   border-style: solid;
+}
+
+.follow-button:hover, .follow-button:focus {
+  color: unset;
 }
 </style>
