@@ -38,6 +38,7 @@ exports.login = (req, res, next) => {
             message: 'Auth successful',
             token,
             userId: user._id,
+            username: user.username,
             success: true
           });
         }
