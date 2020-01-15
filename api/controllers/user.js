@@ -225,48 +225,33 @@ exports.get_random_users = (req, res, next) => {
 
 exports.search_users = (req, res, next) => {
   User.find({username : {$regex: req.body.username , $options: 'i'} })
+    .lean()
     .select('-__v -password -email')
     .limit(10)
     .sort('username')
     .exec()
     .then(docs => {
-      res.status(200).json({
-        users: docs
-      });
-      //#region for get answerCount query
-      // let usersIds = [];
-      // docs.map(doc => {
-      //   usersIds.push(doc._id);
-      // });
-      // Question.aggregate([
-      //   {
-      //     $match: {
-      //         toUser: { $in: usersIds },
-      //         answerText: { $exists: true } 
-      //       }
-      //   },
-      //   {
-      //     $group: {
-      //       _id: '$toUser',
-      //       answerCount: { $sum: 1 },
-      //     }
-      //   }
-      // ])
-      // .exec()
-      // .then(result => {
-      //   docs.forEach(doc => {
-      //     doc.answerCount = 0;
-      //     result.forEach(item => {
-      //       if(String(doc._id) === String(item._id)){
-      //         doc['answerCount'] = item.answerCount;
-      //       }
-      //     });
-      //   });
-      //   res.status(200).json({
-      //     users: docs
-      //   });
-      // });
-      //#endregion
+      if(docs.length !== 0) {
+        Follow.find({fromUser: req.body.fromUserId})
+        .select('toUser -_id')
+        .exec()
+        .then(result => {
+          docs.forEach(element => {
+            element.following = false;
+            result.forEach(item => {
+              if(String(element._id) === String(item.toUser)) 
+              element.following = true;
+            });
+          });
+          res.status(200).json({
+            users: docs
+          });
+        });
+      } else {
+        res.status(404).json({
+          users: []
+        });
+      }
     });
 };
 
