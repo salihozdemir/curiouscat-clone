@@ -1,22 +1,27 @@
 <template>
   <div>
-    <profile-cover :userImg.sync="userImg" :userName="userName" :userId="userId" :isFollow.sync="isFollow" :answerCount="answerCount" ></profile-cover>
+    <profile-cover 
+      :userImg.sync="userImg" 
+      :userName="userName" 
+      :userId="userId" 
+      :isFollow.sync="isFollow"
+      :loading="coverLoading" 
+      :answerCount="answerCount">
+    </profile-cover>
     <a-row :gutter="16">
       <a-col :md="24" :lg="8">
         <ask-message :userId="userId"></ask-message>
         <who-to-follow></who-to-follow>
       </a-col>
       <a-col :md="24" :lg="16">
-        <div v-if="questionLoading">
-          <div class="card" v-for="i in 4" :key="i">
-            <a-skeleton active avatar :paragraph="{rows: 2}" />
-          </div>
+        <div v-if="questionLoading" class="spin">
+          <a-spin size="large"/>
         </div>
         <question-card
+          v-else
           v-for="question in questions"
           :key="question._id"
           :question="question"
-          :loading="questionLoading"
         ></question-card>
       </a-col>
     </a-row>
@@ -91,10 +96,8 @@ export default {
 };
 </script>
 <style scoped>
-.card {
-  padding: 10px;
-  background-color: white;
-  margin-top: 10px;
-  border-radius: 0.5rem;
+.spin {
+  margin-top: 50px;
+  text-align: center;
 }
 </style>

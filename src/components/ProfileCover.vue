@@ -1,9 +1,11 @@
 <template>
-  <a-spin v-if="loading" class="spin"/>
-  <a-row v-else type="flex" class="header">
+  <a-row type="flex" class="header">
     <div class="banner background"></div>
     <div class="banner background-cover"></div>
-    <a-col span="24">
+    <div v-if="loading" class="spin">
+      <a-spin size="large" />
+    </div>
+    <a-col v-else span="24">
       <a-row type="flex" justify="center" class="text-center">
         <a-col :span="4">
           <div class="profile-avatar">
@@ -268,5 +270,6 @@ export default {
   align-items: center;
   flex-direction: column;
   height: 20vh;
+  width: 100%
 }
 </style>

@@ -1,34 +1,32 @@
 <template>
   <div class="container">
     <div class="card">
-      <a-skeleton :loading="false" active>
+      <a-comment>
+        <a slot="author" @click="goToProfile(fromUserInfo.fromUserName)" class="author-name">
+          {{fromUserInfo.fromUserName}}
+        </a>
+        <a-avatar
+          @click="goToProfile(fromUserInfo.fromUserName)"
+          slot="avatar"
+          :src="fromUserInfo.fromUserUrl"
+          :alt="fromUserInfo.fromUserName"
+          :size="40"
+          class="comment-avatar"
+        ></a-avatar>
+        <p slot="content">{{question.questionText}}</p>
         <a-comment>
-          <a slot="author" @click="goToProfile(fromUserInfo.fromUserName)" class="author-name">
-            {{fromUserInfo.fromUserName}}
-          </a>
+          <a slot="author" @click="goToProfile(question.toUser.username)" class="author-name">{{question.toUser.username}}</a>
           <a-avatar
-            @click="goToProfile(fromUserInfo.fromUserName)"
+            @click="goToProfile(question.toUser.username)"
             slot="avatar"
-            :src="fromUserInfo.fromUserUrl"
-            :alt="fromUserInfo.fromUserName"
+            :src="toUserInfo"
+            :alt="question.toUser.username"
             :size="40"
             class="comment-avatar"
-          ></a-avatar>
-          <p slot="content">{{question.questionText}}</p>
-          <a-comment>
-            <a slot="author" @click="goToProfile(question.toUser.username)" class="author-name">{{question.toUser.username}}</a>
-            <a-avatar
-              @click="goToProfile(question.toUser.username)"
-              slot="avatar"
-              :src="toUserInfo"
-              :alt="question.toUser.username"
-              :size="40"
-              class="comment-avatar"
-            />
-            <p slot="content">{{question.answerText}}</p>
-          </a-comment>
+          />
+          <p slot="content">{{question.answerText}}</p>
         </a-comment>
-      </a-skeleton>
+      </a-comment>
     </div>
   </div>
 </template>

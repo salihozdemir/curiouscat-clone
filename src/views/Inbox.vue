@@ -5,7 +5,10 @@
         <who-to-follow></who-to-follow>
       </a-col>
       <a-col :md="24" :lg="16">
-        <inbox-card :question="question" v-for="question in questions" :key="question._id"></inbox-card>
+        <div v-if="questionLoading" class="spin">
+          <a-spin size="large"/>
+        </div>
+        <inbox-card v-else :question="question" v-for="question in questions" :key="question._id"></inbox-card>
       </a-col>
     </a-row>
   </div>
@@ -22,7 +25,8 @@ export default {
   },
   data() {
     return {
-      questions: []
+      questions: [],
+      questionLoading: true,
     };
   },
   computed: {
@@ -35,6 +39,7 @@ export default {
         answered: false
       });
       this.questions = result.questions;
+      this.questionLoading = false;
     }
   },
   created() {
@@ -43,4 +48,8 @@ export default {
 };
 </script>
 <style scoped>
+.spin {
+  margin-top: 50px;
+  text-align: center;
+}
 </style>

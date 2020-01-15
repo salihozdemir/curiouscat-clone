@@ -4,7 +4,9 @@
        <who-to-follow></who-to-follow>
     </a-col>
     <a-col :md="24" :lg="16">
-      <a-skeleton active v-if="loadingQuestions" :paragraph="{rows: 5}" />
+      <div v-if="loadingQuestions" class="spin">
+          <a-spin size="large"/>
+        </div>
       <question-card
         v-else
         v-for="question in questions"
@@ -48,4 +50,8 @@ export default {
 };
 </script>
 <style scoped>
+.spin {
+  margin-top: 50px;
+  text-align: center;
+}
 </style>
