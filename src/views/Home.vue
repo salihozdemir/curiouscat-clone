@@ -6,7 +6,7 @@
     <a-col :md="24" :lg="16">
       <div v-if="loadingQuestions" class="spin">
           <a-spin size="large"/>
-        </div>
+      </div>
       <question-card
         v-else
         v-for="question in questions"

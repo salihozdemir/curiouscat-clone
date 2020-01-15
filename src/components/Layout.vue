@@ -15,7 +15,7 @@
           </router-link>
         </a-menu-item>
         <a-menu-item key="3">
-          <router-link :to="'/Profile/' + this.loginUserName" tag="a">
+          <router-link :to="'/Profile/' + loginUserName" tag="a">
             <a-icon type="profile" />
             <span class="nav-text">Profile</span>
           </router-link>
