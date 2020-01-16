@@ -154,7 +154,7 @@ exports.get_random_answered_questions = (req, res, next) => {
         answerText: { $exists: true},
       }
     },
-    { $sample: { size: 15 } },
+    { $sample: { size: Number(req.body.limit) } },
     {    
       $lookup: {
           from: 'users',
