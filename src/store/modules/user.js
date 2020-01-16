@@ -10,7 +10,6 @@ export default {
     loginUserName: '',
     loginUserId : '',
     randomUsers: [],
-    followText: [],
   },
   getters: {
     token: state => state.token,
