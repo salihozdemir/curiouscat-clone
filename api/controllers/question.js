@@ -154,7 +154,37 @@ exports.get_random_answered_questions = (req, res, next) => {
         answerText: { $exists: true},
       }
     },
-    { $sample: { size: 15 } }
+    { $sample: { size: 15 } },
+    {    
+      $lookup: {
+          from: 'users',
+          localField: 'toUser',
+          foreignField: '_id',
+          as: 'toUser'
+        }
+    },
+    {    
+      $lookup: {
+          from: 'users',
+          localField: 'fromUser',
+          foreignField: '_id',
+          as: 'fromUser'
+        }
+    },
+    {
+      $project: {
+        _id: 1, 
+        'toUser.username': 1, 
+        'toUser.profileImg': 1, 
+        'fromUser.username': 1, 
+        'fromUser.profileImg': 1, 
+        isAnon: 1, 
+        questionText: 1, 
+        timeStamp: 1, 
+        answerText: 1
+      }
+    },
+    
   ])
   .exec()
   .then(result => {
