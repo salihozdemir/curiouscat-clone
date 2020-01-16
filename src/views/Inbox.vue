@@ -8,7 +8,10 @@
         <div v-if="questionLoading" class="spin">
           <a-spin size="large"/>
         </div>
-        <inbox-card v-else :question="question" v-for="question in questions" :key="question._id"></inbox-card>
+        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit" infinite-scroll-immediate-check="false">
+          <inbox-card :question="question" v-for="question in questions" :key="question._id"></inbox-card>
+          <a-spin v-if="loadingMore" class="loading-more" />
+        </div>
       </a-col>
     </a-row>
   </div>
@@ -18,38 +21,61 @@ import WhoToFollow from '@/components/WhoToFollow.vue';
 import InboxCard from '@/components/InboxCard.vue';
 import questionService from '@/services/question';
 import { mapGetters } from 'vuex';
+import infiniteScroll from 'vue-infinite-scroll';
+
 export default {
   components: {
     WhoToFollow,
     InboxCard
   },
+  directives: { infiniteScroll },
   data() {
     return {
       questions: [],
       questionLoading: true,
+      busy: false,
+      limit: 10,
+      page: 0,
+      loadingMore: false
     };
   },
   computed: {
     ...mapGetters(['loginUserId'])
   },
+  created() {
+    this.getNonAnsweredQuestions();
+  },
   methods: {
     async getNonAnsweredQuestions() {
       const result = await questionService.getUserQuestions({
         toUserId: this.loginUserId,
-        answered: false
+        answered: false,
+        limit: this.limit,
+        page: this.page,
       });
-      this.questions = result.questions;
+      this.questions = this.questions.concat(result.questions);
+      if(result.questions.length < this.limit) this.busy = true;
       this.questionLoading = false;
-    }
+    },
+    async loadMore() {
+      this.page++;
+      if(this.page > 0) this.loadingMore = true;
+      await this.getNonAnsweredQuestions();
+      this.loadingMore = false;
+    },
   },
-  created() {
-    this.getNonAnsweredQuestions();
-  }
 };
 </script>
 <style scoped>
 .spin {
   margin-top: 50px;
   text-align: center;
+}
+
+.loading-more {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: center;
 }
 </style>

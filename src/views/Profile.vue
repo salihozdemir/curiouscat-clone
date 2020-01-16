@@ -17,12 +17,14 @@
         <div v-if="questionLoading" class="spin">
           <a-spin size="large"/>
         </div>
-        <question-card
-          v-else
-          v-for="question in questions"
-          :key="question._id"
-          :question="question"
-        ></question-card>
+        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit" infinite-scroll-immediate-check="false">
+          <question-card
+            v-for="question in questions"
+            :key="question._id"
+            :question="question"
+          ></question-card>
+          <a-spin v-if="loadingMore" class="loading-more" />
+        </div>
       </a-col>
     </a-row>
   </div>
@@ -36,6 +38,7 @@ import userService from '@/services/user';
 import questionService from '@/services/question';
 import followService from '@/services/follow';
 import { mapGetters } from 'vuex';
+import infiniteScroll from 'vue-infinite-scroll';
 export default {
   components: {
     ProfileCover,
@@ -43,6 +46,7 @@ export default {
     QuestionCard,
     WhoToFollow
   },
+  directives: { infiniteScroll },
   data() {
     return {
       userImg: '',
@@ -53,11 +57,22 @@ export default {
       questions: [],
       questionLoading: true,
       coverLoading: true,
-      isFollow: ''
+      isFollow: '',
+      busy: false,
+      limit: 5,
+      page: 0,
+      loadingMore: false,
     };
   },
   computed: {
     ...mapGetters(['loginUserId'])
+  },
+  async created() {
+    this.questionLoading = true;
+    this.coverLoading = true;
+    await this.getUser();
+    this.isFollowUser();
+    this.getAnsweredQuestions();
   },
   methods: {
     async getUser() {
@@ -72,10 +87,19 @@ export default {
     async getAnsweredQuestions() {
       const result = await questionService.getUserQuestions({
         toUserId: this.userId,
-        answered: true
+        answered: true,
+        limit: this.limit,
+        page: this.page,
       });
-      this.questions = result.questions;
+      this.questions = this.questions.concat(result.questions);
+      if(result.questions.length < this.limit) this.busy = true;
       this.questionLoading = false;
+    },
+    async loadMore() {
+      this.page++;
+      if(this.page > 0) this.loadingMore = true;
+      await this.getAnsweredQuestions();
+      this.loadingMore = false;
     },
     async isFollowUser() {
       const result = await followService.isFollow({
@@ -86,18 +110,18 @@ export default {
       this.coverLoading = false;
     }
   },
-  async created() {
-    this.questionLoading = true;
-    this.coverLoading = true;
-    await this.getUser();
-    this.isFollowUser();
-    this.getAnsweredQuestions();
-  }
 };
 </script>
 <style scoped>
 .spin {
   margin-top: 50px;
   text-align: center;
+}
+
+.loading-more {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: center;
 }
 </style>

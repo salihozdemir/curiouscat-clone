@@ -7,13 +7,18 @@
       <div v-if="loadingQuestions" class="spin">
           <a-spin size="large"/>
       </div>
-      <question-card
-        v-else
-        v-for="question in questions"
-        :key="question._id"
-        :question="question"
-        >
-      </question-card>
+      <div 
+        v-infinite-scroll="loadMore" 
+        infinite-scroll-disabled="busy" 
+        infinite-scroll-distance="limit" 
+        infinite-scroll-immediate-check="false">
+          <question-card
+            v-for="(question) in questions"
+            :key="question._id"
+            :question="question">
+          </question-card>
+          <a-spin v-if="loadingMore" class="loading-more" />
+      </div>
     </a-col>
   </a-row>
 </template>
@@ -22,16 +27,23 @@ import WhoToFollow from '@/components/WhoToFollow.vue';
 import QuestionCard from '@/components/QuestionCard';
 import questionService from '@/services/question';
 import { mapGetters } from 'vuex';
+import infiniteScroll from 'vue-infinite-scroll';
 
 export default {
   components: {
     WhoToFollow,
     QuestionCard,
   },
+  directives: { infiniteScroll },
   data(){
     return {
       questions: [],
       loadingQuestions: true,
+      loading: false,
+      busy: false,
+      limit: 5,
+      page: 0,
+      loadingMore: false,
     }
   },
   computed: {
@@ -42,9 +54,20 @@ export default {
   },
   methods: {
     async getFollowingQuestions(){
-      const result = await questionService.getFollowingQuestions(this.loginUserId);
-      this.questions = result.questions;
+      const result = await questionService.getFollowingQuestions({
+        fromUserId: this.loginUserId,
+        limit: this.limit,
+	      page: this.page
+      });
+      this.questions = this.questions.concat(result.questions);
+      if(result.count < this.limit) this.busy = true;
       this.loadingQuestions = false;
+    },
+    async loadMore() {
+      this.page++;
+      if(this.page > 0) this.loadingMore = true;
+      await this.getFollowingQuestions();
+      this.loadingMore = false;
     }
   }
 };
@@ -54,4 +77,12 @@ export default {
   margin-top: 50px;
   text-align: center;
 }
+
+.loading-more {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: center;
+}
+
 </style>

@@ -47,7 +47,7 @@ export default {
   },
   async getFollowingQuestions(payload) {
     try {
-      const res = await api().get('/question/getFollowingQuestions/' + payload);
+      const res = await api().post('/question/getFollowingQuestions', payload);
       return res.data;
     } catch (error) {
       return {
