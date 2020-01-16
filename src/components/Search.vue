@@ -69,7 +69,6 @@ export default {
         fromUserId: this.loginUserId
       });
       this.searchResult = result.users;
-      console.log(this.searchResult);
       this.isTyping = false;
       if(this.searchResult.length === 0) this.noDataText = true;
       else this.noDataText = false; 

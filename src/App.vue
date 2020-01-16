@@ -29,6 +29,10 @@ export default {
 </script>
 
 <style>
+.ant-layout {
+  background-color: #f0f2f5;
+}
+
 #app {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   -webkit-font-smoothing: antialiased;
