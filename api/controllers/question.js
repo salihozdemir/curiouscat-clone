@@ -158,7 +158,9 @@ exports.get_random_answered_questions = (req, res, next) => {
   ])
   .exec()
   .then(result => {
-    res.status(200).json(result);
+    res.status(200).json({
+      questions: result
+    });
   })
   .catch(err => {
     res.status(500).json(err);
