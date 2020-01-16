@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     async getNonAnsweredQuestions() {
-      const result = await questionService.getNonAnsweredQuestions({
+      const result = await questionService.getUserQuestions({
         toUserId: this.loginUserId,
         answered: false
       });

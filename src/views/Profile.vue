@@ -70,7 +70,7 @@ export default {
       this.answerCount = details.answerCount;
     },
     async getAnsweredQuestions() {
-      const result = await questionService.getNonAnsweredQuestions({
+      const result = await questionService.getUserQuestions({
         toUserId: this.userId,
         answered: true
       });

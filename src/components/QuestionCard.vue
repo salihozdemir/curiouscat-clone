@@ -14,6 +14,7 @@
           class="comment-avatar"
         ></a-avatar>
         <p slot="content">{{question.questionText}}</p>
+        <span slot="datetime">{{moment(question.timeStamp).fromNow()}}</span>
         <a-comment>
           <a slot="author" @click="goToProfile(question.toUser.username)" class="author-name">{{question.toUser.username}}</a>
           <a-avatar
@@ -31,8 +32,14 @@
   </div>
 </template>
 <script>
+import moment from 'moment';
 export default {
   props: ['question'],
+  data(){
+    return {
+      moment,
+    }
+  },
   computed: {
     fromUserInfo() {
       if (this.question.isAnon) {

@@ -12,7 +12,7 @@ export default {
       };
     }
   },
-  async getNonAnsweredQuestions(payload) {
+  async getUserQuestions(payload) {
     try {
       const res = await api().post('/question/getUserQuestion', payload);
       return res.data;

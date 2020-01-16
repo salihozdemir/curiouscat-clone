@@ -11,6 +11,7 @@
         class="avatar"
       ></a-avatar>
       <p slot="content" style="margin-bottom: 25px;">{{question.questionText}}</p>
+      <span slot="datetime">{{moment(question.timeStamp).fromNow()}}</span>
       <a-popconfirm
           title="Are you sure delete this question?"
           @confirm="deleteQuestion"
@@ -50,6 +51,7 @@
   </div>
 </template> 
 <script>
+import moment from 'moment';
 import questionService from '@/services/question';
 import { mapGetters } from 'vuex';
 export default {
@@ -59,7 +61,8 @@ export default {
       visible: false,
       confirmLoading: false,
       cardVisible: true,
-      answerText: ''
+      answerText: '',
+      moment
     };
   },
   computed: {
