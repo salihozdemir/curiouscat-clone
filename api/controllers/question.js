@@ -144,3 +144,23 @@ exports.get_following_questions = (req, res, next) => {
         });
     });
 };
+
+exports.get_random_answered_questions = (req, res, next) => {
+  Question.aggregate([
+    { 
+      $match: { 
+        toUser: { $ne: mongoose.Types.ObjectId(req.body.loginUserId)}, 
+        fromUser: { $ne: mongoose.Types.ObjectId(req.body.loginUserId)}, 
+        answerText: { $exists: true},
+      }
+    },
+    { $sample: { size: 10 } }
+  ])
+  .exec()
+  .then(result => {
+    res.status(200).json(result);
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  });
+};

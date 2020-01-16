@@ -18,6 +18,6 @@ router.patch("/:questionId", QuestionController.answer_a_question);
 //Get user's following user questions
 router.post("/getFollowingQuestions", QuestionController.get_following_questions);
 
-
+router.post("/randomQuestions", QuestionController.get_random_answered_questions)
 
 module.exports = router;
