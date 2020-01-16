@@ -154,7 +154,7 @@ exports.get_random_answered_questions = (req, res, next) => {
         answerText: { $exists: true},
       }
     },
-    { $sample: { size: 10 } }
+    { $sample: { size: 15 } }
   ])
   .exec()
   .then(result => {
