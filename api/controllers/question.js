@@ -21,7 +21,8 @@ exports.get_user_questions = (req, res, next) => {
             fromUser: doc.fromUser,
             isAnon: doc.isAnon,
             questionText: doc.questionText,
-            answerText: doc.answerText
+            answerText: doc.answerText,
+            timeStamp: doc.timeStamp,
           };
         })
       };
