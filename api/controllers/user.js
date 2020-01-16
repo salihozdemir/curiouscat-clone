@@ -173,7 +173,7 @@ exports.get_random_users = (req, res, next) => {
       });
       User.aggregate([
         {
-          $match: { _id: { $nin: userFollowingIdies } }
+          $match: { _id: { $nin: userFollowingIdies, $ne: mongoose.Types.ObjectId(req.body.fromUserId) } }
         },
         {
           $sample: { size: 3 }
