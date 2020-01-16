@@ -9,7 +9,10 @@ exports.get_user_questions = (req, res, next) => {
     answerText: { $exists: req.body.answered }
   })
     .select("-__v")
+    .limit(Number(req.body.limit))
+    .skip(Number(req.body.page)* Number(req.body.limit))
     .populate("toUser fromUser", "username profileImg")
+    .sort({ timeStamp: 'desc'})
     .exec()
     .then(docs => {
       const response = {
