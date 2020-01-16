@@ -2,7 +2,7 @@
   <div class="container">
     <div class="card">
       <a-comment>
-        <a slot="author" @click="goToProfile(fromUserInfo.fromUserName)" class="author-name">
+        <a slot="author" href="#" @click="goToProfile(fromUserInfo.fromUserName)" class="author-name">
           {{fromUserInfo.fromUserName}}
         </a>
         <a-avatar
@@ -16,7 +16,7 @@
         <p slot="content">{{question.questionText}}</p>
         <span slot="datetime">{{moment(question.timeStamp).fromNow()}}</span>
         <a-comment>
-          <a slot="author" @click="goToProfile(question.toUser.username)" class="author-name">{{question.toUser.username}}</a>
+          <a slot="author" href="#" @click="goToProfile(question.toUser.username)" class="author-name">{{question.toUser.username}}</a>
           <a-avatar
             @click="goToProfile(question.toUser.username)"
             slot="avatar"

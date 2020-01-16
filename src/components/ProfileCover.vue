@@ -143,10 +143,10 @@ export default {
     },
     logout() {
       common.cookie.set('access_token', '', 0);
+      this.$router.push({ name: 'Auth' });
       this.$store.commit('setToken', null);
       this.$store.commit('setloginUserName', '');
       this.$store.commit('setLoginUserId', '');
-      this.$router.push({ name: 'Auth' });
     },
     async followOrUnFollow() {
       const result = await followService.followOrUnFollow({

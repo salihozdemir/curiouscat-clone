@@ -73,7 +73,7 @@ export default {
 				this.$store.commit('setLoginUserId', res.data.userId);
 				this.$store.commit('setloginUserName', res.data.username);
 				this.$store.commit('setToken', res.data.token);
-				this.$router.push({ name: 'Home'});
+				window.history.length > 1 ? this.$router.go(-1) : this.$router.push({name: 'Home'});
 			}
 			this.loading = false;
 		},
