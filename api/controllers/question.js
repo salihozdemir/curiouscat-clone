@@ -189,7 +189,23 @@ exports.get_random_answered_questions = (req, res, next) => {
   .exec()
   .then(result => {
     res.status(200).json({
-      questions: result
+      questions: result.map(x => {
+        return {
+          _id: x._id,
+          toUser: {
+            username: x.toUser[0].username,
+            profileImg: x.toUser[0].profileImg
+          },
+          fromUser: {
+            username: x.fromUser[0].username,
+            profileImg: x.fromUser[0].profileImg
+          },
+          isAnon: x.isAnon,
+          questionText: x.questionText,
+          timeStamp: x.timeStamp,
+          answerText: x.answerText,
+        }
+      })
     });
   })
   .catch(err => {
