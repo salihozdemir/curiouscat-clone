@@ -129,7 +129,7 @@ exports.get_following_questions = (req, res, next) => {
       })
         .select("-__v")
         .limit(Number(req.body.limit))
-        .skip(Number(req.body.page))
+        .skip(Number(req.body.page)* Number(req.body.limit))
         .populate("toUser fromUser", "username profileImg")
         .sort({ timeStamp: 'desc'})
         .exec()
