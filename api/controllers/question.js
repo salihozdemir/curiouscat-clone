@@ -128,7 +128,10 @@ exports.get_following_questions = (req, res, next) => {
         answerText: { $exists: true }
       })
         .select("-__v")
+        .limit(Number(req.body.limit))
+        .skip(Number(req.body.page))
         .populate("toUser fromUser", "username profileImg")
+        .sort({ timeStamp: 'desc'})
         .exec()
         .then(result => {
           res.status(200).json({
