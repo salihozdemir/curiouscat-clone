@@ -116,7 +116,7 @@ exports.answer_a_question = (req, res, next) => {
 };
 
 exports.get_following_questions = (req, res, next) => {
-  Follow.find({ fromUser: req.params.fromUserId })
+  Follow.find({ fromUser: req.body.fromUserId })
     .exec()
     .then(docs => {
       let userArray = [];
