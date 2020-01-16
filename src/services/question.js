@@ -55,5 +55,16 @@ export default {
         message: error.message,
       }
     }
+  },
+  async getRandomQuestions(payload) {
+    try {
+      const res = await api().post('/question/randomQuestions', payload);
+      return res.data;
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message,
+      }
+    }
   }
 }

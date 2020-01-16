@@ -12,11 +12,11 @@
         infinite-scroll-disabled="busy" 
         infinite-scroll-distance="limit" 
         infinite-scroll-immediate-check="false">
-          <question-card
-            v-for="(question) in questions"
-            :key="question._id"
-            :question="question">
-          </question-card>
+        <question-card
+          v-for="(question) in questions"
+          :key="question._id"
+          :question="question"
+        ></question-card>
           <a-spin v-if="loadingMore" class="loading-more" />
       </div>
     </a-col>

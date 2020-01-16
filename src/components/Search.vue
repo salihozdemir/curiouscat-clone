@@ -1,6 +1,6 @@
 <template>
   <div class="card" id="discover">
-    <a-list :dataSource="searchResult">
+    <a-list :dataSource="searchResult" :loading="isTyping">
       <div slot="header" >
         <a-input auto-focus placeholder="Username" v-model="searchText">
           <a-icon slot="suffix" type="loading-3-quarters" :spin="true" style="color: #32afd3;" v-if="isTyping"></a-icon>
