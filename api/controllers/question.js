@@ -49,9 +49,20 @@ exports.create_question = (req, res, next) => {
   question
     .save()
     .then(result => {
-      res.status(201).json({
-        message: "Created question successful",
-        success: true
+      User.findOneAndUpdate(
+        {_id: req.body.toUserId },
+        { $inc: { inboxCount: 1 } })
+      .exec()
+      .then(result => {
+        res.status(201).json({
+          message: "Created question successful",
+          success: true
+        });
+      })
+      .catch(err => {
+        res.status(500).json({
+          error: err
+        });
       });
     })
     .catch(err => {
@@ -70,10 +81,21 @@ exports.delete_question = (req, res, next) => {
           message: "Question not found"
         });
       }
-      res.status(200).json({
-        message: "Question deleted",
-        success: true,
-      });
+      User.findOneAndUpdate(
+        {_id: req.body.userId },
+        { $inc: { inboxCount: -1 } })
+        .exec()
+        .then(result => {
+          res.status(200).json({
+            message: "Question deleted",
+            success: true,
+          });
+        })
+        .catch(err => {
+          res.status(500).json({
+            error: err
+          });
+        });
     })
     .catch(err => {
       res.status(500).json({
@@ -89,9 +111,9 @@ exports.answer_a_question = (req, res, next) => {
   )
   .exec()
   .then(result => {
-    User.findByIdAndUpdate(
+    User.findOneAndUpdate(
       {_id: req.body.userId },
-      { $inc: { answerCount: 1 } })
+      { $inc: { answerCount: 1, inboxCount: -1 } })
       .exec()
       .then(result => {
         res.status(200).json({
