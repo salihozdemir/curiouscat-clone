@@ -39,6 +39,8 @@ exports.login = (req, res, next) => {
             token,
             userId: user._id,
             username: user.username,
+            inboxCount: user.inboxCount,
+            notificationCount: user.notificationCount,
             success: true
           });
         }
@@ -96,6 +98,10 @@ exports.signup = (req, res, next) => {
                 return res.status(201).json({
                   message: 'User created',
                   token,
+                  userId: user._id,
+                  username: user.username,
+                  inboxCount: user.inboxCount,
+                  notificationCount: user.notificationCount,
                   success: true
                 });
               })
@@ -132,7 +138,7 @@ exports.get_user_by_username = (req, res, next) => {
         username: user.username,
         profileImg: user.profileImg,
         id: user._id,
-        answerCount: user.answerCount,
+        answerCount: user.answerCount
         success: true
       });
     })

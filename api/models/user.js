@@ -11,7 +11,9 @@ const userSchema = mongoose.Schema({
     password: {type: String, required: true},
     username: {type: String, required: true, unique:true},
     profileImg: {type: String, default: 'default-pp.png'},
-    answerCount: {type: Number, default: 0}
+    answerCount: {type: Number, default: 0},
+    inboxCount: {type: Number, default: 0},
+    notificationCount: {type: Number, default: 0}
 });
 
 module.exports = mongoose.model('User', userSchema);
