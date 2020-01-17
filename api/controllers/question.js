@@ -62,7 +62,7 @@ exports.create_question = (req, res, next) => {
 };
 
 exports.delete_question = (req, res, next) => {
-  Question.findByIdAndRemove({ _id: req.params.questionId })
+  Question.findOneAndDelete({ _id: req.params.questionId })
     .exec()
     .then(question => {
       if (!question) {
@@ -70,15 +70,9 @@ exports.delete_question = (req, res, next) => {
           message: "Question not found"
         });
       }
-      User.findByIdAndUpdate(
-        {_id: req.body.userId },
-        { $inc: { answerCount: -1 } })
-        .exec()
-        .then(result => {
-          res.status(200).json({
-            message: "Question updated",
-            success: true,
-        });
+      res.status(200).json({
+        message: "Question deleted",
+        success: true,
       });
     })
     .catch(err => {
