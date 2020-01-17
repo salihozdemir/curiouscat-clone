@@ -13,7 +13,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(
   "mongodb+srv://dbUser:" +
     process.env.MONGO_ATLAS_PW +
-    "@question-cnqwq.gcp.mongodb.net/test?retryWrites=true&w=majority",
+    "@question-cnqwq.gcp.mongodb.net/askPrivy?retryWrites=true&w=majority",
   {
     useUnifiedTopology: true,
     useNewUrlParser: true,

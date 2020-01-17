@@ -138,7 +138,7 @@ exports.get_user_by_username = (req, res, next) => {
         username: user.username,
         profileImg: user.profileImg,
         id: user._id,
-        answerCount: user.answerCount
+        answerCount: user.answerCount,
         success: true
       });
     })
