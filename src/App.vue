@@ -24,6 +24,7 @@ export default {
   },
   created() {
     this.$store.commit('setToken', common.cookie.get('access_token'));
+    this.$message.config({top: '55px'});
   }
 };
 </script>
@@ -37,6 +38,10 @@ export default {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.ant-comment-content-detail p {
+  white-space: normal;
 }
 
 .ant-comment-actions > li {
@@ -53,6 +58,15 @@ export default {
     border-radius: 50%;
     padding: 2px;
     border: 2px solid rgba(0,0,0,.1);
+}
+
+.ant-form-explain {
+  color: #f5222d;
+  text-align: center;
+}
+
+.ant-modal-title {
+  text-align: center;
 }
 
 .ant-list-item-meta-avatar img {

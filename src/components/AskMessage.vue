@@ -1,29 +1,20 @@
 <template>
   <div class="card">
-    <a-form :form="form" @submit.prevent="handleSubmit">
+    <a-form :form="form" @submit.prevent="askQuestion">
       <a-form-item style="margin-bottom: 5px;">
         <a-textarea
           style="padding: 10px;"
           placeholder="Ask something!"
           :autosize="{ minRows: 6, maxRows: 12 }"
-          v-decorator="[
-                'questionText',
-                {
-                  rules: [
-                    { required: true, message: 'Please input your message!' }
-                  ]
-                }
-              ]"
+          v-decorator="[ 'questionText', { rules: [ { required: true, message: 'Please input your message!' } ] } ]"
         />
       </a-form-item>
-
       <a-row type="flex" justify="center">
         <a-col :span="8">
           <a-form-item style="margin-bottom: 5px;">
             <a-switch
               checkedChildren="Anon"
-              defaultChecked
-              v-decorator="['isAnon', { initialValue: true }]"
+              v-decorator="['isAnon', { initialValue: false }]"
             />
           </a-form-item>
         </a-col>
@@ -50,16 +41,17 @@ export default {
     this.form = this.$form.createForm(this, { name: 'send_question' });
   },
   methods: {
-    async handleSubmit() {
+     askQuestion() {
       this.form.validateFields(async (err, values) => {
         if (!err) {
-          (values.toUserId = this.userId), (values.fromUserId = this.loginUserId);
+          values.toUserId = this.userId 
+          values.fromUserId = this.loginUserId;
           const res = await questionService.createQuestion(values);
           if(res.success) {
             this.$message.success('Question sent!');
+            this.form.resetFields();
           }
         }
-        this.form.resetFields();
       });
     },
   }

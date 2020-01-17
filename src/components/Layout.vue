@@ -16,7 +16,7 @@
         </a-menu-item>
         <a-menu-item key="3">
           <router-link :to="'/Profile/' + loginUserName" tag="a">
-            <a-icon type="profile" />
+            <a-icon type="user" />
             <span class="nav-text">Profile</span>
           </router-link>
         </a-menu-item>
@@ -28,7 +28,6 @@
         </a-menu-item>
         <a-menu-item key="5">
           <router-link to="/Notification" tag="a">
-          <!-- TODO: ekran küçülünce olacak olan offset :offset="[6,-1]" -->
             <a-badge :count="9" :offset="[-5,-5]">
               <a-icon type="notification" />
             </a-badge>

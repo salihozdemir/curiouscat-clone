@@ -17,7 +17,14 @@
         <div v-if="questionLoading" class="spin">
           <a-spin size="large"/>
         </div>
-        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit" infinite-scroll-immediate-check="false">
+        <p v-if="this.questions.length === 0 && !questionLoading" class="no-data">
+          You don't have any asnwered question :(
+        </p>
+        <div
+          v-infinite-scroll="loadMore" 
+          infinite-scroll-disabled="busy" 
+          infinite-scroll-distance="limit" 
+          infinite-scroll-immediate-check="false">
           <question-card
             v-for="question in questions"
             :key="question._id"
@@ -79,6 +86,12 @@ export default {
       const details = await userService.getUserDetail(
         this.$route.params.username
       );
+      if(!details) {
+        this.$router.push({
+          name: 'Discover',
+        });
+        this.$message.error('User not found');
+      };
       this.userImg = details.profileImg;
       this.userName = details.username;
       this.userId = details.id;
@@ -123,5 +136,12 @@ export default {
     margin-bottom: 15px;
     width: 100%;
     text-align: center;
+}
+
+.no-data {
+  text-align: center;
+  font-family: monospace;
+  margin-top: 15px;
+  font-size: larger;
 }
 </style>

@@ -9,6 +9,8 @@ export default {
     token: null,
     loginUserName: '',
     loginUserId : '',
+    inboxCount: 0,
+    notificationCount: 0,
     randomUsers: [],
   },
   getters: {
@@ -16,6 +18,8 @@ export default {
     loginUserName: state => state.loginUserName,
     loginUserId: state => state.loginUserId,
     randomUsers: state => state.randomUsers,
+    inboxCount: state => state.inboxCount,
+    notificationCount: state => state.notificationCount,
   },
   mutations: {
     setToken(state, payload) {
@@ -32,6 +36,12 @@ export default {
     },
     changeUserText(state, payload) {
       state.randomUsers.find(x => x._id === payload._id).text = payload.text;
+    },
+    setInboxCount(state, payload) {
+      state.inboxCount = payload;
+    },
+    setNotificationCount(state, payload) {
+      state.notificationCount = payload;
     }
   },
   actions: {

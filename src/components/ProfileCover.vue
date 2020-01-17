@@ -30,7 +30,6 @@
         ></a-button>
       </a-row>
       <a-row type="flex" justify="center" class="text-center">
-        <!-- TODO: $route.params.id  -->
         <a-col :span="4">
           <a class="usermame">{{userName}}</a>
           <a-button
@@ -58,7 +57,7 @@
         </a-col>
       </a-row>
     </a-col>
-    <a-modal title="Followers" v-model="followersVisible" :footer="null">
+    <a-modal title="Followers" v-model="followersVisible" :footer="null" centered>
       <a-list itemLayout="horizontal" :dataSource="userFollowers">
         <a-list-item slot="renderItem" slot-scope="item">
           <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
@@ -74,7 +73,7 @@
         </a-list-item>
       </a-list>
     </a-modal>
-    <a-modal v-model="followingVisible" title="Following" :footer="null">
+    <a-modal v-model="followingVisible" title="Following" :footer="null" centered>
       <a-list itemLayout="horizontal" :dataSource="userFollowings">
         <a-list-item slot="renderItem" slot-scope="item">
           <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
@@ -147,6 +146,7 @@ export default {
       this.$store.commit('setToken', null);
       this.$store.commit('setloginUserName', '');
       this.$store.commit('setLoginUserId', '');
+      this.$store.commit('setRandomUsers', []);
     },
     async followOrUnFollow() {
       const result = await followService.followOrUnFollow({

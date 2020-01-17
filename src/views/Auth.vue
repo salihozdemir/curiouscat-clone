@@ -70,10 +70,8 @@ export default {
 			});
 			if(!res.data) this.errorMessageLogin = res.response.data.message;
 			else {
-				this.$store.commit('setLoginUserId', res.data.userId);
-				this.$store.commit('setloginUserName', res.data.username);
-				this.$store.commit('setToken', res.data.token);
-				window.history.length > 1 ? this.$router.go(-1) : this.$router.push({name: 'Home'});
+				await this.setState(res.data);
+				this.$router.push({name: 'Home'});
 			}
 			this.loading = false;
 		},
@@ -86,11 +84,21 @@ export default {
 					password: this.password
 				});
 				if(!res.data) this.errorMessageSignup = res.response.data.message;
-				else this.$router.push({ name: 'Profile', params: { username: this.username } })
+				else { 
+					await this.setState(res.data);
+					this.$router.push({ name: 'Profile', params: { username: this.username } });
+				}
 			} else {
 				this.errorMessageSignup = "Two passwords that you enter is inconsistent!";
 			}
 			this.loading = false;
+		},
+		setState(data) {
+			this.$store.commit('setLoginUserId', data.userId);
+			this.$store.commit('setloginUserName', data.username);
+			this.$store.commit('setToken', data.token);
+			this.$store.commit('setInboxCount', data.inboxCount);
+			this.$store.commit('setNotificationCount', data.notificationCount);
 		}
   }
 };
