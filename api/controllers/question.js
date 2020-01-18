@@ -231,10 +231,10 @@ exports.get_random_answered_questions = (req, res, next) => {
             questionText: x.questionText,
             timeStamp: x.timeStamp,
             answerText: x.answerText,
-            notificationCount: docs.notificationCount,
-            inboxCount: docs.inboxCount,
           }
-        })
+        }),
+        notificationCount: docs.notificationCount,
+        inboxCount: docs.inboxCount,
       });
     })
     .catch(err => {
