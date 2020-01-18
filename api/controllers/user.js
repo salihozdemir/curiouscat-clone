@@ -193,40 +193,6 @@ exports.get_random_users = (req, res, next) => {
           res.status(200).json({
             users: docs
           });
-         //#region get for answerCount query
-          // let usersIds = [];
-          // docs.map(doc => {
-          //   usersIds.push(doc._id);
-          // });
-          // Question.aggregate([
-          //   {
-          //     $match: {
-          //         toUser: { $in: usersIds },
-          //         answerText: { $exists: true } 
-          //       }
-          //   },
-          //   {
-          //     $group: {
-          //       _id: '$toUser',
-          //       answerCount: { $sum: 1 },
-          //     }
-          //   }
-          // ])
-          // .exec()
-          // .then(result => {
-          //   docs.map(doc => {
-          //     doc.answerCount = 0;
-          //     result.map(item => {
-          //       if(String(doc._id) === String(item._id)){
-          //         doc['answerCount'] = item.answerCount;
-          //       }
-          //     });
-          //   });
-          //   res.status(200).json({
-          //     users: docs,
-          //   });
-          // });
-          //#endregion
       });
     });
 };

@@ -53,14 +53,8 @@ exports.is_follow = (req, res, next) => {
   Follow.findOne({ toUser: req.body.toUserId, fromUser: req.body.fromUserId })
     .exec()
     .then(result => {
-      let isFollow;
-      if (result) {
-        isFollow = true;
-      } else {
-        isFollow = false;
-      }
       res.status(200).json({
-        isFollow
+        isFollow: result ? true : false
       });
     })
     .catch(err => {
@@ -86,49 +80,6 @@ exports.get_user_followers = (req, res, next) => {
           }
         })
       });
-      //#region for get answerCount query
-      // let usersIds = [];
-      // docs.map(doc => {
-      //   usersIds.push(doc.fromUser._id);
-      // });
-      // Question.aggregate([
-      //   {
-      //     $match: {
-      //         toUser: { $in: usersIds },
-      //         answerText: { $exists: true } 
-      //       }
-      //   },
-      //   {    
-      //     $lookup: {
-      //         from: 'users',
-      //         localField: 'toUser',
-      //         foreignField: '_id',
-      //         as: 'toUsers'
-      //       }
-      //   },
-      //   {
-      //     $unwind: {
-      //       path: '$toUsers',
-      //       preserveNullAndEmptyArrays: true,
-      //     },
-      //   },
-      //   {
-      //     $group: {
-      //       _id: '$toUsers',
-      //       answerCount: { $sum: 1 }
-      //     }
-      //   },
-      //   {
-      //     $project: {
-      //       '_id._id': 1, '_id.profileImg': 1, '_id.username': 1, answerCount: 1
-      //     }
-      //   },
-      // ])
-      // .exec()
-      // .then(result => {
-      //   res.status(200).json(result);
-      // });
-      //#endregion
     });
 };
 
@@ -147,48 +98,5 @@ exports.get_user_following = (req, res, next) => {
           }
         })
       });
-      //#region for get answerCount query
-      // let usersIds = [];
-      // docs.map(doc => {
-      //   usersIds.push(doc.toUser._id);
-      // });
-      // Question.aggregate([
-      //   {
-      //     $match: {
-      //         toUser: { $in: usersIds },
-      //         answerText: { $exists: true } 
-      //       }
-      //   },
-      //   {    
-      //     $lookup: {
-      //         from: 'users',
-      //         localField: 'toUser',
-      //         foreignField: '_id',
-      //         as: 'toUsers'
-      //       }
-      //   },
-      //   {
-      //     $unwind: {
-      //       path: '$toUsers',
-      //       preserveNullAndEmptyArrays: true,
-      //     },
-      //   },
-      //   {
-      //     $group: {
-      //       _id: '$toUsers',
-      //       answerCount: { $sum: 1 }
-      //     }
-      //   },
-      //   {
-      //     $project: {
-      //       '_id._id': 1, '_id.profileImg': 1, '_id.username': 1, answerCount: 1
-      //     }
-      //   },
-      // ])
-      // .exec()
-      // .then(result => {
-      //   res.status(200).json(result);
-      // });
-      //#endregion
     });
 };

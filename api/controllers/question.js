@@ -15,21 +15,21 @@ exports.get_user_questions = (req, res, next) => {
     .sort({ timeStamp: 'desc'})
     .exec()
     .then(docs => {
-      const response = {
-        count: docs.length,
-        questions: docs.map(doc => {
-          return {
-            _id: doc._id,
-            toUser: doc.toUser,
-            fromUser: doc.fromUser,
-            isAnon: doc.isAnon,
-            questionText: doc.questionText,
-            answerText: doc.answerText,
-            timeStamp: doc.timeStamp,
-          };
-        })
-      };
-      res.status(200).json(response);
+      User.findOne({  _id: req.body.loginUserId})
+      .select('-_id notificationCount inboxCount')
+      .exec()
+      .then(user => {
+        res.status(200).json({
+          questions: docs,
+          inboxCount: user.inboxCount,
+          notificationCount: user.notificationCount
+        });
+      })
+      .catch(err => {
+        res.status(500).json({
+          error: err
+        });
+      });
     })
     .catch(err => {
       res.status(200).json({
@@ -153,9 +153,16 @@ exports.get_following_questions = (req, res, next) => {
         .sort({ timeStamp: 'desc'})
         .exec()
         .then(result => {
-          res.status(200).json({
-            count: result.length,
-            questions: result
+          User.findOne({  _id: req.body.fromUserId})
+          .select('-_id notificationCount inboxCount')
+          .exec()
+          .then(user => {
+            res.status(200).json({
+              count: result.length,
+              questions: result,
+              notificationCount: user.notificationCount,
+              inboxCount: user.inboxCount
+            });
           });
         });
     });
@@ -204,25 +211,35 @@ exports.get_random_answered_questions = (req, res, next) => {
   ])
   .exec()
   .then(result => {
-    res.status(200).json({
-      questions: result.map(x => {
-        return {
-          _id: x._id,
-          toUser: {
-            username: x.toUser[0].username,
-            profileImg: x.toUser[0].profileImg
-          },
-          fromUser: {
-            username: x.fromUser[0].username,
-            profileImg: x.fromUser[0].profileImg
-          },
-          isAnon: x.isAnon,
-          questionText: x.questionText,
-          timeStamp: x.timeStamp,
-          answerText: x.answerText,
-        }
-      })
-    });
+    User.findOne({  _id: req.body.loginUserId})
+    .select('-_id notificationCount inboxCount')
+    .exec()
+    .then(docs => {
+      res.status(200).json({
+        questions: result.map(x => {
+          return {
+            _id: x._id,
+            toUser: {
+              username: x.toUser[0].username,
+              profileImg: x.toUser[0].profileImg
+            },
+            fromUser: {
+              username: x.fromUser[0].username,
+              profileImg: x.fromUser[0].profileImg
+            },
+            isAnon: x.isAnon,
+            questionText: x.questionText,
+            timeStamp: x.timeStamp,
+            answerText: x.answerText,
+            notificationCount: docs.notificationCount,
+            inboxCount: docs.inboxCount,
+          }
+        })
+      });
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    })
   })
   .catch(err => {
     res.status(500).json(err);
