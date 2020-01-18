@@ -13,7 +13,7 @@ router.post("/", QuestionController.create_question);
 router.delete("/:questionId", QuestionController.delete_question);
 
 //Answer a question
-router.patch("/:questionId", QuestionController.answer_a_question);
+router.patch("/", QuestionController.answer_a_question);
 
 //Get user's following user questions
 router.post("/getFollowingQuestions", QuestionController.get_following_questions);

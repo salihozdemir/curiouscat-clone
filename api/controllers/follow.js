@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
 const Follow = require("../models/follow");
+const Notification = require("../models/notification");
+const User = require('../models/user');
 
 exports.follow_or_unfollow = (req, res, next) => {
+  // Kullanıcıyı takip edip etmediğini sorgular.
   Follow.findOne({ toUser: req.body.toUserId, fromUser: req.body.fromUserId })
     .exec()
     .then(result => {
+      // Kullanıcı takip etmiyor ise takip eder. Ediyor ise takipten çıkarır.
       if (!result) {
         const follow = new Follow({
           _id: mongoose.Types.ObjectId(),
@@ -13,13 +17,41 @@ exports.follow_or_unfollow = (req, res, next) => {
         });
         follow
           .save()
-          .then(result => {
-            res.status(201).json({
-              message: 'Follow',
-              buttonText: 'unFollow',
-              toUserId: result.toUser,
-              isFollow: true,
-            });
+          .then(docs => {
+            //Takip edilen kişinin notificationCount'ını 1 arttırır.
+            User.updateOne(
+              {_id: req.body.toUserId },
+              { $inc: { notificationCount: 1 } })
+              .exec()
+              .then(() => {
+                // Takip edilen kişiye notification oluşturur.
+                const notification = new Notification({
+                  _id: mongoose.Types.ObjectId(),
+                  toUser: req.body.toUserId,
+                  fromUser: req.body.fromUserId,
+                  notificationText: req.body.fromUsername  + ' follow you.'
+                });
+                notification
+                  .save()
+                  .then(() => {
+                    res.status(201).json({
+                      message: 'Follow',
+                      buttonText: 'unFollow',
+                      toUserId: docs.toUser,
+                      isFollow: true,
+                    })
+                  })
+                  .catch(err => {
+                    res.status(500).json({
+                      error: err,
+                    });
+                  })
+              })
+              .catch(err => {
+                res.json(500).json({
+                  error: err,
+                })
+              })
           })
           .catch(err => {
             res.status(500).json({

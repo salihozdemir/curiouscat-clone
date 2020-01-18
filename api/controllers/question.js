@@ -105,21 +105,44 @@ exports.delete_question = (req, res, next) => {
 };
 
 exports.answer_a_question = (req, res, next) => {
-  Question.findOneAndUpdate(
-    { _id: req.params.questionId },
-    { $set: { answerText: req.body.value } },
-  )
+  // Soruyu bul, sorunun cevabını oluştur.
+  Question.updateOne( { _id: req.body.questionId }, { $set: { answerText: req.body.answerText } })
   .exec()
-  .then(result => {
-    User.findOneAndUpdate(
-      {_id: req.body.userId },
-      { $inc: { answerCount: 1, inboxCount: -1 } })
+  .then(() => {
+    // Soruyu cevaplayan kişinin answerCount 1 arttır ve inboxCount 1 azalt.
+    User.updateOne( { _id: req.body.fromUserId }, { $inc: { answerCount: 1, inboxCount: -1 } })
       .exec()
-      .then(result => {
-        res.status(200).json({
-          message: "Question updated",
-          success: true,
-        });
+      .then(() => {
+        // Soruyu soran kişinin notificationCount 1 arttır.
+        User.updateOne( {_id: req.body.toUserId}, { $inc: { notificationCount: 1 } })
+          .exec()
+          .then(() => {
+            //Bildirim oluştur.
+            const notification = new Notification({
+              _id: mongoose.Types.ObjectId(),
+              toUser: req.body.toUserId,
+              fromUser: req.body.fromUserId,
+              notificationText: req.body.fromUsername  + ' ask your question.'
+            });
+            notification
+              .save()
+              .then(() => {
+                res.status(200).json({
+                  message: "Question updated",
+                  success: true,
+                });
+              })
+              .catch(err => {
+                res.status(500).json({
+                  error: err,
+                });
+              })
+          })
+          .catch(err => {
+            res.status(500).json({
+              error: err
+            });
+          });
       })
       .catch(err => {
         res.status(500).json({
