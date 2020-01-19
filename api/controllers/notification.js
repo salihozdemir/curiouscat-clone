@@ -62,6 +62,7 @@ exports.get_notification = (req, res, next) => {
   .limit(req.body.limit)
   .skip(req.body.page * req.body.limit)
   .populate('fromUser','profileImg, username')
+  .sort({ timeStamp: 'desc'})
   .exec()
   .then(result => {
     if(result) {

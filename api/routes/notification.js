@@ -7,6 +7,6 @@ router.post("/create", NotificationController.create_notification);
 
 router.delete("/delete", NotificationController.delete_notification);
 
-router.get("/get", NotificationController.get_notification);
+router.post("/get", NotificationController.get_notification);
 
 module.exports = router;
