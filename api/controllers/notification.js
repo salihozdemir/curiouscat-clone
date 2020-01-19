@@ -59,8 +59,8 @@ exports.delete_notification = (req, res, next) => {
 exports.get_notification = (req, res, next) => {
   Notification.find({ toUser: req.body.loginUserId })
   .select('-__v')
-  .limit(Number(req.body.limit))
-  .skip(Number(req.body.page)* Number(req.body.limit))
+  .limit(req.body.limit)
+  .skip(req.body.page * req.body.limit)
   .populate('fromUser','profileImg, username')
   .exec()
   .then(result => {
@@ -75,9 +75,24 @@ exports.get_notification = (req, res, next) => {
             res.status(200).json({
               notifications: result,
               inboxCount: user.inboxCount
+            })
+            .catch(err => {
+              res.status(500).json({
+                error: err
+              });
             });
         });
       })
+      .catch(err => {
+        res.status(500).json({
+          error: err
+        });
+      });
     }
+  })
+  .catch(err => {
+    res.status(500).json({
+      error: err
+    });
   });
 };
