@@ -91,8 +91,7 @@ export default {
         questionId: this.question._id,
         answerText: this.answerText,
         fromUserId: this.loginUserId,
-        toUserId: this.question.toUser._id,
-        fromUsername: this.question.fromUser.username
+        toUserId: this.question.fromUser._id,
       });
       if (result.success) {
         this.$store.commit('InorDecreaseInboxCount', -1);

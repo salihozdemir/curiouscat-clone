@@ -25,7 +25,7 @@ export default {
   },
   async getNotifications(payload) {
     try {
-      const res = await api().get('/notification/get', payload);
+      const res = await api().post('/notification/get', payload);
       return res.data;
     } catch (error) {
       return {

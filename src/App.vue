@@ -85,6 +85,10 @@ export default {
     padding: 7px 0px 0px 0px;
 }
 
+#notification-card .ant-comment-avatar {
+  align-self: center;
+}
+
 #discover .ant-list-header{
   border-bottom: unset;
 }
