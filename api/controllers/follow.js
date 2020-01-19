@@ -17,7 +17,7 @@ exports.follow_or_unfollow = (req, res, next) => {
         });
         follow
           .save()
-          .then(docs => {
+          .then(() => {
             //Takip edilen kişinin notificationCount'ını 1 arttırır.
             User.updateOne(
               {_id: req.body.toUserId },
@@ -37,7 +37,6 @@ exports.follow_or_unfollow = (req, res, next) => {
                     res.status(201).json({
                       message: 'Follow',
                       buttonText: 'unFollow',
-                      toUserId: docs.toUser,
                       isFollow: true,
                     })
                   })
@@ -97,7 +96,7 @@ exports.is_follow = (req, res, next) => {
 };
 
 exports.get_user_followers = (req, res, next) => {
-  Follow.find({ toUser: req.params.toUserId }, { _id: 0})
+  Follow.find({ toUser: req.params.toUserId })
     .select('fromUser')
     .populate('fromUser','_id username profileImg answerCount')
     .exec()
