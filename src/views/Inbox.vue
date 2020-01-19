@@ -63,8 +63,11 @@ export default {
         answered: false,
         limit: this.limit,
         page: this.page,
+        loginUserId: this.loginUserId
       });
       this.questions = this.questions.concat(result.questions);
+      this.$store.commit('setInboxCount', result.inboxCount);
+      this.$store.commit('notificationCount', result.notificationCount);
       if(result.questions.length < this.limit) this.busy = true;
       this.questionLoading = false;
     },

@@ -28,10 +28,8 @@
   </div>
 </template>
 <script>
-//TODO: V-decoreder işime yarıyor mu? Yaramıyorsa kaldır.
 import { mapGetters } from 'vuex';
 import questionService from '@/services/question';
-import { async } from 'q';
 export default {
   props: ['userId'],
   computed: {
@@ -48,6 +46,7 @@ export default {
           values.fromUserId = this.loginUserId;
           const res = await questionService.createQuestion(values);
           if(res.success) {
+            if(this.userId === this.loginUserId) this.$store.commit('InorDecreaseInboxCount', 1);
             this.$message.success('Question sent!');
             this.form.resetFields();
           }

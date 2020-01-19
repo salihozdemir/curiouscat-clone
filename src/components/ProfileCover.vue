@@ -107,7 +107,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['loginUserId']),
+    ...mapGetters(['loginUserId', 'loginUserName']),
     getPhotoUrl() {
       if (this.userImg === 'default-pp.png') {
         return '/assets/img/default-pp.png';
@@ -151,7 +151,8 @@ export default {
     async followOrUnFollow() {
       const result = await followService.followOrUnFollow({
         toUserId: this.userId,
-        fromUserId: this.loginUserId
+        fromUserId: this.loginUserId,
+        fromUsername: this.loginUserName
       });
       this.$emit('update:isFollow', result.isFollow);
     },

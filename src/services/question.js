@@ -23,9 +23,9 @@ export default {
       };
     }
   },
-  async answerQuestion(params, payload) {
+  async answerQuestion(payload) {
     try {
-      const res = await api().patch('/question/' + params , payload);
+      const res = await api().patch('/question', payload);
       return res.data;
     } catch (error) {
       return {

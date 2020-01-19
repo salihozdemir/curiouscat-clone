@@ -87,11 +87,15 @@ export default {
     },
     async answerQuestion() {
       this.confirmLoading = true;
-      const result = await questionService.answerQuestion(this.question._id, {
-        value: this.answerText,
-        userId: this.loginUserId 
+      const result = await questionService.answerQuestion({
+        questionId: this.question._id,
+        answerText: this.answerText,
+        fromUserId: this.loginUserId,
+        toUserId: this.question.toUser._id,
+        fromUsername: this.question.fromUser.username
       });
       if (result.success) {
+        this.$store.commit('InorDecreaseInboxCount', -1);
         this.$message.success('Answered!');
         this.cardVisible = false;
       }
@@ -107,6 +111,7 @@ export default {
         userId: this.loginUserId
       });
       if (result.success) {
+        this.$store.commit('InorDecreaseInboxCount', -1);
         this.$message.error('Deleted!');
         this.cardVisible = false;
       }

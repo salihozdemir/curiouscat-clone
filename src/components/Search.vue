@@ -49,7 +49,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['loginUserId']),
+    ...mapGetters(['loginUserId', 'loginUserName']),
   },
   watch: {
     searchText(newValue) {
@@ -87,9 +87,10 @@ export default {
     async followOrUnFollow(userId) {
       const result = await followService.followOrUnFollow({
         toUserId: userId,
-        fromUserId: this.loginUserId
+        fromUserId: this.loginUserId,
+        fromUsername: this.loginUserName
       });
-      const clickedUser = this.searchResult.find(x => x._id === result.toUserId);
+      const clickedUser = this.searchResult.find(x => x._id === userId);
       clickedUser.following = result.isFollow;
     },
   }

@@ -37,6 +37,9 @@ export default {
     changeUserText(state, payload) {
       state.randomUsers.find(x => x._id === payload._id).text = payload.text;
     },
+    InorDecreaseInboxCount(state, payload) {
+      state.inboxCount = state.inboxCount + payload;
+    },
     setInboxCount(state, payload) {
       state.inboxCount = payload;
     },

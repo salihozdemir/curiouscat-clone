@@ -45,6 +45,8 @@ export default {
         limit: this.limit,
       });
       this.questions = result.questions;
+      this.$store.commit('setInboxCount', result.inboxCount);
+      this.$store.commit('notificationCount', result.notificationCount);
     }
   }
 };

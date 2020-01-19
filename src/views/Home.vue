@@ -60,6 +60,8 @@ export default {
 	      page: this.page
       });
       this.questions = this.questions.concat(result.questions);
+      this.$store.commit('setInboxCount', result.inboxCount);
+      this.$store.commit('notificationCount', result.notificationCount);
       if(result.count < this.limit) this.busy = true;
       this.loadingQuestions = false;
     },

@@ -22,13 +22,15 @@
         </a-menu-item>
         <a-menu-item key="4">
           <router-link to="/Inbox" tag="a">
-            <a-icon type="inbox" />
+            <a-badge :count="inboxCount" :offset="[-5,-5]">
+              <a-icon type="inbox" />
+            </a-badge>
             <span class="nav-text">Inbox</span>
           </router-link>
         </a-menu-item>
         <a-menu-item key="5">
           <router-link to="/Notification" tag="a">
-            <a-badge :count="9" :offset="[-5,-5]">
+            <a-badge :count="notificationCount" :offset="[-5,-5]">
               <a-icon type="notification" />
             </a-badge>
             <span class="nav-text">Notification</span>
@@ -51,7 +53,7 @@
 import { mapGetters } from 'vuex';
 export default {
   computed: {
-    ...mapGetters(['loginUserName'])
+    ...mapGetters(['loginUserName', 'notificationCount', 'inboxCount'])
   },
 };
 </script>

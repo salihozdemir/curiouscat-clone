@@ -51,7 +51,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['randomUsers', 'loginUserId'])
+    ...mapGetters(['randomUsers', 'loginUserId', 'loginUserName'])
   },
   async created() {
     if(this.randomUsers.length === 0) {
@@ -80,11 +80,12 @@ export default {
     async followOrUnFollow(userId) {
       const result = await followService.followOrUnFollow({
         toUserId: userId,
-        fromUserId: this.loginUserId
+        fromUserId: this.loginUserId,
+        fromUsername: this.loginUserName
       });
       this.$store.commit('changeUserText', {
         text: result.buttonText,
-        _id: result.toUserId
+        _id: result.userId
       });
     },
   }
