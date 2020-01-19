@@ -108,7 +108,7 @@ exports.answer_a_question = (req, res, next) => {
       .exec()
       .then(() => {
         // Soruyu soran kişinin notificationCount 1 arttır. Eğer kendisine soru soruyor ise notification oluşturmaz.
-        if (String(req.body.fromUserId) !== String(req.body.toUserId)) {
+        if (req.body.fromUserId !== req.body.toUserId) {
           User.updateOne( {_id: req.body.toUserId}, { $inc: { notificationCount: 1 } })
           .exec()
           .then(() => {
@@ -139,6 +139,10 @@ exports.answer_a_question = (req, res, next) => {
             });
           });
         }
+        res.status(200).json({
+          message: "Question updated",
+          success: true,
+        });
       })
       .catch(err => {
         res.status(500).json({
