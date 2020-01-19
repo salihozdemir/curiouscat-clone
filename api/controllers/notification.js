@@ -59,11 +59,13 @@ exports.delete_notification = (req, res, next) => {
 exports.get_notification = (req, res, next) => {
   Notification.find({ toUser: req.body.loginUserId })
   .select('-__v')
+  .limit(Number(req.body.limit))
+  .skip(Number(req.body.page)* Number(req.body.limit))
   .populate('fromUser','profileImg, username')
   .exec()
   .then(result => {
     if(result) {
-      Notification.updateMany({toUser: mongoose.Types.ObjectId(req.body.toUserId), isViewed: false}, {$set: {isViewed: true}})
+      Notification.updateMany({toUser: mongoose.Types.ObjectId(req.body.loginUserId), isViewed: false}, {$set: {isViewed: true}})
       .exec()
       .then(() => {
         User.findOneAndUpdate({_id: req.body.loginUserId }, { $set: { notificationCount: 0 } })
