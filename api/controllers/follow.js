@@ -29,7 +29,7 @@ exports.follow_or_unfollow = (req, res, next) => {
                   _id: mongoose.Types.ObjectId(),
                   toUser: req.body.toUserId,
                   fromUser: req.body.fromUserId,
-                  notificationText: req.body.fromUsername  + ' follow you.'
+                  notificationText: 'follow you.'
                 });
                 notification
                   .save()
