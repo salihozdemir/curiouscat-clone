@@ -11,15 +11,18 @@ exports.create_notification = (req, res, next) => {
   });
   notification
     .save()
-    .then(result => {
-      User.findOneAndUpdate(
-        {_id: req.body.toUserId },
-        { $inc: { notificationCount: 1 } })
+    .then(() => {
+      User.updateOne( {_id: req.body.toUserId }, { $inc: { notificationCount: 1 } })
         .exec()
-        .then(docs => {
+        .then(() => {
           res.status(201).json({
             message: "Created notification successful",
             success: true
+          });
+        })
+        .catch(err => {
+          res.status(500).json({
+            error: err
           });
         });
     })
@@ -63,8 +66,7 @@ exports.get_notification = (req, res, next) => {
       Notification.updateMany({toUser: mongoose.Types.ObjectId(req.body.toUserId), isViewed: false}, {$set: {isViewed: true}})
       .exec()
       .then(() => {
-        User.findOneAndUpdate(
-          {_id: req.body.loginUserId }, { $set: { notificationCount: 0 } })
+        User.findOneAndUpdate({_id: req.body.loginUserId }, { $set: { notificationCount: 0 } })
           .select('inboxCount -_id')
           .exec()
           .then(user => {

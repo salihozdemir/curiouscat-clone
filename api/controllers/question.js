@@ -5,10 +5,7 @@ const User = require('../models/user');
 const Notification = require("../models/notification");
 
 exports.get_user_questions = (req, res, next) => {
-  Question.find({
-    toUser: req.body.toUserId,
-    answerText: { $exists: req.body.answered }
-  })
+  Question.find({ toUser: req.body.toUserId, answerText: { $exists: req.body.answered } })
     .select("-__v")
     .limit(Number(req.body.limit))
     .skip(Number(req.body.page)* Number(req.body.limit))
@@ -49,12 +46,10 @@ exports.create_question = (req, res, next) => {
   });
   question
     .save()
-    .then(result => {
-      User.findOneAndUpdate(
-        {_id: req.body.toUserId },
-        { $inc: { inboxCount: 1 } })
+    .then(() => {
+      User.findOneAndUpdate( {_id: req.body.toUserId }, { $inc: { inboxCount: 1 } })
       .exec()
-      .then(result => {
+      .then(() => {
         res.status(201).json({
           message: "Created question successful",
           success: true
@@ -82,11 +77,9 @@ exports.delete_question = (req, res, next) => {
           message: "Question not found"
         });
       }
-      User.findOneAndUpdate(
-        {_id: req.body.userId },
-        { $inc: { inboxCount: -1 } })
+      User.findOneAndUpdate( {_id: req.body.userId }, { $inc: { inboxCount: -1 } })
         .exec()
-        .then(result => {
+        .then(() => {
           res.status(200).json({
             message: "Question deleted",
             success: true,
