@@ -67,7 +67,7 @@ export default {
       });
       this.questions = this.questions.concat(result.questions);
       this.$store.commit('setInboxCount', result.inboxCount);
-      this.$store.commit('notificationCount', result.notificationCount);
+      this.$store.commit('setNotificationCount', result.notificationCount);
       if(result.questions.length < this.limit) this.busy = true;
       this.questionLoading = false;
     },

@@ -46,7 +46,7 @@ export default {
       });
       this.questions = result.questions;
       this.$store.commit('setInboxCount', result.inboxCount);
-      this.$store.commit('notificationCount', result.notificationCount);
+      this.$store.commit('setNotificationCount', result.notificationCount);
     }
   }
 };
