@@ -107,8 +107,9 @@ exports.answer_a_question = (req, res, next) => {
     User.updateOne( { _id: req.body.fromUserId }, { $inc: { answerCount: 1, inboxCount: -1 } })
       .exec()
       .then(() => {
-        // Soruyu soran kişinin notificationCount 1 arttır.
-        User.updateOne( {_id: req.body.toUserId}, { $inc: { notificationCount: 1 } })
+        // Soruyu soran kişinin notificationCount 1 arttır. Eğer kendisine soru soruyor ise notification oluşturmaz.
+        if(req.body.fromUserId != req.body.toUserId) {
+          User.updateOne( {_id: req.body.toUserId}, { $inc: { notificationCount: 1 } })
           .exec()
           .then(() => {
             //Bildirim oluştur.
@@ -137,6 +138,7 @@ exports.answer_a_question = (req, res, next) => {
               error: err
             });
           });
+        }
       })
       .catch(err => {
         res.status(500).json({
