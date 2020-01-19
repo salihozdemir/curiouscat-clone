@@ -106,7 +106,7 @@ exports.delete_question = (req, res, next) => {
 
 exports.answer_a_question = (req, res, next) => {
   // Soruyu bul, sorunun cevabını oluştur.
-  Question.updateOne( { _id: req.body.questionId }, { $set: { answerText: req.body.answerText } })
+  Question.findOneAndUpdate( { _id: req.body.questionId }, { $set: { answerText: req.body.answerText } })
   .exec()
   .then(() => {
     // Soruyu cevaplayan kişinin answerCount 1 arttır ve inboxCount 1 azalt.
