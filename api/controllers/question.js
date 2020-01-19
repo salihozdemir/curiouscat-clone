@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Question = require("../models/question");
 const Follow = require("../models/follow");
 const User = require('../models/user');
+const Notification = require("../models/notification");
 
 exports.get_user_questions = (req, res, next) => {
   Question.find({
@@ -122,7 +123,7 @@ exports.answer_a_question = (req, res, next) => {
               _id: mongoose.Types.ObjectId(),
               toUser: req.body.toUserId,
               fromUser: req.body.fromUserId,
-              notificationText: req.body.fromUsername  + ' ask your question.'
+              notificationText: req.body.fromUsername  + 'answer your question.'
             });
             notification
               .save()
