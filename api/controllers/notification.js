@@ -61,7 +61,7 @@ exports.get_notification = (req, res, next) => {
   .select('-__v')
   .limit(req.body.limit)
   .skip(req.body.page * req.body.limit)
-  .populate('fromUser','profileImg, username')
+  .populate('fromUser','profileImg username')
   .sort({ timeStamp: 'desc'})
   .exec()
   .then(result => {

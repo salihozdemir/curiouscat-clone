@@ -116,7 +116,7 @@ exports.answer_a_question = (req, res, next) => {
               _id: mongoose.Types.ObjectId(),
               toUser: req.body.toUserId,
               fromUser: req.body.fromUserId,
-              notificationText: req.body.fromUsername  + 'answer your question.'
+              notificationText: req.body.fromUsername  + ' answer your question.'
             });
             notification
               .save()
