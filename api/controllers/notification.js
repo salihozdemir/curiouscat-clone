@@ -34,7 +34,7 @@ exports.create_notification = (req, res, next) => {
 };
 
 exports.delete_notification = (req, res, next) => {
-  Notification.findOneAndDelete({ _id: req.params._id})
+  Notification.deleteOne({ _id: req.params._id})
   .exec()
   .then(result => {
     if(!result){
