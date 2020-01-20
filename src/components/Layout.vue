@@ -1,7 +1,7 @@
 <template>
   <a-layout style="min-height: 100vh">
     <a-layout-header id="header" class="custom-header">
-      <a-menu theme="light" mode="horizontal" :defaultSelectedKeys="[selectedHeaderKey]">
+      <a-menu theme="light" mode="horizontal" :defaultSelectedKeys="selectedHeaderKey">
         <a-menu-item key="1">
           <router-link to="/" tag="a">
             <a-icon type="home" />

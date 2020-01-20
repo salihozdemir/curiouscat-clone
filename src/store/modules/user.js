@@ -12,7 +12,7 @@ export default {
     inboxCount: 0,
     notificationCount: 0,
     randomUsers: [],
-    selectedHeaderKey : '1',
+    selectedHeaderKey : ['1'],
   },
   getters: {
     token: state => state.token,
