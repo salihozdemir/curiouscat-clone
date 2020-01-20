@@ -1,5 +1,5 @@
 <template>
-  <div class="card" id="notification-card">
+  <div class="card" id="notification-card" v-if="cardVisible">
     <a-comment>
       <a-avatar
         @click="goToProfile(notification.fromUser.username)"
@@ -27,12 +27,14 @@
 </template>
 <script>
 import moment from 'moment';
+import notificationService from '@/services/notification';
 
 export default {
   props: ['notification'],
   data(){
     return {
-      moment
+      moment,
+      cardVisible: true,
     }
   },
   methods: {
@@ -47,8 +49,12 @@ export default {
         params: { username: value }
       }); 
     },
-    deleteNotification() {
-
+    async deleteNotification() {
+      const result = await notificationService.deleteNotification(this.notification._id);
+      if(result.success) {
+        this.$message.error('Deleted!');
+        this.cardVisible = false;
+      }
     }
   }
 };

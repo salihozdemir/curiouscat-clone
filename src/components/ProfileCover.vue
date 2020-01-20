@@ -145,6 +145,7 @@ export default {
       this.$store.commit('setToken', null);
       this.$router.push({ name: 'Auth' });
       this.$store.commit('setRandomUsers', []);
+      this.$store.commit('setSelectedHeaderKey', '1');
     },
     async followOrUnFollow() {
       const result = await followService.followOrUnFollow({

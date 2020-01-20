@@ -14,7 +14,7 @@ export default {
   },
   async deleteNotification(payload) {
     try {
-      const res = await api().delete('/notification/delete', payload);
+      const res = await api().delete('/notification/delete/' + payload);
       return res.data;
     } catch (error) {
       return {
