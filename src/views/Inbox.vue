@@ -54,6 +54,7 @@ export default {
     ...mapGetters(['loginUserId'])
   },
   created() {
+    this.$store.commit('setSelectedHeaderKey', '4');
     this.getNonAnsweredQuestions();
   },
   methods: {

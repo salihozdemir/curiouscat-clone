@@ -24,6 +24,7 @@ export default {
   },
   created() {
     this.$store.commit('setToken', common.cookie.get('access_token'));
+    this.$store.commit('setRandomUsers', []);
     this.$message.config({top: '55px'});
   }
 };

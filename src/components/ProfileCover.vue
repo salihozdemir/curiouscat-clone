@@ -107,7 +107,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['loginUserId', 'loginUserName']),
+    ...mapGetters(['loginUserId']),
     getPhotoUrl() {
       if (this.userImg === 'default-pp.png') {
         return '/assets/img/default-pp.png';
@@ -144,8 +144,6 @@ export default {
       common.cookie.set('access_token', '', 0);
       this.$store.commit('setToken', null);
       this.$router.push({ name: 'Auth' });
-      this.$store.commit('setloginUserName', '');
-      this.$store.commit('setLoginUserId', '');
       this.$store.commit('setRandomUsers', []);
     },
     async followOrUnFollow() {

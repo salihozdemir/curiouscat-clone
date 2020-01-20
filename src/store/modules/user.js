@@ -12,6 +12,7 @@ export default {
     inboxCount: 0,
     notificationCount: 0,
     randomUsers: [],
+    selectedHeaderKey : '1',
   },
   getters: {
     token: state => state.token,
@@ -20,6 +21,7 @@ export default {
     randomUsers: state => state.randomUsers,
     inboxCount: state => state.inboxCount,
     notificationCount: state => state.notificationCount,
+    selectedHeaderKey: state => state.selectedHeaderKey,
   },
   mutations: {
     setToken(state, payload) {
@@ -45,6 +47,9 @@ export default {
     },
     setNotificationCount(state, payload) {
       state.notificationCount = payload;
+    },
+    setSelectedHeaderKey(state, payload) {
+      state.selectedHeaderKey = payload;
     }
   },
   actions: {
