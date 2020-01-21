@@ -16,11 +16,16 @@
           infinite-scroll-disabled="busy" 
           infinite-scroll-distance="limit" 
           infinite-scroll-immediate-check="false">
-          <inbox-card 
-            :question="question" 
-            v-for="question in questions" 
-            :key="question._id">
-          </inbox-card>
+          <button @click="hides =! hides">Toggle</button>
+          <transition-group name="slide">
+            <inbox-card
+              :question="question" 
+              v-for="(question, index) in questions" 
+              :key="question._id"
+              v-if="hide(index)"
+              @delete-card="deleteQuestion(index)">
+            </inbox-card>
+          </transition-group>
           <a-spin v-if="loadingMore" class="loading-more" />
         </div>
       </a-col>
@@ -47,7 +52,8 @@ export default {
       busy: false,
       limit: 10,
       page: 0,
-      loadingMore: false
+      loadingMore: false,
+      hides: true,
     };
   },
   computed: {
@@ -78,6 +84,13 @@ export default {
       await this.getNonAnsweredQuestions();
       this.loadingMore = false;
     },
+    deleteQuestion(index) {
+      this.questions.splice(index, 1);
+    },
+    hide(index) {
+      if(index === 2 && this.hides === true) return false 
+      else return true
+    }
   },
 };
 </script>
@@ -100,4 +113,29 @@ export default {
   margin-top: 15px;
   font-size: larger;
 }
+/* .slide-right-enter-active-class {
+  opacity: 1;
+  animation: slide-right 1s linear both;
+}
+
+.slide-right-leave-active-class {
+  opacity: 1;
+  animation: slide-right 1s linear both;
+}
+.slide-right-leave-class {
+  opacity: 0;
+  animation: slide-right 1s linear both;
+} */
+
+.slide-leave-active {
+  /* animation: slide-right 1s linear both; */
+  transition: opacity 0.5s;
+  opacity: 0;
+  position: absolute;
+}
+
+.slide-move {
+  transition: transform 0.5s;
+}
+
 </style>

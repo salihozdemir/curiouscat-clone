@@ -1,5 +1,5 @@
 <template>
-  <div class="card" id="inbox-card" v-if="cardVisible">
+  <div class="card" id="inbox-card">
     <a-comment>
       <a slot="author" class="author-name" @click="goToProfile(fromUserInfo.name)">{{fromUserInfo.name}}</a>
       <a-avatar
@@ -60,7 +60,6 @@ export default {
     return {
       visible: false,
       confirmLoading: false,
-      cardVisible: true,
       answerText: '',
       moment
     };
@@ -96,7 +95,7 @@ export default {
       if (result.success) {
         this.$store.commit('InorDecreaseInboxCount', -1);
         this.$message.success('Answered!');
-        this.cardVisible = false;
+        this.$emit('delete-card');
       }
       this.visible = false;
       this.confirmLoading = false;
@@ -112,7 +111,7 @@ export default {
       if (result.success) {
         this.$store.commit('InorDecreaseInboxCount', -1);
         this.$message.error('Deleted!');
-        this.cardVisible = false;
+        this.$emit('delete-card');
       }
     },
     goToProfile(value) {
