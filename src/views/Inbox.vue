@@ -16,7 +16,7 @@
           infinite-scroll-disabled="busy" 
           infinite-scroll-distance="limit" 
           infinite-scroll-immediate-check="false">
-          <transition-group name="slide">
+          <transition-group name="question">
             <inbox-card
               :question="question" 
               v-for="(question, index) in questions" 
@@ -107,13 +107,13 @@ export default {
   font-size: larger;
 }
 
-.slide-leave-active {
+.question-leave-active {
   transition: opacity;
   opacity: 0;
   position: absolute;
 }
 
-.slide-move {
+.question-move {
   transition: transform 0.8s;
 }
 

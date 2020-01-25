@@ -15,11 +15,14 @@
         infinite-scroll-disabled="busy" 
         infinite-scroll-distance="limit" 
         infinite-scroll-immediate-check="false">
-        <notification-card 
-          v-for="notification in notifications" 
-          :key="notification._id"
-          :notification="notification"> 
-        </notification-card>
+        <transition-group name="notification">
+          <notification-card 
+            v-for="(notification, index) in notifications" 
+            :key="notification._id"
+            :notification="notification"
+            @delete-notification="deleteNotification(index)"> 
+          </notification-card>
+        </transition-group>
         <a-spin v-if="loadingMore" class="loading-more" />
       </div>
     </a-col>
@@ -74,6 +77,9 @@ export default {
       await this.getUserNotifications();
       this.loadingMore = false;
     },
+    deleteNotification(index) {
+      this.notifications.splice(index, 1);
+    }
   }
 }
 </script>
@@ -95,5 +101,15 @@ export default {
   font-family: monospace;
   margin-top: 15px;
   font-size: larger;
+}
+
+.notification-leave-active {
+  transition: opacity;
+  opacity: 0;
+  position: absolute;
+}
+
+.notification-move {
+  transition: transform 0.8s;
 }
 </style>

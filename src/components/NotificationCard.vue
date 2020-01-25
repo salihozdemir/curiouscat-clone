@@ -1,5 +1,5 @@
 <template>
-  <div class="card" id="notification-card" v-if="cardVisible">
+  <div class="card" id="notification-card">
     <a-comment>
       <a-avatar
         @click="goToProfile(notification.fromUser.username)"
@@ -9,7 +9,7 @@
         class="avatar"
       ></a-avatar>
       <p slot="content" :style="notification.isViewed ? '' : 'font-weight: 500'">
-        <a :href="'./Profile/' + notification.fromUser.username">{{notification.fromUser.username}}</a> 
+        <a style="color: #32afd3;" :href="'./Profile/' + notification.fromUser.username">{{notification.fromUser.username}}</a> 
         {{notification.notificationText}}
       </p>
       <span slot="datetime">{{moment(notification.timeStamp).fromNow()}}</span>
@@ -34,7 +34,6 @@ export default {
   data(){
     return {
       moment,
-      cardVisible: true,
     }
   },
   methods: {
@@ -53,7 +52,7 @@ export default {
       const result = await notificationService.deleteNotification(this.notification._id);
       if(result.success) {
         this.$message.error('Deleted!');
-        this.cardVisible = false;
+        this.$emit('delete-notification');
       }
     }
   }
@@ -66,6 +65,10 @@ export default {
   margin-top: 10px;
   border-radius: 0.5rem;
   box-shadow: 0 0px 4px 0 rgba(0,0,0,0.2);
+}
+
+.card:last-child {
+  margin-bottom: 15px;
 }
 
 .author-name {
