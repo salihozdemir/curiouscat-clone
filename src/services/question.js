@@ -34,9 +34,9 @@ export default {
       };
     }
   },
-  async deleteQuestion(params, payload) {
+  async deleteQuestion(payload) {
     try {
-      const res = await api().delete('/question/' + params, payload);
+      const res = await api().delete('/question/' + payload.questionId + '/' + payload.userId);
       return res.data;
     } catch (error) {
       return {

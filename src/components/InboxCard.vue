@@ -105,8 +105,9 @@ export default {
       this.answerText = '';
     },
     async deleteQuestion() {
-      const result = await questionService.deleteQuestion(this.question._id, {
-        userId: this.loginUserId
+      const result = await questionService.deleteQuestion({
+        questionId: this.question._id,
+        userId: this.loginUserId,
       });
       if (result.success) {
         this.$store.commit('InorDecreaseInboxCount', -1);
