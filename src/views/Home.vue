@@ -1,9 +1,9 @@
 <template>
   <a-row :gutter="16">
-    <a-col :md="24" :lg="8">
+    <a-col :xs="24" :sm="10" :lg="8">
        <who-to-follow></who-to-follow>
     </a-col>
-    <a-col :md="24" :lg="16">
+    <a-col :xs="24" :sm="14" :lg="12">
       <div v-if="loadingQuestions" class="spin">
           <a-spin size="large"/>
       </div>

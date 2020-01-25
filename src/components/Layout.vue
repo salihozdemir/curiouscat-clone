@@ -40,11 +40,7 @@
     </a-layout-header>
     <a-layout>
       <a-layout-content class="layout-content">
-        <a-row type="flex" justify="center">
-          <a-col :xs="24" :sm="20" :md="18">
-            <slot></slot>
-          </a-col>
-        </a-row>
+          <slot></slot>
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -55,18 +51,13 @@ export default {
   computed: {
     ...mapGetters(['loginUserName', 'notificationCount', 'inboxCount', 'selectedHeaderKey'])
   },
-  methods: {
-    deneme() {
-      console.log('salig');
-    }
-  }
 };
 </script>
 
 <style scope>
 
 .layout-content {
-  padding: 0px 50px; 
+  padding: 0px 10px; 
   margin-top: 50px;
 }
 
