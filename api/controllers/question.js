@@ -77,7 +77,7 @@ exports.delete_question = (req, res, next) => {
           message: "Question not found"
         });
       }
-      User.updateOne( {_id: req.body.userId }, { $inc: { inboxCount: -1 } })
+      User.updateOne( {_id: req.params.userId }, { $inc: { inboxCount: -1 } })
         .exec()
         .then(() => {
           res.status(200).json({

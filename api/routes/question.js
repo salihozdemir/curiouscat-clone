@@ -10,7 +10,7 @@ router.post("/getUserQuestion", QuestionController.get_user_questions);
 router.post("/", QuestionController.create_question);
 
 //Delete question
-router.delete("/:questionId", QuestionController.delete_question);
+router.delete("/:questionId/:userId", QuestionController.delete_question);
 
 //Answer a question
 router.patch("/", QuestionController.answer_a_question);
