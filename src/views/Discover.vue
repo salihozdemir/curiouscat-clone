@@ -1,9 +1,9 @@
 <template>
-  <a-row :gutter="16">
-    <a-col :md="24" :lg="8">
+  <a-row :gutter="16" type="flex" justify="center">
+    <a-col :xs="24" :sm="10" :md="8" :lg="6" :xl="5">
       <who-to-follow></who-to-follow>
     </a-col>
-    <a-col :md="24" :lg="16">
+    <a-col :xs="24" :sm="14" :md="12" :lg="10" :xl="9">
       <search></search>
       <question-card
         v-for="question in questions"

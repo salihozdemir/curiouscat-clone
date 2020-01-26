@@ -1,10 +1,10 @@
 <template>
   <div>
-    <a-row :gutter="16">
-      <a-col :md="24" :lg="8">
+    <a-row :gutter="16" justify="center" type="flex">
+      <a-col :xs="24" :sm="10" :md="8" :lg="6" :xl="5">
         <who-to-follow></who-to-follow>
       </a-col>
-      <a-col :md="24" :lg="16">
+      <a-col :xs="24" :sm="14" :md="12" :lg="10" :xl="9">
         <div v-if="questionLoading" class="spin">
           <a-spin size="large"/>
         </div>

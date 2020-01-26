@@ -80,6 +80,7 @@ export default {
 .ant-list-item-meta-description {
   font-size: 15px;
   color: #929292;
+  width: max-content;
 }
 
 .ant-comment-inner {
@@ -124,6 +125,10 @@ a:hover {
   .ant-badge-count {
     right: -6px !important;
     margin-top: unset !important;
+  }
+
+  #whoToFollow {
+    display: none;
   }
 }
 </style>

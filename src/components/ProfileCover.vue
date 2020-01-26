@@ -7,7 +7,7 @@
     </div>
     <a-col v-else span="24">
       <a-row type="flex" justify="center" class="text-center">
-        <a-col :span="4">
+        <a-col :span="7">
           <div class="profile-avatar">
             <img :src="getPhotoUrl" @click="$refs.file.click()" />
           </div>
@@ -30,7 +30,7 @@
         ></a-button>
       </a-row>
       <a-row type="flex" justify="center" class="text-center">
-        <a-col :span="4">
+        <a-col :span="7">
           <a class="usermame">{{userName}}</a>
           <a-button
             style="font-weight: bold;"
