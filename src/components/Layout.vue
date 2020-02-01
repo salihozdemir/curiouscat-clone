@@ -15,10 +15,12 @@
           </router-link>
         </a-menu-item>
         <a-menu-item key="3">
-          <a :href="'../Profile/' + loginUserName" tag="a">
+          <router-link :to="'../Profile/' + loginUserName" v-slot="{ href }" >
+          <a :href="href">
             <a-icon type="user" />
             <span class="nav-text">Profile</span>
           </a>
+          </router-link>
         </a-menu-item>
         <a-menu-item key="4">
           <router-link to="/Inbox" tag="a">

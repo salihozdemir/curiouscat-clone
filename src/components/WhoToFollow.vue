@@ -17,8 +17,8 @@
       </div>
       <a-list-item slot="renderItem" slot-scope="item">
         <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
-          <a slot="title" :href="'./' + item.username" class="username">{{item.username}}</a>
-          <a slot="avatar" :href="'./' + item.username">
+          <a slot="title" :href="'../Profile/' + item.username" class="username">{{item.username}}</a>
+          <a slot="avatar" :href="'../Profile/' + item.username">
             <a-avatar
               :src="getProfileImg(item)"
               :size="40"
