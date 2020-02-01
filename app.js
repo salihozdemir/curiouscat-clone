@@ -10,16 +10,25 @@ const followRoutes = require("./api/routes/follow");
 const notificationRoutes = require("./api/routes/notification");
 
 mongoose.Promise = global.Promise;
-mongoose.connect(
-  "mongodb+srv://dbUser:" +
-    process.env.MONGO_ATLAS_PW +
-    "@question-cnqwq.gcp.mongodb.net/askPrivy?retryWrites=true&w=majority",
-  {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true
-  }
-).catch((error) => { console.log(error);});
+// mongoose.connect(
+//   "mongodb+srv://dbUser:" +
+//     process.env.MONGO_ATLAS_PW +
+//     "@question-cnqwq.gcp.mongodb.net/askPrivy?retryWrites=true&w=majority",
+//   {
+//     useUnifiedTopology: true,
+//     useNewUrlParser: true,
+//     useCreateIndex: true
+//   }
+// ).catch((error) => { console.log(error);});
+const url = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@127.0.0.1:27017/que-ano?authSource=admin`;
+mongoose.connect(url, 
+    { 
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useCreateIndex: true
+    }
+  ).catch((error) => { console.log(error);});
+
 
 app.use(morgan("dev"));
 app.use(express.static('uploads'));
