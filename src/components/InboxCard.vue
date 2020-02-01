@@ -132,6 +132,10 @@ export default {
   box-shadow: 0 0px 4px 0 rgba(0,0,0,0.2);
 }
 
+.card:last-child {
+  margin-bottom: 55px;
+}
+
 .question-container {
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.5em;

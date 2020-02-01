@@ -75,7 +75,7 @@ export default {
 }
 
 .container:last-child {
-  margin-bottom: 15px;
+  margin-bottom: 55px;
 }
 
 .author-name {

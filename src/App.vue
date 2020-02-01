@@ -126,9 +126,17 @@ a:hover {
     right: -6px !important;
     margin-top: unset !important;
   }
-
   #whoToFollow {
     display: none;
+  }
+  .custom-header {
+    bottom: 0;
+  }
+  .layout-content {
+    margin-top: unset;
+  }
+  .loading-more {
+    bottom: 55px !important;
   }
 }
 </style>

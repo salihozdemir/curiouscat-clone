@@ -140,10 +140,10 @@ export default {
 }
 
 .loading-more {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    width: 100%;
-    text-align: center;
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
 }
 
 .no-data {
