@@ -90,8 +90,7 @@ export default {
 }
 
 .loading-more {
-  position: absolute;
-  bottom: 20px;
+  margin: 10px;
   width: 100%;
   text-align: center;
 }

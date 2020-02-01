@@ -136,6 +136,7 @@ a:hover {
     margin-top: unset;
   }
   .loading-more {
+    position: absolute !important;
     bottom: 55px !important;
   }
 }

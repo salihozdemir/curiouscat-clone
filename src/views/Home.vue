@@ -17,7 +17,7 @@
           :key="question._id"
           :question="question"
         ></question-card>
-          <a-spin v-if="loadingMore" class="loading-more" />
+          <a-spin v-if="!loadingMore" class="loading-more" />
       </div>
     </a-col>
   </a-row>
@@ -82,8 +82,7 @@ export default {
 }
 
 .loading-more {
-  position: absolute;
-  bottom: 20px;
+  margin: 10px;
   width: 100%;
   text-align: center;
 }
