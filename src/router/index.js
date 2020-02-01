@@ -36,6 +36,10 @@ const routes = [
     name: 'Discover',
     component: () => import('@/views/Discover.vue')
   },
+  {
+    path: '*',
+    component: () => import('@/views/Home.vue')
+  }
 ];
 
 const router = new VueRouter({
@@ -52,7 +56,7 @@ router.beforeEach((to, from, next) => {
     if (!common.cookie.get('access_token')) next('/Auth');
     else next();
   }
-  if (to.name === 'Auth') {
+  else if (to.name === 'Auth') {
     if (common.cookie.get('access_token')) next('/Profile');
     else next();
   }
