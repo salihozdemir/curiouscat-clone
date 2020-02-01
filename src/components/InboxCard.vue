@@ -1,15 +1,16 @@
 <template>
   <div class="card" id="inbox-card">
     <a-comment>
-      <a slot="author" class="author-name" @click="goToProfile(fromUserInfo.name)">{{fromUserInfo.name}}</a>
-      <a-avatar
-        @click="goToProfile(fromUserInfo.name)"
-        slot="avatar"
+      <a slot="author" class="author-name" :href="'../Profile/' + fromUserInfo.name">
+        {{fromUserInfo.name}}
+      </a>
+      <a slot="avatar" :href="'../Profile/' + fromUserInfo.name">
+        <a-avatar
         :src="fromUserInfo.url"
         :alt="fromUserInfo.name"
         :size="40"
-        class="avatar"
-      ></a-avatar>
+        class="avatar" />
+      </a>
       <p slot="content" style="margin-bottom: 25px;">{{question.questionText}}</p>
       <span slot="datetime">{{moment(question.timeStamp).fromNow()}}</span>
       <a-popconfirm
@@ -36,7 +37,7 @@
       >
       <div class="question-container">
         <div class="sender">
-          <a @click="goToProfile(fromUserInfo.name)">{{fromUserInfo.name}}</a> asked
+          <a :href="'../Profile/' + fromUserInfo.name"> {{fromUserInfo.name}} </a> asked
         </div>
         <span>{{question.questionText}}</span>
       </div>
@@ -118,14 +119,6 @@ export default {
         this.$message.error('Deleted!');
         this.$emit('delete-card');
       }
-    },
-    goToProfile(value) {
-      if(value !== 'Anonymous'){
-        this.$router.push({
-          name: 'Profile',
-          params: { username: value }
-        }); 
-      } 
     },
   }
 };

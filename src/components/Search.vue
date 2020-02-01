@@ -9,14 +9,13 @@
       </div>
       <a-list-item style="margin-top: 5px;" class="border-bottom-0" slot="renderItem" slot-scope="item">
         <a-list-item-meta :description="String(item.answerCount) + ' Answered'">
-          <a slot="title" @click="goToProfile(item.username)" class="username">{{item.username}}</a>
-          <a-avatar
-            slot="avatar"
-            :src="getProfileImg(item)"
-            @click="goToProfile(item.username)"
-            :size="40"
-            class="avatar"
-          />
+          <a slot="title" :href="'../Profile/' + item.username" class="username">{{item.username}}</a>
+          <a slot="avatar" :href="'../Profile/' + item.username">
+            <a-avatar
+              :src="getProfileImg(item)"
+              :size="40"
+              class="avatar" />
+          </a>
         </a-list-item-meta>
         <div>
           <a-button 
@@ -72,12 +71,6 @@ export default {
       this.isTyping = false;
       if(this.searchResult.length === 0) this.noDataText = true;
       else this.noDataText = false; 
-    },
-    goToProfile(value) {
-      this.$router.push({
-        name: 'Profile',
-        params: { username: value }
-      }); 
     },
     getProfileImg(user) {
       const defaultPP = '/assets/img/default-pp.png';

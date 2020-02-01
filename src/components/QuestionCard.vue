@@ -2,29 +2,30 @@
   <div class="container">
     <div class="card">
       <a-comment>
-        <a slot="author" href="#" @click="goToProfile(fromUserInfo.fromUserName)" class="author-name">
+        <a slot="author" :href="'../Profile/' + fromUserInfo.fromUserName"  class="author-name">
           {{fromUserInfo.fromUserName}}
         </a>
-        <a-avatar
-          @click="goToProfile(fromUserInfo.fromUserName)"
-          slot="avatar"
+        <a slot="avatar" :href="'../Profile/' + fromUserInfo.fromUserName">
+          <a-avatar
           :src="fromUserInfo.fromUserUrl"
           :alt="fromUserInfo.fromUserName"
           :size="40"
-          class="comment-avatar"
-        ></a-avatar>
+          class="comment-avatar" />
+        </a>
         <p slot="content">{{question.questionText}}</p>
         <span slot="datetime">{{moment(question.timeStamp).fromNow()}}</span>
         <a-comment>
-          <a slot="author" href="#" @click="goToProfile(question.toUser.username)" class="author-name">{{question.toUser.username}}</a>
-          <a-avatar
-            @click="goToProfile(question.toUser.username)"
-            slot="avatar"
+          <a slot="author" :href="'../Profile/' + question.toUser.username" class="author-name">
+            {{question.toUser.username}}
+          </a>
+          <a slot="avatar" :href="'../Profile/' + question.toUser.username">
+            <a-avatar
             :src="toUserInfo"
             :alt="question.toUser.username"
             :size="40"
-            class="comment-avatar"
-          />
+            class="comment-avatar" />
+          </a>
+          
           <p slot="content">{{question.answerText}}</p>
         </a-comment>
       </a-comment>
@@ -62,16 +63,6 @@ export default {
       return this.question.toUser.profileImg === 'default-pp.png' ? defaultPP : backendPP
     },
   },
-  methods: {
-    goToProfile(value) {
-      if(value !== 'Anonymous'){
-        this.$router.push({
-          name: 'Profile',
-          params: { username: value }
-        }); 
-      } 
-    }
-  }
 };
 </script>
 <style scoped>

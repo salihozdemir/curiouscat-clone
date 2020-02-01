@@ -15,10 +15,10 @@
           </router-link>
         </a-menu-item>
         <a-menu-item key="3">
-          <router-link :to="'/Profile/' + loginUserName" tag="a">
+          <a :href="'../Profile/' + loginUserName" tag="a">
             <a-icon type="user" />
             <span class="nav-text">Profile</span>
-          </router-link>
+          </a>
         </a-menu-item>
         <a-menu-item key="4">
           <router-link to="/Inbox" tag="a">

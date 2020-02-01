@@ -17,14 +17,13 @@
       </div>
       <a-list-item slot="renderItem" slot-scope="item">
         <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
-          <a slot="title" @click="goToProfile(item.username)" class="username">{{item.username}}</a>
-          <a-avatar
-            slot="avatar"
-            :src="getProfileImg(item)"
-            @click="goToProfile(item.username)"
-            :size="40"
-            class="avatar"
-          />
+          <a slot="title" :href="'./' + item.username" class="username">{{item.username}}</a>
+          <a slot="avatar" :href="'./' + item.username">
+            <a-avatar
+              :src="getProfileImg(item)"
+              :size="40"
+              class="avatar" />
+          </a>
         </a-list-item-meta>
           <a-button 
             shape="round" 
@@ -70,13 +69,7 @@ export default {
       const defaultPP = '/assets/img/default-pp.png';
       const backendPP = `${process.env.VUE_APP_API_URL}/${user._id}/${user.profileImg}`;
       return user.profileImg === 'default-pp.png' ? defaultPP : backendPP
-    },
-    goToProfile(value) {
-      this.$router.push({
-        name: 'Profile',
-        params: { username: value }
-      }); 
-    },
+    },  
     async followOrUnFollow(userId) {
       const result = await followService.followOrUnFollow({
         toUserId: userId,

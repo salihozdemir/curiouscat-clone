@@ -1,13 +1,12 @@
 <template>
   <div class="card" id="notification-card">
     <a-comment>
+      <a slot="avatar" :href="'../Profile/' + notification.fromUser.username">
       <a-avatar
-        @click="goToProfile(notification.fromUser.username)"
-        slot="avatar"
         :src="getProfileImg(notification.fromUser)"
         :size="40"
-        class="avatar"
-      ></a-avatar>
+        class="avatar" />
+      </a>
       <p slot="content" :style="notification.isViewed ? '' : 'font-weight: 500'">
         <a style="color: #32afd3;" :href="'./Profile/' + notification.fromUser.username">{{notification.fromUser.username}}</a> 
         {{notification.notificationText}}
@@ -41,12 +40,6 @@ export default {
       const defaultPP = '/assets/img/default-pp.png';
       const backendPP = `${process.env.VUE_APP_API_URL}/${user._id}/${user.profileImg}`;
       return user.profileImg === 'default-pp.png' ? defaultPP : backendPP
-    },
-    goToProfile(value) {
-      this.$router.push({
-        name: 'Profile',
-        params: { username: value }
-      }); 
     },
     async deleteNotification() {
       const result = await notificationService.deleteNotification(this.notification._id);
