@@ -84,7 +84,7 @@ export default {
       });
       this.$store.commit('changeUserText', {
         text: result.buttonText,
-        _id: result.userId
+        _id: userId
       });
     },
   }
