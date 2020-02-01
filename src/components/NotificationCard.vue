@@ -1,27 +1,31 @@
 <template>
   <div class="card" id="notification-card">
-    <a-comment>
-      <a slot="avatar" :href="'../Profile/' + notification.fromUser.username">
-      <a-avatar
-        :src="getProfileImg(notification.fromUser)"
-        :size="40"
-        class="avatar" />
-      </a>
-      <p slot="content" :style="notification.isViewed ? '' : 'font-weight: 500'">
-        <a style="color: #32afd3;" :href="'./Profile/' + notification.fromUser.username">{{notification.fromUser.username}}</a> 
-        {{notification.notificationText}}
-      </p>
-      <span slot="datetime">{{moment(notification.timeStamp).fromNow()}}</span>
-      <a-popconfirm
-          title="Are you sure delete this notification?"
-          @confirm="deleteNotification"
-          okText="Yes"
-          cancelText="No"
-        >
-          <a-icon slot="icon" type="delete" style="color: red" />
-          <a-icon type="close" class="delete-button"/>
+    <div class="flex">
+      <a-icon v-if="!notification.isViewed" type="fire" theme="twoTone" twoToneColor="#eb2f96" class="fire-icon"></a-icon>
+      <a-comment style="flex: 100%">
+        <a slot="avatar" :href="'../Profile/' + notification.fromUser.username">
+        <a-avatar
+          :src="getProfileImg(notification.fromUser)"
+          :size="40"
+          class="avatar" />
+        </a>
+        <p slot="content" :style="notification.isViewed ? '' : 'font-weight: 500'">
+          <a style="color: #32afd3;" :href="'./Profile/' + notification.fromUser.username">{{notification.fromUser.username}}</a> 
+          {{notification.notificationText}}
+        </p>
+        <span slot="datetime">{{moment(notification.timeStamp).fromNow()}}</span>
+        <a-popconfirm
+            title="Are you sure delete this notification?"
+            @confirm="deleteNotification"
+            okText="Yes"
+            cancelText="No"
+          >
+            <a-icon slot="icon" type="delete" style="color: red" />
+            <a-icon type="close" class="delete-button"/>
         </a-popconfirm>
-    </a-comment>
+      </a-comment>
+    </div>
+    
   </div>
 </template>
 <script>
@@ -82,5 +86,16 @@ export default {
   right: 0;
   top: 0;
   color: #8a8989;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.fire-icon {
+  color: indianred;
+  font-size: 20px;
+  margin-right: 5px;
 }
 </style>
