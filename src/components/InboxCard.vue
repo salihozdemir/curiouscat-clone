@@ -85,20 +85,24 @@ export default {
       this.visible = true;
     },
     async answerQuestion() {
-      this.confirmLoading = true;
-      const result = await questionService.answerQuestion({
-        questionId: this.question._id,
-        answerText: this.answerText,
-        fromUserId: this.loginUserId,
-        toUserId: this.question.fromUser._id,
-      });
-      if (result.success) {
-        this.$store.commit('InorDecreaseInboxCount', -1);
-        this.$message.success('Answered!');
-        this.$emit('delete-card');
+      if(this.answerText !== '') {
+        this.confirmLoading = true;
+        const result = await questionService.answerQuestion({
+          questionId: this.question._id,
+          answerText: this.answerText,
+          fromUserId: this.loginUserId,
+          toUserId: this.question.fromUser._id,
+        });
+        if (result.success) {
+          this.$store.commit('InorDecreaseInboxCount', -1);
+          this.$message.success('Answered!');
+          this.$emit('delete-card');
+        }
+        this.visible = false;
+        this.confirmLoading = false;
+      } else {
+        this.$message.error('Please input a answer text');
       }
-      this.visible = false;
-      this.confirmLoading = false;
     },
     handleCancel() {
       this.visible = false;
