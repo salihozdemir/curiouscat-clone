@@ -5,6 +5,9 @@
     </a-col>
     <a-col :xs="24" :sm="14" :md="12" :lg="10" :xl="9">
       <search></search>
+      <div v-if="loadingQuestions" class="spin">
+          <a-spin size="large"/>
+      </div>
       <question-card
         v-for="question in questions"
         :key="question._id"
@@ -29,7 +32,8 @@ export default {
   data() {
     return {
       questions: [],
-      limit: 10
+      limit: 10,
+      loadingQuestions: true,
     }
   },
   computed: {
@@ -48,9 +52,14 @@ export default {
       this.questions = result.questions;
       this.$store.commit('setInboxCount', result.inboxCount);
       this.$store.commit('setNotificationCount', result.notificationCount);
+      this.loadingQuestions = false;
     }
   }
 };
 </script>
 <style scoped>
+.spin {
+  margin-top: 50px;
+  text-align: center;
+}
 </style>
