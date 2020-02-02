@@ -17,7 +17,7 @@
           :key="question._id"
           :question="question"
         ></question-card>
-          <a-spin v-if="!loadingMore" class="loading-more" />
+          <a-spin v-if="loadingMore" class="loading-more" />
       </div>
     </a-col>
   </a-row>

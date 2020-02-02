@@ -81,6 +81,7 @@ export default {
 .author-name {
   font-size: 14px;
   color: #32afd3;
+  font-weight: 500;
 }
 
 .comment-avatar {

@@ -180,6 +180,7 @@ export default {
 .author-name {
   font-size: 14px;
   color: #32afd3;
+  font-weight: 500;
 }
 
 .avatar {
@@ -195,6 +196,10 @@ export default {
   right: 0;
   top: 0;
   color: #8a8989;
+}
+.delete-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
 }
 
 
