@@ -76,12 +76,12 @@ exports.get_notification = (req, res, next) => {
             res.status(200).json({
               notifications: result,
               inboxCount: user.inboxCount
-            })
-            .catch(err => {
-              res.status(500).json({
-                error: err
-              });
             });
+          })
+          .catch(err => {
+            res.status(500).json({
+              error: err
+          });;
         });
       })
       .catch(err => {
