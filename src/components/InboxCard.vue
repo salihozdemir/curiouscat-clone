@@ -73,11 +73,13 @@ export default {
           name: 'Anonymous',
           url: '/assets/img/anonymous-pp.png'
         };
-      } else {
+     } else {
+        const defaultPP = '/assets/img/default-pp.png';
+        const backendPP = `${process.env.VUE_APP_API_URL}/${this.question.fromUser._id}/${this.question.fromUser.profileImg}`;
         return {
           name: this.question.fromUser.username,
-          url: `${process.env.VUE_APP_API_URL}/${this.question.fromUser._id}/${this.question.fromUser.profileImg}`
-        };
+          url: this.question.fromUser.profileImg === 'default-pp.png' ? defaultPP : backendPP
+        }; 
       }
     },
   },
