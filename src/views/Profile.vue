@@ -22,7 +22,7 @@
           <a-spin size="large"/>
         </div>
         <p v-if="this.questions.length === 0 && !questionLoading" class="no-data">
-          You don't have any asnwered question :(
+          doesn't have any asnwered question :(
         </p>
         <div
           v-infinite-scroll="loadMore" 

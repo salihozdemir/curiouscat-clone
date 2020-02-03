@@ -33,6 +33,7 @@
         <a-col :span="7">
           <a class="usermame">{{userName}}</a>
           <a-button
+            v-if="!isOwnProfile"
             style="font-weight: bold;"
             @click="followOrUnFollow"
             type="primary"
