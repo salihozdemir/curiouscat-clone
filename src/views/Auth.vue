@@ -15,7 +15,7 @@
 			<button class="form-btn dx" type="submit">Sign Up</button>
 		</form>
 		<form :class="'signIn ' + signInClass" @submit.prevent="logIn">
-			<h3>Welcome </br> Back !</h3>
+			<h3>Welcome <br> Back !</h3>
 			<input type="email" placeholder="eMail" autocomplete='off' required v-model="email"/>
 			<input type="password" placeholder="Password" autocomplete='off' required v-model="password" />
 			<p style="color: indianred">{{errorMessageLogin}}</p>
@@ -28,6 +28,8 @@
 </template>
 <script>
 import AuthService from '@/services/auth';
+import notificationService from '@/services/notification';
+import questionService from '@/services/question';
 
 export default {
   data(){
@@ -99,6 +101,21 @@ export default {
 			this.$store.commit('setToken', data.token);
 			this.$store.commit('setInboxCount', data.inboxCount);
 			this.$store.commit('setNotificationCount', data.notificationCount);
+		},
+		createQuestion() {
+			notificationService.createNotification({
+				toUser: '',
+				fromUser: '',
+				notificationText: '',
+			});
+		},
+		createNotification() {
+			questionService.createQuestion({
+				toUser: '',
+				fromUser: '',
+				isAnon: '',
+				questionText: '',
+			});
 		}
   }
 };
