@@ -6,7 +6,7 @@
       </div>
 		<form :class="'signUp ' + signUpClass" @submit.prevent="signUp">
 			<img width="40" src="/assets/img/logo.svg" class="site-logo">
-			<input class="w100" type="email" placeholder="eMail" autocomplete='off' v-model="email"/>
+			<input class="w100" type="email" placeholder="Email" autocomplete='off' v-model="email"/>
 			<input class="w100" type="string" placeholder="Username" autocomplete='off' required v-model="username"/>
 			<input type="password" placeholder="Password" required v-model="password"/>
 			<input type="password" placeholder="Verify Password" required style="margin-bottom: 0px;" v-model="verifyPassword" />
@@ -16,7 +16,7 @@
 		</form>
 		<form :class="'signIn ' + signInClass" @submit.prevent="logIn">
 			<h3>Welcome <br> Back !</h3>
-			<input type="email" placeholder="eMail" autocomplete='off' required v-model="email"/>
+			<input type="email" placeholder="Email" autocomplete='off' required v-model="email"/>
 			<input type="password" placeholder="Password" autocomplete='off' required v-model="password" />
 			<p style="color: indianred">{{errorMessageLogin}}</p>
 			<button class="form-btn sx back" type="button" @click="goToSignUp()">Back</button>

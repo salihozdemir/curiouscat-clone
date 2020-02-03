@@ -95,7 +95,7 @@ export default {
         this.$router.push({
           name: 'Discover',
         });
-        this.$message.error('User not found');
+        if(details.message != 'Auth failed') this.$message.error('User not found');
       };
       this.userImg = details.profileImg;
       this.userName = details.username;

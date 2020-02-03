@@ -141,8 +141,8 @@ export default {
     },
     logout() {
       common.cookie.set('access_token', '', 0);
-      this.$store.commit('setToken', null);
       this.$router.push({ name: 'Auth' });
+      this.$store.commit('setToken', null);
       this.$store.commit('setRandomUsers', []);
       this.$store.commit('setSelectedHeaderKey', ['0']);
     },
