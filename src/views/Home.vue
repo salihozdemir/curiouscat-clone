@@ -50,7 +50,6 @@ export default {
      ...mapGetters(['loginUserId']),
   },
   created() {
-    this.$store.commit('setSelectedHeaderKey', ['1']);
     this.getFollowingQuestions();
   },
   methods: {

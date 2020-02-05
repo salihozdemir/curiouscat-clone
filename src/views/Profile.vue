@@ -79,7 +79,6 @@ export default {
     ...mapGetters(['loginUserId'])
   },
   async created() {
-    this.$store.commit('setSelectedHeaderKey', ['3']);
     this.questionLoading = true;
     this.coverLoading = true;
     await this.getUser();

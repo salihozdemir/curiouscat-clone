@@ -40,7 +40,6 @@ export default {
     ...mapGetters(['loginUserId'])
   },
   created() {
-    this.$store.commit('setSelectedHeaderKey', ['2']);
     this.getRandomQuestions();
   },
   methods: {
