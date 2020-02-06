@@ -3,14 +3,16 @@
     <div class="flex">
       <a-icon v-if="!notification.isViewed" type="fire" theme="twoTone" twoToneColor="#eb2f96" class="fire-icon"></a-icon>
       <a-comment style="flex: 100%">
-        <router-link slot="avatar" :to="'../Profile/' + notification.fromUser.username">
+        <router-link slot="avatar" :to="{name: 'Profile', params: { username: notification.fromUser.username }}">
         <a-avatar
           :src="getProfileImg(notification.fromUser)"
           :size="40"
           class="avatar" />
         </router-link>
         <p slot="content" :style="notification.isViewed ? '' : 'font-weight: 500'">
-          <router-link style="color: #32afd3;" :to="'../Profile/' + notification.fromUser.username">{{notification.fromUser.username}}</router-link> 
+          <router-link style="color: #32afd3;" :to="{name: 'Profile', params: { username: notification.fromUser.username }}">
+            {{notification.fromUser.username}}
+          </router-link> 
           {{notification.notificationText}}
         </p>
         <span slot="datetime">{{moment(notification.timeStamp).fromNow()}}</span>
@@ -18,14 +20,12 @@
             title="Are you sure delete this notification?"
             @confirm="deleteNotification"
             okText="Yes"
-            cancelText="No"
-          >
+            cancelText="No" >
             <a-icon slot="icon" type="delete" style="color: red" />
             <a-icon type="close" class="delete-button"/>
         </a-popconfirm>
       </a-comment>
     </div>
-    
   </div>
 </template>
 <script>
@@ -63,23 +63,19 @@ export default {
   border-radius: 0.5rem;
   box-shadow: 0 0px 4px 0 rgba(0,0,0,0.2);
 }
-
 .card:last-child {
   margin-bottom: 55px;
 }
-
 .author-name {
   font-size: 14px;
   color: #32afd3;
   font-weight: 500;
 }
-
 .avatar {
   display: inline;
   text-align: center;
   cursor: pointer;
 }
-
 .delete-button {
   font-size: 12px;
   cursor: pointer;
@@ -88,17 +84,14 @@ export default {
   top: 0;
   color: #8a8989;
 }
-
 .delete-button:hover {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 50%;
 }
-
 .flex {
   display: flex;
   align-items: center;
 }
-
 .fire-icon {
   color: indianred;
   font-size: 20px;

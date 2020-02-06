@@ -17,8 +17,10 @@
       </div>
       <a-list-item slot="renderItem" slot-scope="item">
         <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
-          <router-link slot="title" :to="'../Profile/' + item.username" class="username">{{item.username}}</router-link>
-          <router-link slot="avatar" :to="'../Profile/' + item.username">
+          <router-link slot="title" :to="{name: 'Profile', params: {username: item.userName}}" class="username">
+            {{item.username}}
+          </router-link>
+          <router-link slot="avatar" :to="{name: 'Profile', params: {username: item.userName}}">
             <a-avatar
               :src="getProfileImg(item)"
               :size="40"
@@ -29,8 +31,7 @@
             shape="round" 
             class="follow-button" 
             size="small" 
-            @click="followOrUnFollow(item._id)"
-          >
+            @click="followOrUnFollow(item._id)" >
             {{item.text}}
           </a-button>
       </a-list-item>
@@ -42,6 +43,7 @@ import userService from '@/services/user';
 import followService from '@/services/follow';
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex'
+
 export default {
   data() {
     return {
@@ -98,27 +100,22 @@ export default {
 .card:last-child {
   margin-bottom: 15px;
 }
-
 .username {
   color: #32afd3;
   font-size: 14px;
 }
-
 .avatar {
   display: inline;
   text-align: center;
   cursor: pointer;
 }
-
 .follow-button {
   border-color: #b1b0b0;
   border-style: solid;
 }
-
 .follow-button:hover, .follow-button:focus {
   color: unset;
 }
-
 a-avatar > img {
   padding: 2px;
   border: 2px solid rgba(0,0,0,.1);

@@ -9,8 +9,10 @@
       </div>
       <a-list-item style="margin-top: 5px;" class="border-bottom-0" slot="renderItem" slot-scope="item">
         <a-list-item-meta :description="String(item.answerCount) + ' Answered'">
-          <router-link slot="title" :to="'../Profile/' + item.username" class="username">{{item.username}}</router-link>
-          <router-link slot="avatar" :to="'../Profile/' + item.username">
+          <router-link slot="title" :to="{name: 'Profile', params: {username: item.userName}}" class="username">
+            {{item.username}}
+          </router-link>
+          <router-link slot="avatar" :to="{name: 'Profile', params: {username: item.userName}}">
             <a-avatar
               :src="getProfileImg(item)"
               :size="40"
@@ -22,8 +24,7 @@
             shape="round" 
             class="follow-button" 
             size="small"
-            @click="followOrUnFollow(item._id)"
-            >
+            @click="followOrUnFollow(item._id)" >
               {{item.following ? 'unFollow' : 'Follow'}}
           </a-button>
         </div>
@@ -97,28 +98,23 @@ export default {
   margin-bottom: 20px;
   box-shadow: 0 0px 4px 0 rgba(0,0,0,0.2);
 }
-
 .no-data-text {
   text-align: center;
   color: #8a8989;
 }
-
 .username {
   color: #32afd3;
   font-size: 14px;
 }
-
 .avatar {
   display: inline;
   text-align: center;
   cursor: pointer;
 }
-
 .follow-button {
   border-color: #b1b0b0;
   border-style: solid;
 }
-
 .follow-button:hover, .follow-button:focus {
   color: unset;
 }

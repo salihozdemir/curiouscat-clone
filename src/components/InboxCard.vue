@@ -1,10 +1,10 @@
 <template>
   <div class="card" id="inbox-card">
     <a-comment>
-      <router-link slot="author" class="author-name" :to="'../Profile/' + fromUserInfo.name">
+      <router-link slot="author" class="author-name" :to="{ name: 'Profile', params: {username:fromUserInfo.name } }">
         {{fromUserInfo.name}}
       </router-link>
-      <router-link slot="avatar" :to="'../Profile/' + fromUserInfo.name">
+      <router-link slot="avatar" :to="{ name: 'Profile', params: {username:fromUserInfo.name }}">
         <a-avatar
         :src="fromUserInfo.url"
         :alt="fromUserInfo.name"
@@ -17,8 +17,7 @@
           title="Are you sure delete this question?"
           @confirm="deleteQuestion"
           okText="Yes"
-          cancelText="No"
-        >
+          cancelText="No" >
           <a-icon slot="icon" type="delete" style="color: red" />
           <a-icon type="close" class="delete-button"/>
         </a-popconfirm>
@@ -33,11 +32,12 @@
       :confirmLoading="confirmLoading"
       @cancel="handleCancel"
       okText="Answer"
-      :closable="false"
-      >
+      :closable="false">
       <div class="question-container">
         <div class="sender">
-          <router-link :to="'../Profile/' + fromUserInfo.name"> {{fromUserInfo.name}} </router-link> asked
+          <router-link :to="{ name: 'Profile', params: {username:fromUserInfo.name }}">
+             {{fromUserInfo.name}} 
+          </router-link> asked
         </div>
         <span>{{question.questionText}}</span>
       </div>
@@ -46,8 +46,7 @@
         v-model="answerText"
         placeholder="Ask something!"
         :autosize="{ minRows: 6, maxRows: 12 }"
-        :centered="true"
-      />
+        :centered="true" />
     </a-modal>
   </div>
 </template> 
@@ -133,11 +132,9 @@ export default {
   border-radius: 0.5rem;
   box-shadow: 0 0px 4px 0 rgba(0,0,0,0.2);
 }
-
 .card:last-child {
   margin-bottom: 55px;
 }
-
 .question-container {
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.5em;
@@ -147,20 +144,16 @@ export default {
   margin-bottom: 20px;
   margin-top: 5px;
 }
-
 .question-container.sender {
   margin-bottom: 0.5em;
   font-weight: 300;
 }
-
 .sender > a {
   color: #32afd3;
 }
-
 .question-container > span {
   white-space: pre-wrap;
 }
-
 .reply-button {
   font-size: unset;
   color: #32afd3;
@@ -172,25 +165,21 @@ export default {
   padding-bottom: 1px;
   transition: none;
 }
-
 .reply-button:hover {
   border: 1px solid;
   background-color: #32afd3;
   color: white;
 }
-
 .author-name {
   font-size: 14px;
   color: #32afd3;
   font-weight: 500;
 }
-
 .avatar {
   display: inline;
   text-align: center;
   cursor: pointer;
 }
-
 .delete-button {
   font-size: 12px;
   cursor: pointer;
@@ -203,6 +192,4 @@ export default {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 50%;
 }
-
-
 </style>

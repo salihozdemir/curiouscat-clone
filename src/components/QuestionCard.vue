@@ -2,10 +2,10 @@
   <div class="container">
     <div class="card">
       <a-comment>
-        <router-link slot="author" :to="{name: 'Profile', params: {username: fromUserInfo.fromUserName }}" replace class="author-name">
+        <router-link slot="author" :to="{name: 'Profile', params: {username: fromUserInfo.fromUserName }}" class="author-name">
           {{fromUserInfo.fromUserName}}
         </router-link>
-        <router-link slot="avatar" :to="'../Profile/' + fromUserInfo.fromUserName">
+        <router-link slot="avatar" :to="{name: 'Profile', params: {username: fromUserInfo.fromUserName }}">
           <a-avatar
           :src="fromUserInfo.fromUserUrl"
           :alt="fromUserInfo.fromUserName"
@@ -15,10 +15,10 @@
         <p slot="content">{{question.questionText}}</p>
         <span slot="datetime">{{moment(question.timeStamp).fromNow()}}</span>
         <a-comment>
-          <router-link slot="author" :to="'../Profile/' + question.toUser.username" class="author-name">
+          <router-link slot="author" :to="{name: 'Profile', params: {username: question.toUser.username }}" class="author-name">
             {{question.toUser.username}}
           </router-link>
-          <router-link slot="avatar" :to="'../Profile/' + question.toUser.username">
+          <router-link slot="avatar" :to="{name: 'Profile', params: {username: question.toUser.username }}">
             <a-avatar
             :src="toUserInfo"
             :alt="question.toUser.username"
@@ -72,21 +72,16 @@ export default {
   border-radius: 0.5rem;
   box-shadow: 0 0px 4px 0 rgba(0,0,0,0.2);
 }
-
 .container:last-child {
   margin-bottom: 55px;
 }
-
 .author-name {
   font-size: 14px;
   color: #32afd3;
   font-weight: 500;
 }
-
 .comment-avatar {
   display: inline;
   text-align: center;
 }
-
-
 </style>

@@ -1,7 +1,7 @@
 <template>
   <a-layout style="min-height: 100vh">
     <a-layout-header id="header" class="custom-header">
-      <a-menu theme="light" mode="horizontal" :defaultSelectedKeys="selectedHeaderKey">
+      <a-menu theme="light" mode="horizontal">
         <a-menu-item key="1">
           <router-link to="/" tag="a">
             <a-icon type="home" />
@@ -49,18 +49,15 @@
 import { mapGetters } from 'vuex';
 export default {
   computed: {
-    ...mapGetters(['loginUserName', 'notificationCount', 'inboxCount', 'selectedHeaderKey'])
+    ...mapGetters(['loginUserName', 'notificationCount', 'inboxCount'])
   },
 };
 </script>
-
 <style scope>
-
 .layout-content {
   padding: 0px 10px; 
   margin-top: 50px;
 }
-
 .custom-header {
   position: fixed;
   z-index: 1;

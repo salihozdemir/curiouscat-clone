@@ -17,8 +17,7 @@
             @change="changePP($event)"
             class="form-control"
             hidden
-            v-if="isOwnProfile"
-          />
+            v-if="isOwnProfile" />
         </a-col>
         <a-button
           icon="poweroff"
@@ -26,8 +25,8 @@
           shape="circle"
           class="logout"
           @click="logout"
-          v-if="isOwnProfile"
-        ></a-button>
+          v-if="isOwnProfile">
+        </a-button>
       </a-row>
       <a-row type="flex" justify="center" class="text-center">
         <a-col :span="7">
@@ -62,8 +61,10 @@
       <a-list itemLayout="horizontal" :dataSource="userFollowers">
         <a-list-item slot="renderItem" slot-scope="item">
           <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
-            <router-link slot="title" :to="'../Profile/' + item.username">{{item.username}}</router-link>
-            <router-link slot="avatar" :to="'../Profile/' + item.username">
+            <router-link slot="title" :to="{name: 'Profile', params: {username: item.userName}}">
+              {{item.username}}
+            </router-link>
+            <router-link slot="avatar" :to="{name: 'Profile', params: {username: item.userName}}">
               <a-avatar
               :src="getProfileImg(item)"
               :size="40"
@@ -77,8 +78,10 @@
       <a-list itemLayout="horizontal" :dataSource="userFollowings">
         <a-list-item slot="renderItem" slot-scope="item">
           <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
-            <router-link slot="title" :to="'../Profile/' + item.username">{{item.username}}</router-link>
-            <router-link slot="avatar" :to="'../Profile/' + item.username">
+            <router-link slot="title" :to="{name: 'Profile', params: {username: item.userName}}">
+              {{item.username}}
+            </router-link>
+            <router-link slot="avatar" :to="{name: 'Profile', params: {username: item.userName}}">
               <a-avatar
               :src="getProfileImg(item)"
               :size="40"
@@ -108,18 +111,12 @@ export default {
   computed: {
     ...mapGetters(['loginUserId']),
     getPhotoUrl() {
-      if (this.userImg === 'default-pp.png') {
-        return '/assets/img/default-pp.png';
-      } else {
-        return `${process.env.VUE_APP_API_URL}/${this.userId}/${this.userImg}`;
-      }
+      if (this.userImg === 'default-pp.png') return '/assets/img/default-pp.png'; 
+      else return `${process.env.VUE_APP_API_URL}/${this.userId}/${this.userImg}`; 
     },
     isOwnProfile() {
-      if (this.userId === this.loginUserId) {
-        return true;
-      } else {
-        return false;
-      }
+      if (this.userId === this.loginUserId) return true; 
+      else return false;
     }
   },
   created() {
@@ -174,7 +171,6 @@ export default {
   text-align: center;
   color: white;
 }
-
 .usermame {
   font-size: 1.7rem;
   color: #fff;
@@ -182,11 +178,9 @@ export default {
   font-weight: bold;
   display: block;
 }
-
 .cursor-pointer {
   cursor: pointer;
 }
-
 .profile-avatar {
   display: inline-block;
   margin: 0.5em 0;
@@ -198,25 +192,21 @@ export default {
   box-shadow: 0 0 0 2px hsla(0, 0%, 100%, 0.5);
   cursor: pointer;
 }
-
 .profile-avatar img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
 }
-
 .avatar {
   display: inline;
   text-align: center;
   cursor: pointer;
 }
-
 .header {
   position: relative;
   font-family: 'Roboto', sans-serif;
   padding: 0.5rem 0px 0.5rem 0px;
 }
-
 .banner {
   border-radius: 10px;
   width: 100%;
@@ -225,35 +215,29 @@ export default {
   bottom: 0;
   left: 0;
 }
-
 .background {
   background-image: linear-gradient(140deg, #32aff8 50%, #32aff8);
   background-size: cover;
   background-position: 50%;
 }
-
 .background-cover {
   -webkit-transform: scale(1.0001);
   transform: scale(1.0001);
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
 }
-
 .title {
   font-size: 15px;
   display: block;
 }
-
 .num {
   font-size: 1.75em;
   margin: 0.1em 0;
 }
-
 .logout {
   position: absolute;
   right: 8px;
   top: 0;
 }
-
 .spin {
   display: flex;
   justify-content: center;
