@@ -10,7 +10,7 @@
           class="avatar" />
         </a>
         <p slot="content" :style="notification.isViewed ? '' : 'font-weight: 500'">
-          <a style="color: #32afd3;" :href="'./Profile/' + notification.fromUser.username">{{notification.fromUser.username}}</a> 
+          <a style="color: #32afd3;" :href="'../Profile/' + notification.fromUser.username">{{notification.fromUser.username}}</a> 
           {{notification.notificationText}}
         </p>
         <span slot="datetime">{{moment(notification.timeStamp).fromNow()}}</span>

@@ -2,19 +2,19 @@
   <a-layout style="min-height: 100vh">
     <a-layout-header id="header" class="custom-header">
       <a-menu theme="light" mode="horizontal" :defaultSelectedKeys="selectedHeaderKey">
-        <a-menu-item key="1" @click="$store.commit('setSelectedHeaderKey', ['1'])">
+        <a-menu-item key="1">
           <router-link to="/" tag="a">
             <a-icon type="home" />
             <span class="nav-text">Home</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item key="2" @click="$store.commit('setSelectedHeaderKey', ['2'])">
+        <a-menu-item key="2">
           <router-link to="/Discover" tag="a">
             <a-icon type="search" />
             <span class="nav-text">Discover</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item key="3" @click="$store.commit('setSelectedHeaderKey', ['3'])">
+        <a-menu-item key="3">
           <router-link :to="'../Profile/' + loginUserName" tag="a" v-slot="{ href }" >
           <a :href="href">
             <a-icon type="user" />
@@ -22,7 +22,7 @@
           </a>
           </router-link>
         </a-menu-item>
-        <a-menu-item key="4" @click="$store.commit('setSelectedHeaderKey', ['4'])">
+        <a-menu-item key="4">
           <router-link to="/Inbox" tag="a">
             <a-badge :count="inboxCount" :offset="[-5,-5]">
               <a-icon type="inbox" />
@@ -30,7 +30,7 @@
             <span class="nav-text">Inbox</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item key="5" @click="$store.commit('setSelectedHeaderKey', ['5'])">
+        <a-menu-item key="5">
           <router-link to="/Notification" tag="a">
             <a-badge :count="notificationCount" :offset="[-5,-5]">
               <a-icon type="notification" />

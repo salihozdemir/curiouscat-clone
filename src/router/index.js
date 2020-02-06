@@ -14,27 +14,27 @@ const routes = [
   {
     path: '/Profile/:username',
     name: 'Profile',
-    component: () => import('@/views/Profile.vue')
+    component: () => import('@/views/Profile.vue'),
   },
   {
     path: '/Inbox',
     name: 'Inbox',
-    component: () => import('@/views/Inbox.vue')
+    component: () => import('@/views/Inbox.vue'),
   },
   {
     path: '/',
     name: 'Home',
-    component: () => import('@/views/Home.vue')
+    component: () => import('@/views/Home.vue'),
   },
   {
     path: '/Notification',
     name: 'Notification',
-    component: () => import('@/views/Notification.vue')
+    component: () => import('@/views/Notification.vue'),
   },
   {
     path: '/Discover',
     name: 'Discover',
-    component: () => import('@/views/Discover.vue')
+    component: () => import('@/views/Discover.vue'),
   },
   {
     path: '*',
@@ -44,7 +44,6 @@ const routes = [
 
 const router = new VueRouter({
   routes,
-  mode: 'history'
 });
 
 export default router;

@@ -74,6 +74,7 @@ export default {
 			else {
 				await this.setState(res.data);
 				this.$router.push({name: 'Home'});
+				this.$store.commit('setSelectedHeaderKey', ['1']);
 			}
 			this.loading = false;
 		},
@@ -89,6 +90,7 @@ export default {
 				else { 
 					await this.setState(res.data);
 					this.$router.push({ name: 'Profile', params: { username: this.username } });
+					this.$store.commit('setSelectedHeaderKey', ['3']);
 				}
 			} else {
 				this.errorMessageSignup = "Two passwords that you enter is inconsistent!";
