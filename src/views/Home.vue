@@ -57,6 +57,7 @@ export default {
   },
   methods: {
     async getFollowingQuestions(){
+      this.busy = false;
       const result = await questionService.getFollowingQuestions({
         fromUserId: this.loginUserId,
         limit: this.limit,

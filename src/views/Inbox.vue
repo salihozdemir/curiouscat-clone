@@ -47,7 +47,7 @@ export default {
     return {
       questions: [],
       questionLoading: true,
-      busy: false,
+      busy: true,
       limit: 10,
       page: 0,
       loadingMore: false,
@@ -64,6 +64,7 @@ export default {
   },
   methods: {
     async getNonAnsweredQuestions() {
+      this.busy = false;
       const result = await questionService.getUserQuestions({
         toUserId: this.loginUserId,
         answered: false,

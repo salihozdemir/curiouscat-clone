@@ -69,7 +69,7 @@ export default {
       questionLoading: true,
       coverLoading: true,
       isFollow: '',
-      busy: false,
+      busy: true,
       limit: 5,
       page: 0,
       loadingMore: false,
@@ -105,6 +105,7 @@ export default {
       this.answerCount = details.answerCount;
     },
     async getAnsweredQuestions() {
+      this.busy = false;
       const result = await questionService.getUserQuestions({
         toUserId: this.userId,
         answered: true,

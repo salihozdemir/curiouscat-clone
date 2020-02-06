@@ -45,7 +45,7 @@ export default {
     return {
       notifications : [],
       notificationLoading: true,
-      busy: false,
+      busy: true,
       limit: 15,
       page: 0,
       loadingMore: false
@@ -62,6 +62,7 @@ export default {
   },
   methods: {
     async getUserNotifications() {
+      this.busy = false;
       const result = await notificationService.getNotifications({
         loginUserId: this.loginUserId,
         page: this.page,
