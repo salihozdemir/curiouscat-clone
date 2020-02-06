@@ -15,11 +15,9 @@
           </router-link>
         </a-menu-item>
         <a-menu-item key="3">
-          <router-link :to="'../Profile/' + loginUserName" tag="a" v-slot="{ href }" >
-          <a :href="href">
+          <router-link :to="{name: 'Profile', params: {username: loginUserName}}" tag="a">
             <a-icon type="user" />
             <span class="nav-text">Profile</span>
-          </a>
           </router-link>
         </a-menu-item>
         <a-menu-item key="4">

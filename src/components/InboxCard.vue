@@ -1,16 +1,16 @@
 <template>
   <div class="card" id="inbox-card">
     <a-comment>
-      <a slot="author" class="author-name" :href="'../Profile/' + fromUserInfo.name">
+      <router-link slot="author" class="author-name" :to="'../Profile/' + fromUserInfo.name">
         {{fromUserInfo.name}}
-      </a>
-      <a slot="avatar" :href="'../Profile/' + fromUserInfo.name">
+      </router-link>
+      <router-link slot="avatar" :to="'../Profile/' + fromUserInfo.name">
         <a-avatar
         :src="fromUserInfo.url"
         :alt="fromUserInfo.name"
         :size="40"
         class="avatar" />
-      </a>
+      </router-link>
       <p slot="content" style="margin-bottom: 25px;">{{question.questionText}}</p>
       <span slot="datetime">{{moment(question.timeStamp).fromNow()}}</span>
       <a-popconfirm
@@ -37,7 +37,7 @@
       >
       <div class="question-container">
         <div class="sender">
-          <a :href="'../Profile/' + fromUserInfo.name"> {{fromUserInfo.name}} </a> asked
+          <router-link :to="'../Profile/' + fromUserInfo.name"> {{fromUserInfo.name}} </router-link> asked
         </div>
         <span>{{question.questionText}}</span>
       </div>

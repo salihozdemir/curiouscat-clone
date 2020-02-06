@@ -2,30 +2,29 @@
   <div class="container">
     <div class="card">
       <a-comment>
-        <a slot="author" :href="'../Profile/' + fromUserInfo.fromUserName"  class="author-name">
+        <router-link slot="author" :to="{name: 'Profile', params: {username: fromUserInfo.fromUserName }}" replace class="author-name">
           {{fromUserInfo.fromUserName}}
-        </a>
-        <a slot="avatar" :href="'../Profile/' + fromUserInfo.fromUserName">
+        </router-link>
+        <router-link slot="avatar" :to="'../Profile/' + fromUserInfo.fromUserName">
           <a-avatar
           :src="fromUserInfo.fromUserUrl"
           :alt="fromUserInfo.fromUserName"
           :size="40"
           class="comment-avatar" />
-        </a>
+        </router-link>
         <p slot="content">{{question.questionText}}</p>
         <span slot="datetime">{{moment(question.timeStamp).fromNow()}}</span>
         <a-comment>
-          <a slot="author" :href="'../Profile/' + question.toUser.username" class="author-name">
+          <router-link slot="author" :to="'../Profile/' + question.toUser.username" class="author-name">
             {{question.toUser.username}}
-          </a>
-          <a slot="avatar" :href="'../Profile/' + question.toUser.username">
+          </router-link>
+          <router-link slot="avatar" :to="'../Profile/' + question.toUser.username">
             <a-avatar
             :src="toUserInfo"
             :alt="question.toUser.username"
             :size="40"
             class="comment-avatar" />
-          </a>
-          
+          </router-link>
           <p slot="content">{{question.answerText}}</p>
         </a-comment>
       </a-comment>

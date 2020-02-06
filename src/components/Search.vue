@@ -9,13 +9,13 @@
       </div>
       <a-list-item style="margin-top: 5px;" class="border-bottom-0" slot="renderItem" slot-scope="item">
         <a-list-item-meta :description="String(item.answerCount) + ' Answered'">
-          <a slot="title" :href="'../Profile/' + item.username" class="username">{{item.username}}</a>
-          <a slot="avatar" :href="'../Profile/' + item.username">
+          <router-link slot="title" :to="'../Profile/' + item.username" class="username">{{item.username}}</router-link>
+          <router-link slot="avatar" :to="'../Profile/' + item.username">
             <a-avatar
               :src="getProfileImg(item)"
               :size="40"
               class="avatar" />
-          </a>
+          </router-link>
         </a-list-item-meta>
         <div>
           <a-button 

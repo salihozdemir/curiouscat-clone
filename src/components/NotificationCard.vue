@@ -3,14 +3,14 @@
     <div class="flex">
       <a-icon v-if="!notification.isViewed" type="fire" theme="twoTone" twoToneColor="#eb2f96" class="fire-icon"></a-icon>
       <a-comment style="flex: 100%">
-        <a slot="avatar" :href="'../Profile/' + notification.fromUser.username">
+        <router-link slot="avatar" :to="'../Profile/' + notification.fromUser.username">
         <a-avatar
           :src="getProfileImg(notification.fromUser)"
           :size="40"
           class="avatar" />
-        </a>
+        </router-link>
         <p slot="content" :style="notification.isViewed ? '' : 'font-weight: 500'">
-          <a style="color: #32afd3;" :href="'../Profile/' + notification.fromUser.username">{{notification.fromUser.username}}</a> 
+          <router-link style="color: #32afd3;" :to="'../Profile/' + notification.fromUser.username">{{notification.fromUser.username}}</router-link> 
           {{notification.notificationText}}
         </p>
         <span slot="datetime">{{moment(notification.timeStamp).fromNow()}}</span>

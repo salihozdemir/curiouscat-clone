@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <layout v-if="isAuthenticated">
-      <router-view />
+      <router-view :key="$route.params.username" />
     </layout>
     <router-view v-else></router-view>
   </div>

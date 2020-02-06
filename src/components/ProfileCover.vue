@@ -62,13 +62,13 @@
       <a-list itemLayout="horizontal" :dataSource="userFollowers">
         <a-list-item slot="renderItem" slot-scope="item">
           <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
-            <a slot="title" :href="'../Profile/' + item.username">{{item.username}}</a>
-            <a slot="avatar" :href="'../Profile/' + item.username">
+            <router-link slot="title" :to="'../Profile/' + item.username">{{item.username}}</router-link>
+            <router-link slot="avatar" :to="'../Profile/' + item.username">
               <a-avatar
               :src="getProfileImg(item)"
               :size="40"
               class="avatar" />
-            </a>
+            </router-link>
           </a-list-item-meta>
         </a-list-item>
       </a-list>
@@ -77,13 +77,13 @@
       <a-list itemLayout="horizontal" :dataSource="userFollowings">
         <a-list-item slot="renderItem" slot-scope="item">
           <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
-            <a slot="title" :href="'../Profile/' + item.username">{{item.username}}</a>
-            <a slot="avatar" :href="'../Profile/' + item.username">
+            <router-link slot="title" :to="'../Profile/' + item.username">{{item.username}}</router-link>
+            <router-link slot="avatar" :to="'../Profile/' + item.username">
               <a-avatar
               :src="getProfileImg(item)"
               :size="40"
               class="avatar" />
-            </a>
+            </router-link>
           </a-list-item-meta>
         </a-list-item>
       </a-list>
