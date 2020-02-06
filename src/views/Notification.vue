@@ -54,9 +54,6 @@ export default {
   computed: {
     ...mapGetters(['loginUserId'])
   },
-  beforeCreate(){
-    this.$store.commit('setSelectedHeaderKey', ['5']);
-  },
    created() {
     this.getUserNotifications();
   },
