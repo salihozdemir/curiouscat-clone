@@ -2,8 +2,8 @@
 <div class="backgroud">
 	<div class="container">
 		<div v-if="loading" class="spin">
-          <a-spin size="large"/>
-      </div>
+      <a-spin size="large"/>
+    </div>
 		<form :class="'signUp ' + signUpClass" @submit.prevent="signUp">
 			<img width="40" src="/assets/img/logo.svg" class="site-logo">
 			<input class="w100" type="email" placeholder="Email" autocomplete='off' v-model="email"/>
@@ -24,12 +24,12 @@
 		</form>
 	</div>
 </div>
- 
 </template>
 <script>
 import AuthService from '@/services/auth';
 import notificationService from '@/services/notification';
 import questionService from '@/services/question';
+import followService from '@/services/follow';
 
 export default {
   data(){
@@ -103,19 +103,27 @@ export default {
 			this.$store.commit('setNotificationCount', data.notificationCount);
 		},
 		createQuestion() {
-			notificationService.createNotification({
-				toUser: '',
-				fromUser: '',
-				notificationText: '',
-			});
-		},
-		createNotification() {
 			questionService.createQuestion({
 				toUser: '',
 				fromUser: '',
-				isAnon: '',
-				questionText: '',
+				isAnon: false,
+				questionText: 'Would you please review this site and share your opinions with me?',
 			});
+		},
+		createNotification(username) {
+			notificationService.createNotification({
+				toUser: '',
+				fromUser: '',
+				notificationText: "Welcome" + username + " , I am the creator of this site." + 
+					" Feel free asking me questions about this site or whatever you want." +
+					" I'll be answering soon. Have fun!",
+			});
+		},
+		followAdmin() {
+			followService.followOrUnFollow({
+        toUserId: '',
+        fromUserId: '',
+      });
 		}
   }
 };
@@ -215,6 +223,10 @@ button.form-btn.sx:hover {
 	background-color :#9fcca9;
 	color: #fff;
 }
+button.form-btn.sx:focus {
+	border: 1px solid;    
+	border-color: #32afd3;
+}
 
 button.form-btn.sx.back {
 	background-color: rgba(0, 0, 0, 0.15);
@@ -230,6 +242,11 @@ button.form-btn.dx {
 	border-radius: 0 0 5px 0;
 	background-color: #ec8280;
 	color: #fff;
+}
+
+button.form-btn.dx:focus {
+	border: 1px solid;    
+	border-color: #32afd3;
 }
 
 input {
