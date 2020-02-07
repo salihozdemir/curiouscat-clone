@@ -1,7 +1,7 @@
 <template>
   <div class="card" id="notification-card">
     <div class="flex">
-      <a-icon v-if="!notification.isViewed" type="fire" theme="twoTone" twoToneColor="#eb2f96" class="fire-icon"></a-icon>
+      <a-icon v-if="!notification.isViewed" type="fire" theme="twoTone" twoToneColor="#32afd3" class="fire-icon"></a-icon>
       <a-comment style="flex: 100%">
         <router-link slot="avatar" :to="{name: 'Profile', params: { username: notification.fromUser.username }}">
         <a-avatar
@@ -93,7 +93,7 @@ export default {
   align-items: center;
 }
 .fire-icon {
-  color: indianred;
+  color: #32afd3;
   font-size: 20px;
   margin-right: 5px;
 }
