@@ -2,13 +2,13 @@
   <div class="container">
     <div class="card">
       <a-comment>
-        <router-link slot="author" :to="{name: 'Profile', params: {username: fromUserInfo.fromUserName }}" class="author-name">
-          {{fromUserInfo.fromUserName}}
+        <router-link slot="author" :to="fromUserInfo.userUrl" class="author-name">
+          {{fromUserInfo.username}}
         </router-link>
-        <router-link slot="avatar" :to="{name: 'Profile', params: {username: fromUserInfo.fromUserName }}">
+        <router-link slot="avatar" :to="fromUserInfo.userUrl">
           <a-avatar
-          :src="fromUserInfo.fromUserUrl"
-          :alt="fromUserInfo.fromUserName"
+          :src="fromUserInfo.profilePP"
+          :alt="fromUserInfo.username"
           :size="40"
           class="comment-avatar" />
         </router-link>
@@ -44,15 +44,17 @@ export default {
     fromUserInfo() {
       if (this.question.isAnon) {
         return {
-          fromUserName: 'Anonymous',
-          fromUserUrl: '/assets/img/anonymous-pp.png'
+          username: 'Anonymous',
+          userUrl: '',
+          profilePP: '/assets/img/anonymous-pp.png'
         };
       } else {
         const defaultPP = '/assets/img/default-pp.png';
         const backendPP = `${process.env.VUE_APP_API_URL}/${this.question.fromUser._id}/${this.question.fromUser.profileImg}`;
         return {
-          fromUserName: this.question.fromUser.username,
-          fromUserUrl: this.question.fromUser.profileImg === 'default-pp.png' ? defaultPP : backendPP
+          username: this.question.fromUser.username,
+          userUrl: {name: 'Profile', params: {username: this.question.fromUser.username}},
+          profilePP: this.question.fromUser.profileImg === 'default-pp.png' ? defaultPP : backendPP
         }; 
       }
     },

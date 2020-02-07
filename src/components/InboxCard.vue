@@ -1,13 +1,13 @@
 <template>
   <div class="card" id="inbox-card">
     <a-comment>
-      <router-link slot="author" class="author-name" :to="{ name: 'Profile', params: {username:fromUserInfo.name } }">
-        {{fromUserInfo.name}}
+      <router-link slot="author" class="author-name" :to="fromUserInfo.userUrl">
+        {{fromUserInfo.username}}
       </router-link>
-      <router-link slot="avatar" :to="{ name: 'Profile', params: {username:fromUserInfo.name }}">
+      <router-link slot="avatar" :to="fromUserInfo.userUrl">
         <a-avatar
-        :src="fromUserInfo.url"
-        :alt="fromUserInfo.name"
+        :src="fromUserInfo.profilePP"
+        :alt="fromUserInfo.username"
         :size="40"
         class="avatar" />
       </router-link>
@@ -35,8 +35,8 @@
       :closable="false">
       <div class="question-container">
         <div class="sender">
-          <router-link :to="{ name: 'Profile', params: {username:fromUserInfo.name }}">
-             {{fromUserInfo.name}} 
+          <router-link :to="{ name: 'Profile', params: {username:fromUserInfo.username }}">
+             {{fromUserInfo.username}} 
           </router-link> asked
         </div>
         <span>{{question.questionText}}</span>
@@ -69,15 +69,17 @@ export default {
     fromUserInfo() {
       if (this.question.isAnon) {
         return {
-          name: 'Anonymous',
-          url: '/assets/img/anonymous-pp.png'
+          username: 'Anonymous',
+          userUrl: '',
+          profilePP: '/assets/img/anonymous-pp.png'
         };
      } else {
         const defaultPP = '/assets/img/default-pp.png';
         const backendPP = `${process.env.VUE_APP_API_URL}/${this.question.fromUser._id}/${this.question.fromUser.profileImg}`;
         return {
-          name: this.question.fromUser.username,
-          url: this.question.fromUser.profileImg === 'default-pp.png' ? defaultPP : backendPP
+          username: this.question.fromUser.username,
+          userUrl: { name: 'Profile', params: { username: this.question.fromUser.username }},
+          profilePP: this.question.fromUser.profileImg === 'default-pp.png' ? defaultPP : backendPP
         }; 
       }
     },
