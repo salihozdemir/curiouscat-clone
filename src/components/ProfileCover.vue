@@ -61,10 +61,10 @@
       <a-list itemLayout="horizontal" :dataSource="userFollowers">
         <a-list-item slot="renderItem" slot-scope="item">
           <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
-            <router-link slot="title" :to="{name: 'Profile', params: {username: item.userName}}">
+            <router-link slot="title" :to="{name: 'Profile', params: {username: item.username}}">
               {{item.username}}
             </router-link>
-            <router-link slot="avatar" :to="{name: 'Profile', params: {username: item.userName}}">
+            <router-link slot="avatar" :to="{name: 'Profile', params: {username: item.username}}">
               <a-avatar
               :src="getProfileImg(item)"
               :size="40"
@@ -78,10 +78,10 @@
       <a-list itemLayout="horizontal" :dataSource="userFollowings">
         <a-list-item slot="renderItem" slot-scope="item">
           <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
-            <router-link slot="title" :to="{name: 'Profile', params: {username: item.userName}}">
+            <router-link slot="title" :to="{name: 'Profile', params: {username: item.username}}">
               {{item.username}}
             </router-link>
-            <router-link slot="avatar" :to="{name: 'Profile', params: {username: item.userName}}">
+            <router-link slot="avatar" :to="{name: 'Profile', params: {username: item.username}}">
               <a-avatar
               :src="getProfileImg(item)"
               :size="40"

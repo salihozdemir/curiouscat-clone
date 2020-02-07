@@ -182,7 +182,7 @@ h3 {
 	font-family: 'Roboto';
 	font-size: 35px;
 	text-transform: uppercase;
-	color: #bb6a69;
+	color: #32afd3;
 	margin-bottom: 75px;
 }
 
@@ -245,25 +245,25 @@ input {
 }
 
 ::-webkit-input-placeholder {
-   color: #32afd3;
+   color: #6f7273;
 	font-family: 'Catamaran';
 	font-weight:100;
 }
 
 :-moz-placeholder {
-   color: #32afd3;  
+   color: #6f7273;  
 	font-family: 'Catamaran';
 	font-weight:100;
 }
 
 ::-moz-placeholder {
-   color: #32afd3;  
+   color: #6f7273;  
 	font-family: 'Catamaran';
 	font-weight:100;
 }
 
 :-ms-input-placeholder {  
-   color: #32afd3; 
+   color: #6f7273; 
 	font-family: 'Catamaran';
 	font-weight:100;
 }
