@@ -5,7 +5,7 @@
       <a-spin size="large"/>
     </div>
 		<form :class="'signUp ' + signUpClass" @submit.prevent="signUp">
-			<img width="40" src="/assets/img/logo.svg" class="site-logo">
+			<img width="40" src="/assets/img/anonymous-pp.png" class="site-logo">
 			<input class="w100" type="email" placeholder="Email" autocomplete='off' v-model="email"/>
 			<input class="w100" type="string" placeholder="Username" autocomplete='off' required v-model="username"/>
 			<input type="password" placeholder="Password" required v-model="password"/>
@@ -214,34 +214,39 @@ button.form-btn {
 button.form-btn.sx {
 	left: 0;
 	border-radius: 0 0 0 5px;
-	background-color: #a4d4ae;
+	background-color: #5c5c5c;
 	color: #fff;
 	transition:all 0.3s linear;
 }
 
 button.form-btn.sx:hover {
-	background-color :#9fcca9;
-	color: #fff;
+	background-color :#5c5c5ccc;
 }
 button.form-btn.sx:focus {
-	border: 1px solid;    
+	border: 1.2px solid;    
 	border-color: #32afd3;
 }
 
 button.form-btn.sx.back {
-	background-color: rgba(0, 0, 0, 0.15);
+	background-color: #5c5c5ccc;
 	transition:all 0.3s linear;
+	transition: all .3s linear;
 }
 
 button.form-btn.sx.back:hover {
-	background-color: rgba(0, 0, 0, 0.25);
+	background-color: #5c5c5c91;
 }
 
 button.form-btn.dx {
 	right: 0;
 	border-radius: 0 0 5px 0;
-	background-color: #ec8280;
+	background-color: #4885b4;
 	color: #fff;
+	transition: all .3s linear;
+}
+
+button.form-btn.dx:hover {
+	background-color: #4885b4cc;
 }
 
 button.form-btn.dx:focus {
@@ -264,24 +269,28 @@ input {
 ::-webkit-input-placeholder {
    color: #6f7273;
 	font-family: 'Catamaran';
+	font-size: 19px;
 	font-weight:100;
 }
 
 :-moz-placeholder {
    color: #6f7273;  
 	font-family: 'Catamaran';
+	font-size: 19px;
 	font-weight:100;
 }
 
 ::-moz-placeholder {
    color: #6f7273;  
 	font-family: 'Catamaran';
+	font-size: 19px;
 	font-weight:100;
 }
 
 :-ms-input-placeholder {  
    color: #6f7273; 
 	font-family: 'Catamaran';
+	font-size: 19px;
 	font-weight:100;
 }
 
