@@ -12,20 +12,25 @@
           :size="40"
           class="comment-avatar" />
         </router-link>
-        <p slot="content">{{question.questionText}}</p>
+        <p slot="content" class="question-text">{{question.questionText}}</p>
         <span slot="datetime">{{moment(question.timeStamp).fromNow()}}</span>
         <a-comment>
-          <router-link slot="author" :to="{name: 'Profile', params: {username: question.toUser.username }}" class="author-name">
+          <router-link 
+          slot="author" 
+          :to="{name: 'Profile', params: {username: question.toUser.username }}" 
+          class="author-name">
             {{question.toUser.username}}
           </router-link>
-          <router-link slot="avatar" :to="{name: 'Profile', params: {username: question.toUser.username }}">
+          <router-link 
+          slot="avatar" 
+          :to="{name: 'Profile', params: {username: question.toUser.username }}">
             <a-avatar
             :src="toUserInfo"
             :alt="question.toUser.username"
             :size="40"
             class="comment-avatar" />
           </router-link>
-          <p slot="content">{{question.answerText}}</p>
+          <p slot="content" class="answer-text">{{question.answerText}}</p>
         </a-comment>
       </a-comment>
     </div>
@@ -78,12 +83,24 @@ export default {
   margin-bottom: 55px;
 }
 .author-name {
-  font-size: 14px;
+  font-size: 15px;
   color: #32afd3;
   font-weight: 500;
 }
 .comment-avatar {
   display: inline;
   text-align: center;
+}
+.question-text{
+  color: #414141;
+  font-size: 15px;
+  line-height: 18px;
+  white-space: pre-wrap;
+}
+.answer-text {
+  color: #666;
+  font-size: 15px;
+  line-height: 18px;
+  white-space: pre-wrap;
 }
 </style>

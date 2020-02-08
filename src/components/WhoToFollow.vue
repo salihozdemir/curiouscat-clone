@@ -11,16 +11,26 @@
             <div style="font-size: 12px;">Who to follow</div>
           </a-col>
           <a-col :span="3">
-            <a-icon class="reload" @click="refreshUsers" type="reload" :spin="isLoadingUsers"></a-icon>
+            <a-icon 
+            class="reload" 
+            @click="refreshUsers" 
+            type="reload" 
+            :spin="isLoadingUsers">
+            </a-icon>
           </a-col>
         </a-row>
       </div>
       <a-list-item slot="renderItem" slot-scope="item">
         <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
-          <router-link slot="title" :to="{name: 'Profile', params: {username: item.username}}" class="username">
+          <router-link 
+          slot="title" 
+          :to="{name: 'Profile', params: {username: item.username}}" 
+          class="username">
             {{item.username}}
           </router-link>
-          <router-link slot="avatar" :to="{name: 'Profile', params: {username: item.username}}">
+          <router-link 
+          slot="avatar" 
+          :to="{name: 'Profile', params: {username: item.username}}">
             <a-avatar
               :src="getProfileImg(item)"
               :size="40"
@@ -102,7 +112,7 @@ export default {
 }
 .username {
   color: #32afd3;
-  font-size: 14px;
+  font-size: 15px;
 }
 .avatar {
   display: inline;

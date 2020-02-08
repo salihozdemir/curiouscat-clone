@@ -11,7 +11,7 @@
         :size="40"
         class="avatar" />
       </router-link>
-      <p slot="content" style="margin-bottom: 25px;">{{question.questionText}}</p>
+      <p slot="content" class="question-text">{{question.questionText}}</p>
       <span slot="datetime">{{moment(question.timeStamp).fromNow()}}</span>
       <a-popconfirm
           title="Are you sure delete this question?"
@@ -173,7 +173,7 @@ export default {
   color: white;
 }
 .author-name {
-  font-size: 14px;
+  font-size: 15px;
   color: #32afd3;
   font-weight: 500;
 }
@@ -193,5 +193,12 @@ export default {
 .delete-button:hover {
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 50%;
+}
+.question-text {
+  margin-bottom: 25px;
+  color: #414141;
+  font-size: 15px;
+  line-height: 18px;
+  white-space: pre-wrap;
 }
 </style>

@@ -36,9 +36,11 @@ export default {
 }
 
 #app {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Roboto' ,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .ant-comment-content-detail p {
