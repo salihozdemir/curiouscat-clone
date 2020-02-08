@@ -57,14 +57,19 @@
         </a-col>
       </a-row>
     </a-col>
-    <a-modal title="Followers" v-model="followersVisible" :footer="null" centered>
+    <a-modal title="Followers" width="350px" v-model="followersVisible" :footer="null" centered>
       <a-list itemLayout="horizontal" :dataSource="userFollowers">
         <a-list-item slot="renderItem" slot-scope="item">
           <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
-            <router-link slot="title" :to="{name: 'Profile', params: {username: item.username}}">
+            <router-link 
+            slot="title"
+            class="author-name" 
+            :to="{name: 'Profile', params: {username: item.username}}">
               {{item.username}}
             </router-link>
-            <router-link slot="avatar" :to="{name: 'Profile', params: {username: item.username}}">
+            <router-link 
+            slot="avatar"
+            :to="{name: 'Profile', params: {username: item.username}}">
               <a-avatar
               :src="getProfileImg(item)"
               :size="40"
@@ -74,14 +79,19 @@
         </a-list-item>
       </a-list>
     </a-modal>
-    <a-modal v-model="followingVisible" title="Following" :footer="null" centered>
+    <a-modal v-model="followingVisible" width="350px" title="Following" :footer="null" centered>
       <a-list itemLayout="horizontal" :dataSource="userFollowings">
         <a-list-item slot="renderItem" slot-scope="item">
           <a-list-item-meta :description="String(item.answerCount) + ' Answers'">
-            <router-link slot="title" :to="{name: 'Profile', params: {username: item.username}}">
+            <router-link 
+            slot="title"
+            class="author-name"
+            :to="{name: 'Profile', params: {username: item.username}}">
               {{item.username}}
             </router-link>
-            <router-link slot="avatar" :to="{name: 'Profile', params: {username: item.username}}">
+            <router-link 
+            slot="avatar" 
+            :to="{name: 'Profile', params: {username: item.username}}">
               <a-avatar
               :src="getProfileImg(item)"
               :size="40"
@@ -245,5 +255,9 @@ export default {
   flex-direction: column;
   height: 20vh;
   width: 100%
+}
+.author-name {
+  font-size: 15px;
+  color: #32afd3;
 }
 </style>
