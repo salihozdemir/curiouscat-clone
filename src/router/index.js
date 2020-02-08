@@ -51,10 +51,7 @@ export default router;
 
 router.beforeEach((to, from, next) => {
   if (to.name !== 'Auth') {
-    if (!common.cookie.get('access_token')) {
-      this.$message.error('Authorization fail, Please Login again.');
-      next('/Auth'); 
-    }
+    if (!common.cookie.get('access_token')) next('/Auth');
     else next();
   }
   else if (to.name === 'Auth') {
