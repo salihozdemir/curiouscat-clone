@@ -20,7 +20,10 @@
         </a-col>
         <a-col :span="16" style="text-align: right;">
           <a-form-item style="margin-bottom: 5px;">
-            <a-button shape="round" type="primary" html-type="submit">Send</a-button>
+            <a-button shape="round" type="primary" html-type="submit">
+              Send 
+              <a-icon type="right" />
+            </a-button>
           </a-form-item>
         </a-col>
       </a-row>
