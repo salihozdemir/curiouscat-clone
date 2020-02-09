@@ -24,7 +24,7 @@
           type="danger"
           shape="circle"
           class="logout"
-          @click="logout"
+          @click.native="logout"
           v-if="isOwnProfile">
         </a-button>
       </a-row>
@@ -43,15 +43,15 @@
       </a-row>
       <br />
       <a-row type="flex" justify="space-around" class="text-center">
-        <a-col :span="4">
+        <a-col :span="5">
           <span class="title">Answers</span>
           <span class="num">{{answerCount}}</span>
         </a-col>
-        <a-col :span="4" @click="followersVisible = true" class="cursor-pointer">
+        <a-col :span="5" @click="followersVisible = true" class="cursor-pointer">
           <span class="title">Followers</span>
           <span class="num">{{userFollowers.length}}</span>
         </a-col>
-        <a-col :span="4" @click="followingVisible = true" class="cursor-pointer">
+        <a-col :span="5" @click="followingVisible = true" class="cursor-pointer">
           <span class="title">Following</span>
           <span class="num">{{userFollowings.length}}</span>
         </a-col>
@@ -151,7 +151,6 @@ export default {
       this.$router.push({ name: 'Auth' });
       this.$store.commit('setToken', null);
       this.$store.commit('setRandomUsers', []);
-      this.$store.commit('setSelectedHeaderKey', ['0']);
     },
     async followOrUnFollow() {
       const result = await followService.followOrUnFollow({

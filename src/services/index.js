@@ -5,7 +5,7 @@ const instance = axios.create();
 
 instance.interceptors.request.use(config => {
   const token = common.cookie.get('access_token');
-  config.baseURL = 'https://question-node-api.herokuapp.com';
+  config.baseURL = 'http://localhost:5000';
   config.headers.authorization = `Bearer ${token}`;
   return config;
 });

@@ -51,7 +51,9 @@ export default {
           if(res.success) {
             if(this.userId === this.loginUserId) this.$store.commit('InorDecreaseInboxCount', 1);
             this.$message.success('Question sent!');
-            this.form.resetFields();
+            this.form.setFieldsValue({
+              questionText: null,
+            });
           }
         }
       });
