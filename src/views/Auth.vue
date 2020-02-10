@@ -88,7 +88,7 @@ export default {
 				if(!res.data) this.errorMessageSignup = res.response.data.message;
 				else { 
 					await this.setState(res.data);
-					this.$router.push({ name: 'Profile', params: { username: this.username } });
+					this.$router.push({ name: 'Home' });
 				}
 			} else {
 				this.errorMessageSignup = "Two passwords that you enter is inconsistent!";
