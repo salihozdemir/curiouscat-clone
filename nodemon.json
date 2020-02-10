@@ -1,8 +1,5 @@
 {
     "env": {
-        "MONGO_ATLAS_PW": "que-ano",
-        "JWT_KEY": "que-ano",
-        "MONGO_USERNAME": "salih",
-        "MONGO_PASSWORD": "Zpokiljl2"
+        "JWT_KEY": "que-ano"
     }
 }
