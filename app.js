@@ -10,16 +10,6 @@ const followRoutes = require("./api/routes/follow");
 const notificationRoutes = require("./api/routes/notification");
 
 mongoose.Promise = global.Promise;
-// mongoose.connect(
-//   "mongodb+srv://dbUser:" +
-//     process.env.MONGO_ATLAS_PW +
-//     "@question-cnqwq.gcp.mongodb.net/askPrivy?retryWrites=true&w=majority",
-//   {
-//     useUnifiedTopology: true,
-//     useNewUrlParser: true,
-//     useCreateIndex: true
-//   }
-// ).catch((error) => { console.log(error);});
 const url = 'mongodb://127.0.0.1:27017/askPrivy';
 mongoose.connect(url, 
     { 
@@ -49,10 +39,10 @@ app.use((req, res, next) => {
 });
 
 
-app.use("/user", userRoutes);
-app.use("/question", questionRoutes);
-app.use("/follow", followRoutes);
-app.use("/notification", notificationRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/question", questionRoutes);
+app.use("/api/follow", followRoutes);
+app.use("/api/notification", notificationRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
@@ -65,7 +55,7 @@ app.use((error, req, res, next) => {
   res.json({
     error: {
       message: error.message,
-      myMessage : "Bir hata!"
+      myMessage : "an error!"
     }
   });
 });
