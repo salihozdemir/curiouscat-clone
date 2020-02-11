@@ -9,6 +9,8 @@ const questionRoutes = require("./api/routes/question");
 const followRoutes = require("./api/routes/follow");
 const notificationRoutes = require("./api/routes/notification");
 
+require("dotenv").config();
+
 mongoose.Promise = global.Promise;
 const url = 'mongodb://127.0.0.1:27017/askPrivy';
 mongoose.connect(url, 
