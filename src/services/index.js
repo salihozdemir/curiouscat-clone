@@ -5,7 +5,7 @@ const instance = axios.create();
 
 instance.interceptors.request.use(config => {
   const token = common.cookie.get('access_token');
-  config.baseURL = 'http://localhost:4510';
+  config.baseURL = process.env.VUE_APP_API_URL + '/api';
   config.headers.authorization = `Bearer ${token}`;
   return config;
 });
