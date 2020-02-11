@@ -55,7 +55,7 @@ export default {
         };
       } else {
         const defaultPP = '/assets/img/default-pp.png';
-        const backendPP = `${process.env.VUE_APP_API_URL}/${this.question.fromUser._id}/${this.question.fromUser.profileImg}`;
+        const backendPP = `${process.env.VUE_APP_STATIC_FILE_URL}/${this.question.fromUser._id}/${this.question.fromUser.profileImg}`;
         return {
           username: this.question.fromUser.username,
           userUrl: {name: 'Profile', params: {username: this.question.fromUser.username}},
@@ -65,7 +65,7 @@ export default {
     },
     toUserInfo() {
       const defaultPP = '/assets/img/default-pp.png';
-      const backendPP = `${process.env.VUE_APP_API_URL}/${this.question.toUser._id}/${this.question.toUser.profileImg}`;
+      const backendPP = `${process.env.VUE_APP_STATIC_FILE_URL}/${this.question.toUser._id}/${this.question.toUser.profileImg}`;
       return this.question.toUser.profileImg === 'default-pp.png' ? defaultPP : backendPP
     },
   },

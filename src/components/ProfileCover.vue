@@ -122,7 +122,7 @@ export default {
     ...mapGetters(['loginUserId']),
     getPhotoUrl() {
       if (this.userImg === 'default-pp.png') return '/assets/img/default-pp.png'; 
-      else return `${process.env.VUE_APP_API_URL}/${this.userId}/${this.userImg}`; 
+      else return `${process.env.VUE_APP_STATIC_FILE_URL}/${this.userId}/${this.userImg}`; 
     },
     isOwnProfile() {
       if (this.userId === this.loginUserId) return true; 
@@ -169,7 +169,7 @@ export default {
     },
     getProfileImg(user) {
       const defaultPP = '/assets/img/default-pp.png';
-      const backendPP = `${process.env.VUE_APP_API_URL}/${user._id}/${user.profileImg}`;
+      const backendPP = `${process.env.VUE_APP_STATIC_FILE_URL}/${user._id}/${user.profileImg}`;
       return user.profileImg === 'default-pp.png' ? defaultPP : backendPP
     },
   },
