@@ -24,7 +24,7 @@
           type="danger"
           shape="circle"
           class="logout"
-          @click.native="logout"
+          @click.prevent="logout"
           v-if="isOwnProfile">
         </a-button>
       </a-row>

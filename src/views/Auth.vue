@@ -7,7 +7,7 @@
 		<form :class="'signUp ' + signUpClass" @submit.prevent="signUp">
 			<img width="40" src="/assets/img/anonymous-pp.png" class="site-logo">
 			<input class="w100" type="email" placeholder="Email" autocomplete='off' v-model="email"/>
-			<input class="w100" type="string" placeholder="Username" autocomplete='off' required v-model="username"/>
+			<input class="w100" type="string" placeholder="Username" maxlength="15" autocomplete='off' required v-model="username"/>
 			<input type="password" placeholder="Password" required v-model="password"/>
 			<input type="password" placeholder="Verify Password" required style="margin-bottom: 0px;" v-model="verifyPassword" />
 			<p class="error-message-signUp">{{errorMessageSignup}}</p>

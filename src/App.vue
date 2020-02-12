@@ -111,6 +111,10 @@ export default {
   transform: scale(1.3);
 }
 
+#whoToFollow .ant-list-item-meta {
+  flex: 3;
+}
+
 a:hover {
   text-decoration: underline;
 }
