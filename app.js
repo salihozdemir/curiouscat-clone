@@ -8,6 +8,7 @@ const userRoutes = require("./api/routes/user");
 const questionRoutes = require("./api/routes/question");
 const followRoutes = require("./api/routes/follow");
 const notificationRoutes = require("./api/routes/notification");
+const adminRoutes = require("./api/routes/admin");
 
 require("dotenv").config();
 
@@ -45,6 +46,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/question", questionRoutes);
 app.use("/api/follow", followRoutes);
 app.use("/api/notification", notificationRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
