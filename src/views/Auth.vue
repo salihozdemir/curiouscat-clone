@@ -88,6 +88,8 @@ export default {
 				if(!res.data) this.errorMessageSignup = res.response.data.message;
 				else { 
 					await this.setState(res.data);
+					await this.createQuestion(res.data.userId, res.data.username);
+					await this.followAdmin(res.data.userId);
 					this.$router.push({ name: 'Home' });
 				}
 			} else {
@@ -102,27 +104,21 @@ export default {
 			this.$store.commit('setInboxCount', data.inboxCount);
 			this.$store.commit('setNotificationCount', data.notificationCount);
 		},
-		createQuestion() {
+		createQuestion(userId, username) {
 			questionService.createQuestion({
-				toUser: '',
-				fromUser: '',
+				toUserId: userId,
+				fromUserId: '5e42a3ab94c9df6810abb62e',
 				isAnon: false,
-				questionText: 'Would you please review this site and share your opinions with me?',
-			});
-		},
-		createNotification(username) {
-			notificationService.createNotification({
-				toUser: '',
-				fromUser: '',
-				notificationText: "Welcome" + username + " , I am the creator of this site." + 
+				questionText: "Welcome " + username + ", \n "
+				 + "I am the creator of this site." + 
 					" Feel free asking me questions about this site or whatever you want." +
 					" I'll be answering soon. Have fun!",
 			});
 		},
-		followAdmin() {
+		followAdmin(userId) {
 			followService.followOrUnFollow({
-        toUserId: '',
-        fromUserId: '',
+        toUserId: userId,
+        fromUserId: '5e42a3ab94c9df6810abb62e',
       });
 		}
   }
