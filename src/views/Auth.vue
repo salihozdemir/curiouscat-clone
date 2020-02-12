@@ -88,8 +88,8 @@ export default {
 				if(!res.data) this.errorMessageSignup = res.response.data.message;
 				else { 
 					await this.setState(res.data);
-					await this.createQuestion(res.data.userId, res.data.username);
-					await this.followAdmin(res.data.userId);
+					// await this.createQuestion(res.data.userId, res.data.username);
+					// await this.followAdmin(res.data.userId);
 					this.$router.push({ name: 'Home' });
 				}
 			} else {

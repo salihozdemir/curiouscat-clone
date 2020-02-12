@@ -9,10 +9,10 @@
       </div>
       <a-list-item style="margin-top: 5px;" class="border-bottom-0" slot="renderItem" slot-scope="item">
         <a-list-item-meta :description="String(item.answerCount) + ' Answered'">
-          <router-link slot="title" :to="{name: 'Profile', params: {username: item.userName}}" class="username">
+          <router-link slot="title" :to="{name: 'Profile', params: {username: item.username}}" class="username">
             {{item.username}}
           </router-link>
-          <router-link slot="avatar" :to="{name: 'Profile', params: {username: item.userName}}">
+          <router-link slot="avatar" :to="{name: 'Profile', params: {username: item.username}}">
             <a-avatar
               :src="getProfileImg(item)"
               :size="40"

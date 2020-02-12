@@ -94,8 +94,8 @@ export default {
         const result = await questionService.answerQuestion({
           questionId: this.question._id,
           answerText: this.answerText,
-          fromUserId: this.loginUserId,
-          toUserId: this.question.fromUser._id,
+          toUserId: this.loginUserId,
+          fromUserId: this.question.fromUser._id,
         });
         if (result.success) {
           this.$store.commit('InorDecreaseInboxCount', -1);
