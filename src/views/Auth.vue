@@ -4,20 +4,20 @@
 		<div v-if="loading" class="spin">
       <a-spin size="large"/>
     </div>
-		<form :class="'signUp ' + signUpClass" @submit.prevent="signUp">
+		<form :class="'signUp ' + signUpClass" @submit.prevent="signUp" autocomplete="off">
 			<img width="40" src="/assets/img/anonymous-pp.png" class="site-logo">
-			<input class="w100" type="email" placeholder="Email" autocomplete='off' v-model="email"/>
-			<input class="w100" type="string" placeholder="Username" maxlength="15" autocomplete='off' required v-model="username"/>
-			<input type="password" placeholder="Password" required v-model="password"/>
-			<input type="password" placeholder="Verify Password" required style="margin-bottom: 0px;" v-model="verifyPassword" />
+			<input class="w100" type="email" placeholder="Email" v-model="email"/>
+			<input class="w100" type="string" placeholder="Username" maxlength="15" required v-model="username"/>
+			<input type="password" placeholder="Password" minlength="6" required v-model="password"/>
+			<input type="password" placeholder="Verify Password" minlength="6" required style="margin-bottom: 0px;" v-model="verifyPassword" />
 			<p class="error-message-signUp">{{errorMessageSignup}}</p>
 			<button class="form-btn sx log-in" type="button" @click="goToSignIn()">Log In</button>
 			<button class="form-btn dx" type="submit">Sign Up</button>
 		</form>
 		<form :class="'signIn ' + signInClass" @submit.prevent="logIn">
 			<h3>Welcome <br> Back !</h3>
-			<input type="email" placeholder="Email" autocomplete='off' required v-model="email"/>
-			<input type="password" placeholder="Password" autocomplete='off' required v-model="password" />
+			<input type="email" placeholder="Email" required v-model="email"/>
+			<input type="password" placeholder="Password" required v-model="password" />
 			<p style="color: indianred">{{errorMessageLogin}}</p>
 			<button class="form-btn sx back" type="button" @click="goToSignUp()">Back</button>
 			<button class="form-btn dx" type="submit">Log In</button>
@@ -88,7 +88,7 @@ export default {
 					await this.setState(res.data);
 					await this.createQuestion(res.data.userId, res.data.username);
 					await this.adminFollowUser(res.data.userId);
-					this.userFollowAdmin(res.data.userId);
+					await this.userFollowAdmin(res.data.userId);
 					this.$router.push({ name: 'Home' });
 				}
 			} else {
