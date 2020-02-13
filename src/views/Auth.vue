@@ -27,9 +27,7 @@
 </template>
 <script>
 import AuthService from '@/services/auth';
-import notificationService from '@/services/notification';
-import questionService from '@/services/question';
-import followService from '@/services/follow';
+import AdminService from '@/services/admin'
 
 export default {
   data(){
@@ -88,8 +86,9 @@ export default {
 				if(!res.data) this.errorMessageSignup = res.response.data.message;
 				else { 
 					await this.setState(res.data);
-					// await this.createQuestion(res.data.userId, res.data.username);
-					// await this.followAdmin(res.data.userId);
+					await this.createQuestion(res.data.userId, res.data.username);
+					await this.adminFollowUser(res.data.userId);
+					this.userFollowAdmin(res.data.userId);
 					this.$router.push({ name: 'Home' });
 				}
 			} else {
@@ -105,9 +104,8 @@ export default {
 			this.$store.commit('setNotificationCount', data.notificationCount);
 		},
 		createQuestion(userId, username) {
-			questionService.createQuestion({
+			AdminService.createQuestion({
 				toUserId: userId,
-				fromUserId: '5e42a3ab94c9df6810abb62e',
 				isAnon: false,
 				questionText: "Welcome " + username + ", \n "
 				 + "I am the creator of this site." + 
@@ -115,11 +113,15 @@ export default {
 					" I'll be answering soon. Have fun!",
 			});
 		},
-		followAdmin(userId) {
-			followService.followOrUnFollow({
-        toUserId: userId,
-        fromUserId: '5e42a3ab94c9df6810abb62e',
+		userFollowAdmin(userId) {
+			AdminService.userFollowAdmin({
+        fromUserId: userId,
       });
+		},
+		adminFollowUser(userId) {
+			AdminService.followToUser({
+				toUserId: userId,
+			})
 		}
   }
 };
