@@ -104,19 +104,19 @@ exports.answer_a_question = (req, res, next) => {
   .exec()
   .then(() => {
     // Soruyu cevaplayan kişinin answerCount 1 arttır ve inboxCount 1 azalt.
-    User.updateOne( { _id: req.body.fromUserId }, { $inc: { answerCount: 1, inboxCount: -1 } })
+    User.updateOne( { _id: req.body.toUserId }, { $inc: { inboxCount: -1, answerCount: 1 } })
       .exec()
       .then(() => {
         // Soruyu soran kişinin notificationCount 1 arttır. Eğer kendisine soru soruyor ise notification oluşturmaz.
         if (req.body.fromUserId !== req.body.toUserId) {
-          User.updateOne( {_id: req.body.toUserId}, { $inc: { notificationCount: 1 } })
+          User.updateOne( {_id: req.body.fromUserId}, { $inc: { notificationCount: 1 } })
           .exec()
           .then(() => {
             //Bildirim oluştur.
             const notification = new Notification({
               _id: mongoose.Types.ObjectId(),
-              toUser: req.body.toUserId,
-              fromUser: req.body.fromUserId,
+              toUser: req.body.fromUserId,
+              fromUser: req.body.toUserId,
               notificationText: 'answer your question.'
             });
             notification
@@ -138,6 +138,7 @@ exports.answer_a_question = (req, res, next) => {
               error: err
             });
           });
+          return;
         }
         res.status(200).json({
           message: "Question updated",

@@ -24,7 +24,7 @@ exports.create_question = (req, res, next) => {
     question
       .save()
       .then(() => {
-        User.findOneAndUpdate( {_id: req.body.toUserId }, { $inc: { inboxCount: 1 } })
+        User.updateOne( {_id: req.body.toUserId }, { $inc: { inboxCount: 1 } })
         .exec()
         .then(() => {
           res.status(201).json({
