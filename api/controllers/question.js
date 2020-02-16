@@ -221,8 +221,10 @@ exports.get_random_answered_questions = (req, res, next) => {
     {
       $project: {
         _id: 1, 
-        'toUser.username': 1, 
+        'toUser._id': 1,
+        'toUser.username': 1,
         'toUser.profileImg': 1, 
+        'fromUser._id': 1, 
         'fromUser.username': 1, 
         'fromUser.profileImg': 1, 
         isAnon: 1, 
@@ -236,7 +238,7 @@ exports.get_random_answered_questions = (req, res, next) => {
   .exec()
   .then(result => {
     User.findOne({  _id: req.body.loginUserId})
-    .select('-_id notificationCount inboxCount')
+    .select('notificationCount inboxCount')
     .exec()
     .then(docs => {
       res.status(200).json({
@@ -244,10 +246,12 @@ exports.get_random_answered_questions = (req, res, next) => {
           return {
             _id: x._id,
             toUser: {
+              _id: x.toUser[0]._id,
               username: x.toUser[0].username,
               profileImg: x.toUser[0].profileImg
             },
             fromUser: {
+              _id: x.fromUser[0]._id,
               username: x.fromUser[0].username,
               profileImg: x.fromUser[0].profileImg
             },
