@@ -65,7 +65,7 @@ export default {
         page: this.page,
         limit: this.limit
       });
-      this.notifications = result.notifications;
+      this.notifications = this.notifications.concat(result.notifications);
       this.$store.commit('setInboxCount', result.inboxCount);
       this.$store.commit('setNotificationCount', 0);
       if(result.notifications.length < this.limit) this.busy = true;
