@@ -167,7 +167,7 @@ exports.get_following_questions = (req, res, next) => {
         userArray.push(doc.toUser);
       });
       Question.find({
-        fromUser: { $in: userArray },
+        toUser: { $in: userArray },
         answerText: { $exists: true }
       })
         .select("-__v")
