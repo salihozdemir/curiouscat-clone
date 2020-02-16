@@ -129,9 +129,13 @@ export default {
       else return false;
     }
   },
-  created() {
-    this.getFollowersUser();
-    this.getFollowingUser();
+  watch: {
+    loading (newValue, oldValue) {
+      if(newValue === false) {
+        this.getFollowersUser();
+        this.getFollowingUser();
+      }
+    }
   },
   methods: {
     async changePP(event) {
@@ -160,11 +164,11 @@ export default {
       this.$emit('update:isFollow', result.isFollow);
     },
     async getFollowersUser() {
-      const followers = await followService.getUserFollowers(this.loginUserId);
+      const followers = await followService.getUserFollowers(this.userId);
       this.userFollowers = followers.users;
     },
     async getFollowingUser() {
-      const followings = await followService.getUserFollowings(this.loginUserId);
+      const followings = await followService.getUserFollowings(this.userId);
       this.userFollowings = followings.users;
     },
     getProfileImg(user) {
