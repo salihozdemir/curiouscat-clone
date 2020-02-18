@@ -56,7 +56,7 @@ npm run serve
 ## FAQ
 1. **What is this site?**
 
-This is a clone of the site [Curiouscar.me](https://curiouscat.me).
+This is a clone of the site [Curiouscat.me](https://curiouscat.me).
 
 2. **Why would you make a clone of this site?**
 
