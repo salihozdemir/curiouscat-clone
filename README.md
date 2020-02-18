@@ -119,7 +119,7 @@ I was wondering what kind of problems I would encounter while realizing a real l
   <p align="center">Three random users from people you don't follow.</p>
   <hr>
 
-## Connect with me
+## Contact info
 
 - [Github](https://github.com/slhozdemir)
 - [LinkedIn](https://www.linkedin.com/in/salihozdemr)
