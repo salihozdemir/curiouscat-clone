@@ -56,7 +56,7 @@ npm run serve
 ## FAQ
 1. **What is this site?**
 
-This is a clone of the site [Curiouscar.me](https://curiouscat.me).
+This is a clone of the site [Curiouscat.me](https://curiouscat.me).
 
 2. **Why would you make a clone of this site?**
 
@@ -119,7 +119,7 @@ I was wondering what kind of problems I would encounter while realizing a real l
   <p align="center">Three random users from people you don't follow.</p>
   <hr>
 
-## Connect with me
+## Contact info
 
 - [Github](https://github.com/slhozdemir)
 - [LinkedIn](https://www.linkedin.com/in/salihozdemr)
