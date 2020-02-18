@@ -1,9 +1,9 @@
 <h2 >A simplified curiouscat.me clone built with Vue and Node</h2>
 
-<h3>
+<p>
   <a href="http://www.askprivy.com/">Visit the live site</a> |
   <a href="https://github.com/slhozdemir/askprivy-backend">View API</a>
-</h3>
+</p>
 
 ## Preview
 
