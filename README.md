@@ -72,9 +72,10 @@ I was wondering what kind of problems I would encounter while realizing a real l
   Taken as a reference <a href="https://www.codepen.io/tomma5o/pen/NrbKXy/">code</a>
   <hr>
 
+
   <h4 align="center">Home Page</h4>
   <p align="center">
-    <img align="top" src="./screenshots/desktop/home.png" alt="Home Page Desktop" width="500" style="margin-right: 10px; margin-bottom: 10px">
+    <img align="top" src="./screenshots/desktop/home.PNG" alt="Home Page Desktop" width="500" style="margin-right: 10px; margin-bottom: 10px">
     <img src="./screenshots/mobile/home.png" alt="Home Page Mobile" width = "200">
   </p>
   <p align="center">You can see the posts of the people you follow.</p>
@@ -82,7 +83,7 @@ I was wondering what kind of problems I would encounter while realizing a real l
 
   <h4 align="center">Discover Page</h4>
   <p align="center">
-    <img align="top" src="./screenshots/desktop/discover.png" alt="Discover Page Desktop" width="500" style="margin-right: 10px; margin-bottom: 10px">
+    <img align="top" src="./screenshots/desktop/discover.PNG" alt="Discover Page Desktop" width="500" style="margin-right: 10px; margin-bottom: 10px">
     <img src="./screenshots/mobile/discover.png" alt="Discover Page Mobile" width = "200" >
   </p>
   <p align="center">You can search and see randomly answered questions.</p>
@@ -97,8 +98,8 @@ I was wondering what kind of problems I would encounter while realizing a real l
   <hr>
 
   <h4 align="center">Inbox Page</h4>
-  <p align="center" style="position:">
-    <img align="top" src="./screenshots/desktop/inbox.png" alt="Inbox Page Desktop" width="500" style="margin-right: 10px; margin-bottom: 10px;">
+  <p align="center">
+    <img align="top" src="./screenshots/desktop/inbox.PNG" alt="Inbox Page Desktop" width="500" style="margin-right: 10px; margin-bottom: 10px;">
     <img src="./screenshots/mobile/inbox.png" alt="Inbox Page Mobile" width = "200" >
   </p>
   <p align="center">You can see the questions asked to you and you can answer those questions.</p>
@@ -106,7 +107,7 @@ I was wondering what kind of problems I would encounter while realizing a real l
 
   <h4 align="center">Notification Page</h4>
   <P align="center">
-    <img align="top" src="./screenshots/desktop/notification.png" alt="Notification Page Desktop" width="500" style="margin-right: 10px; margin-bottom: 10px">
+    <img align="top" src="./screenshots/desktop/notification.PNG" alt="Notification Page Desktop" width="500" style="margin-right: 10px; margin-bottom: 10px">
     <img src="./screenshots/mobile/notification.png" alt="Notification Page Mobile" width = "200" >
   </P>
   <p align="center">You can see what notifications you receive. Occurs when someone follows you or answers your questions.</p>
