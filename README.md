@@ -52,7 +52,6 @@ npm install
 # Run the app
 npm run serve
 ```
-<small>Notice that your requests are thrown to the correct local api address and cors address in `app.js` should be edited.</small>
 
 ## FAQ
 1. **What is this site?**
