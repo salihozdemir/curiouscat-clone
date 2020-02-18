@@ -72,6 +72,7 @@ I was wondering what kind of problems I would encounter while realizing a real l
   Taken as a reference <a href="https://www.codepen.io/tomma5o/pen/NrbKXy/">code</a>
   <hr>
 
+
   <h4 align="center">Home Page</h4>
   <p align="center">
     <img align="top" src="./screenshots/desktop/home.png" alt="Home Page Desktop" width="500" style="margin-right: 10px; margin-bottom: 10px">
