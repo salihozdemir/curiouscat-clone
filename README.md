@@ -2,7 +2,8 @@
 
 <p>
   <a href="http://www.askprivy.com/">Visit the live site</a> |
-  <a href="https://github.com/slhozdemir/askprivy-backend">View API</a>
+  <a href="https://github.com/slhozdemir/curiouscat-clone/tree/master/client">View Frontend</a> |
+  <a href="https://github.com/slhozdemir/curiouscat-clone/tree/master/backend">View API</a>
 </p>
 
 ## Preview
@@ -29,13 +30,13 @@ A social media platform where users can interact with each other. Can follow eac
 
 ## Installation
 
-To clone and run this repository you'll need [backend api](https://github.com/slhozdemir/askprivy-backend) cloned on your computer. From your command line:
+To clone and run this repository you'll need [backend api](https://github.com/slhozdemir/curiouscat-clone/tree/master/backend) cloned on your computer. From your command line:
 
 ```bash
 # Firstly clone node backend repository
-git clone https://github.com/slhozdemir/askprivy-backend.git
-# Go into the repository
-cd askprivy-backend
+git clone https://github.com/slhozdemir/curiouscat-clone.git
+# Go into the subfolder to backend
+cd backend
 # Install dependencies
 npm install
 # Run the app
@@ -43,15 +44,14 @@ npm start
 ```
 then
 ```bash
-# Clone this repository
-git clone https://github.com/slhozdemir/askprivy-frontend.git
-# Go into the repository
+# Go into the subfolder to client
 cd askprivy-frontend
 # Install dependencies
 npm install
 # Run the app
 npm run serve
 ```
+Client application sends requests to the address where the application is running. To change it, the .env in the client file must be configured.
 
 ## FAQ
 1. **What is this site?**
