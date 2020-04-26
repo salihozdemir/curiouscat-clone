@@ -1,0 +1,17 @@
+runtime: php55
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /
+  static_files: dist/index.html
+  upload: dist/index.html
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /(.*)
+  static_files: dist/\1
+  upload: dist/(.*)
+  secure: always
+  redirect_http_response_code: 301
+  
