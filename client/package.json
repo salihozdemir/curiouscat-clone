@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "ant-design-vue": "^1.4.8",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "babel-plugin-import": "^1.13.0",
     "core-js": "^3.3.2",
     "less": "^3.10.3",
